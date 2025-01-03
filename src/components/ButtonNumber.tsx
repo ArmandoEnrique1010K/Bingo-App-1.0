@@ -4,10 +4,11 @@ type ButtonNumberProps = {
     n: {
         number: number,
         position: number
-    }
+    },
+    type: string
 }
 
-export default function ButtonNumber({ handleClickButton, handleSelectedNumber, n }: ButtonNumberProps) {
+export default function ButtonNumber({ handleClickButton, handleSelectedNumber, n, type }: ButtonNumberProps) {
     return (
         <>
             <button
@@ -16,7 +17,9 @@ export default function ButtonNumber({ handleClickButton, handleSelectedNumber, 
 
                 onClick={() => handleClickButton(n.number, n.position)}>
                 {/* {n.position} --- */}
-                {n.number}</button>
+                {n.number}
+                {/* {type === 'player' ? n.number : ""} */}
+            </button>
 
         </>
     )

@@ -12,7 +12,8 @@ export default function Credits() {
                 showCredits === true && (
                     <>
                         <h2>Music</h2>
-                        <p>A Home for FLOWER - OMORIBOY MOD</p>
+                        <p>Tap Out - Strokes(2013)</p>
+                        <p>Ready to Start - Arcade Fire(2010)</p>
                     </>
                 )
             }

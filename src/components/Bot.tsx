@@ -4,6 +4,9 @@ import { dynamicInterval } from '../utils/dynamicInterval';
 import { Board } from '../types';
 import BoardNumbers from './BoardNumbers';
 
+type BotProps = {
+}
+
 export default function Bot({ dataLevel, targets, interval, name, patterns, handleGameOver }) {
 
     // Tablero del bot
@@ -69,10 +72,12 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
 
     // Imprimir en consola los numeros objetivos que se encuentran en el tablero
     useEffect(() => {
-        const arrayTargets = botBoard.filter(n => targets.includes(n.number))
-
-        console.log(arrayTargets)
-    })
+        // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
+        if (targets && targets.length > 0) {
+            const arrayTargets = botBoard.filter(n => targets.includes(n.number));
+            console.log(arrayTargets);
+        }
+    }, [targets])
 
 
 
@@ -116,9 +121,10 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
                 console.log("SE ACABO EL JUEGO");
             }, 5000);
 
-        } else {
-            console.log("Tu oponente sigue intentando");
         }
+        // else {
+        //     console.log("Tu oponente sigue intentando");
+        // }
     };
 
 
@@ -131,6 +137,8 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
         <div>
             <div>Tablero del bot {name}</div>
             <BoardNumbers
+
+                type="bot"
                 board={botBoard}
                 handleSelectedNumber={handleSelectedNumber}
                 handleClickButton={handleTargetNumber}

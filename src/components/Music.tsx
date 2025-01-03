@@ -9,10 +9,11 @@ export default function Music() {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
             // TODO: Modificar con AudioPad el archivo de audio para que se reproduzca en bucle sin interrupciones
-            url: "/music/background.mp3",
+            url: "/music/background_hard.mp3",
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
-            volume: -15, // Reduce el volumen
+            volume: -8, // Reduce el volumen
+            // background hard: -8 / normal: -15
         }).toDestination(); // Conecta el audio a la salida principal
 
         setPlayer(audioPlayer);

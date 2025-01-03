@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { useMusic } from '../hooks/useMusic'
 
 export default function Index() {
 
@@ -9,10 +10,31 @@ export default function Index() {
     // // Guardalo en un localstorage
     // localStorage.setItem('unlockedLevels', unlockedLevels)
 
+    // Llama al hook useMusic
+    const { nameMusic, volume, isPlaying, startMusic, stopMusic, setNameMusic, setVolume } = useMusic()
+
+    useEffect(() => {
+        setNameMusic("background")
+        setVolume(-15)
+        console.log(nameMusic)
+        setTimeout(() => {
+            stopMusic()
+            startMusic()
+            console.log("Reproduciendo " + nameMusic)
+
+        }, 2000)
+
+    }, [nameMusic])
     const [menu, setMenu] = useState(false)
+
+
+
+
 
     const handleViewMenu = () => {
         setMenu(true)
+        startMusic()
+
     }
 
     return (

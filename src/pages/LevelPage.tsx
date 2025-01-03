@@ -9,6 +9,7 @@ import TargetPattern from "../components/TargetPattern";
 import { Link } from "react-router";
 import { dynamicInterval } from "../utils/dynamicInterval";
 import Bot from "../components/Bot";
+import { useMusic } from "../hooks/useMusic";
 
 type LevelPageProps = {
     level: number
@@ -36,8 +37,14 @@ export default function LevelPage({ level }: LevelPageProps) {
 
 
 
+    // Estado para el fin del juego si el jugador gano
+    const [victory, setVictory] = useState(false)
+
     // Estado para el fin del juego
     const [gameOver, setGameOver] = useState(false);
+
+    // Estado para el turno o ronda
+    const [round, setRound] = useState(0)
 
     // Efecto para cargar los posibles patrones
     useEffect(() => {
@@ -55,7 +62,11 @@ export default function LevelPage({ level }: LevelPageProps) {
 
     // Función para cambiar los numeros objetivos
     const handleChangeTargets = () => {
-        setTargets(generateTargets(dataLevel.targetQuantity));
+        setTargets([]);
+        setRound(round + 1)
+        setTimeout(() => {
+            setTargets(generateTargets(dataLevel.targetQuantity));
+        }, 1000)
     }
 
     // Función para establecer el fin del juego
@@ -100,39 +111,71 @@ export default function LevelPage({ level }: LevelPageProps) {
     const handleCheckWinnerPattern = () => {
         // Verifica si los numeros que se encuentra en positionTarget, coinciden con los numeros (todos los numeros) de un arreglo que se encuentra en patterWinner
         if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
-            console.log("Ganaste el nivel " + level)
+            console.log("El jugador ha ganado el nivel " + level)
+            setTargets([])
             setGameOver(true)
         } else {
             console.log("Sigue intentando")
         }
     }
 
+    const { nameMusic,
+        volume,
+        isPlaying,
+        startMusic,
+        stopMusic,
+        setNameMusic,
+        setVolume
+    } = useMusic()
+    useEffect(() => {
+        setNameMusic("background_hard")
+        setVolume(-8)
+        console.log(nameMusic)
+        setTimeout(() => {
+            stopMusic()
+            startMusic()
+            console.log("Reproduciendo " + nameMusic)
+
+        }, 2000)
+
+    }, [nameMusic])
+
 
     return (
-        <div>
-            <div>Pagina del nivel</div>
-            <TargetsNumbers targets={targets} handleChangeTargets={handleChangeTargets} />
-            <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
-            <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
+        <div className="w-max mx-auto flex flex-col">
+            <div className="flex flex-row">
+                <div className="flex flex-col">
+                    <div>Ronda: {round}</div>
+                    <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                    <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
+                    <button
+                        className="flex bg-cyan-400 p-2"
+                        onClick={() => handleCheckWinnerPattern()
+                        }
+                    > Comprobar el patron ganador</button>
+                    <Link to="/">Abandonar partida</Link>
 
-            <button
-                className="flex bg-cyan-400 p-2"
-                onClick={() => handleCheckWinnerPattern()
+
+                </div>
+                <div className="flex">
+                    <BoardNumbers type="player" board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
+                </div>
+
+
+            </div>
+
+            <div className="flex flex-row">
+                {
+                    dataLevel.bots.map((bot) => (
+                        <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver} />
+                    ))
                 }
-            > Comprobar el patron ganador</button>
-
+                {
+                    // SI EL OPONENTE HA GANADO
+                    gameOver === true ? (<div className="bg-red-600 text-yellow-50">Se acabo el juego</div>) : ""
+                }
+            </div>
             {/* TODO: Al hacer clic en el botón End Game se debe limpiar los datos */}
-            <Link to="/">Salir</Link>
-            {
-                dataLevel.bots.map((bot) => (
-                    <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver} />
-                ))
-            }
-            {
-                // SI EL OPONENTE HA GANADO
-                gameOver === true ? (<div className="bg-red-600 text-yellow-50">Se acabo el juego</div>) : ""
-            }
-
         </div>
     )
 }
