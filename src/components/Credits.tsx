@@ -13,7 +13,6 @@ export default function Credits() {
                     <>
                         <h2>Music</h2>
                         <p>Tap Out - Strokes(2013)</p>
-                        <p>Ready to Start - Arcade Fire(2010)</p>
                     </>
                 )
             }

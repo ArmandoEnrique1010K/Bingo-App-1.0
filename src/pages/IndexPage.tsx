@@ -4,6 +4,7 @@ import { Link } from 'react-router'
 
 export default function Index() {
 
+
     // Estado para los niveles desbloqueados
     // const [unlockedLevels, setUnlockedLevels] = useState<number[]>([])
 
@@ -36,7 +37,6 @@ export default function Index() {
 
     const handleViewMenu = async () => {
         setMenu(true)
-        // await startMusic()
     }
 
     return (

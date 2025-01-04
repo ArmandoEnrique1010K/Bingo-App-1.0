@@ -7,9 +7,7 @@ import TargetsNumbers from "../components/TargetNumbers";
 import BoardNumbers from "../components/BoardNumbers";
 import TargetPattern from "../components/TargetPattern";
 import { Link } from "react-router";
-import { dynamicInterval } from "../utils/dynamicInterval";
 import Bot from "../components/Bot";
-import { useMusic } from "../hooks/useMusic";
 
 type LevelPageProps = {
     level: number
@@ -151,12 +149,17 @@ export default function LevelPage({ level }: LevelPageProps) {
     // }, [nameMusic])
 
 
+
     return (
         <div className="w-max mx-auto flex flex-col">
             <div className="flex flex-row">
                 <div className="flex flex-col">
                     <div>Ronda: {round}</div>
-                    <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                    {
+                        (
+                            <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                        )
+                    }
                     <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
                     <button
                         className="flex bg-cyan-400 p-2"

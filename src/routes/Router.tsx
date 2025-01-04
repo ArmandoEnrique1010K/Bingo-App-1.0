@@ -64,6 +64,11 @@ export default function Router() {
                             <Level level={8} />
                         </Suspense>
                     } />
+                    <Route path="/level_20" element={
+                        <Suspense fallback="Cargando...">
+                            <Level level={20} />
+                        </Suspense>
+                    } />
 
                 </Route>
             </Routes>

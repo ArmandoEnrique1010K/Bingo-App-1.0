@@ -12,7 +12,7 @@ export const levels: Level[] = [
     {
         level: 1,
         targetQuantity: 3,
-        targetText: "A column o row of five numbers",
+        targetText: "A column or row of five numbers",
         // Objetivo: Una columna o fila de 5 numeros
         patterns: [
             [1, 2, 3, 4, 5],
@@ -30,7 +30,7 @@ export const levels: Level[] = [
             {
                 name: "Slow Bot",
                 // Tiempo de respuesta del bot en milisegundos
-                interval: 2500,
+                interval: 2400,
             }
         ]
 
@@ -54,7 +54,7 @@ export const levels: Level[] = [
         bots: [
             {
                 name: "Slow Bot",
-                interval: 1900,
+                interval: 1800,
             },
         ]
     },
@@ -80,32 +80,12 @@ export const levels: Level[] = [
         bots: [
             {
                 name: "Middle Bot",
-                interval: 1500,
+                interval: 1300,
             }
         ]
     },
     {
         level: 4,
-        targetQuantity: 10,
-        targetText: "A four squared",
-        // Objetivo: Cuatro al cuadrado
-        patterns: [
-            [1, 6, 11, 16, 2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19],
-            [2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19, 5, 10, 15, 20],
-            [6, 11, 16, 21, 7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24],
-            [7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24, 10, 15, 20, 25],
-        ],
-        bots: [
-            {
-                name: "Bot1",
-                interval: 1800,
-            }
-        ]
-    },
-
-    // Nivel 5 es con 2 bots
-    {
-        level: 5,
         targetQuantity: 3,
         targetText: "A little letter 'X'",
         // Objetivo: Una letra X de 5 numeros
@@ -120,21 +100,92 @@ export const levels: Level[] = [
             [8, 18, 14, 10, 20],
             [13, 23, 19, 15, 25],
         ],
+        // Ahora son 2 bots tipo "Slow"
         bots: [
             {
-                name: "Bot1",
-                interval: 1900,
+                name: "Slow Bot 1",
+                interval: 2000,
             },
             {
-                name: "Bot2",
-                interval: 1600,
+                name: "Slow Bot 2",
+                interval: 1700,
             }
         ]
     },
 
+    // A PARTIR DE AQUI COMIENZAN LOS NIVELES DEL 5 AL 20
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "A four squared",
+        // Objetivo: Cuatro al cuadrado
+        patterns: [
+            [1, 6, 11, 16, 2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19],
+            [2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19, 5, 10, 15, 20],
+            [6, 11, 16, 21, 7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24],
+            [7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24, 10, 15, 20, 25],
+        ],
+        bots: [
+            {
+                name: "Middle Bot",
+                interval: 1100,
+            }
+        ]
+    },
+
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Two Squares in diagonals",
+        // Objetivo: Dos cuadrados en diagonales
+        patterns: [
+            [1, 6, 2, 7, 19, 24, 20, 25],
+            [4, 9, 5, 10, 16, 21, 17, 22],
+        ],
+        bots: [
+            {
+                name: "Slow Bot",
+                interval: 1800,
+            },
+            {
+                name: "Middle Bot",
+                interval: 1400,
+            }
+        ]
+    },
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "F for fast",
+        // Objetivo: La letra F
+        patterns: [
+            [
+                1, 6, 11, 16, 21,
+                2,
+                3, 8, 13,
+                4,
+                5,
+            ]
+        ],
+        bots: [
+            // Tu oponente es un bot de alta velocidad
+            {
+                name: "Fast Bot",
+                interval: 700
+            }
+        ]
+    },
+
+
+
+
+
     // Este es un nivel con un solo patrón
     {
-        level: 6,
+        level: 0,
         targetQuantity: 4,
         targetText: "The number one",
         // Objetivo: El numero 1
@@ -159,11 +210,12 @@ export const levels: Level[] = [
             }
         ]
     },
+
     {
-        // ¿Primer nivel dificil?
-        level: 7,
+        // Nivel con 2 objetivos en el tablero
+        level: 0,
         targetQuantity: 3,
-        targetText: "Double Target Complicated",
+        targetText: "Big 'X' and Little '+'",
         // Objetivo: Una gran aspa de 9 numeros y una cruz de 5 numeros que comience desde el centro
         // Nota: Existe 4 combinaciones
         patterns: [
@@ -189,35 +241,12 @@ export const levels: Level[] = [
     },
 
 
-    {
-        level: 8,
-        targetQuantity: 4,
-        targetText: "F from fast and speed",
-        // Objetivo: La letra F
-        patterns: [
-            [
-                1, 6, 11, 16, 21,
-                2,
-                3, 8, 13,
-                4,
-                5,
-            ]
-        ],
-        bots: [
-            // Tu oponente es un bot de alta velocidad
-            {
-                name: "Fast Bot",
-                interval: 800
-            }
-        ]
-    },
 
 
-    // Ocho cuartos (a partir de aqui comienzan los niveles con 4 bots)
     {
-        level: 12,
+        level: 0,
         targetQuantity: 3,
-        targetText: "Eight quarters of cake",
+        targetText: "Eight quarters",
         // Objetivo: Los 8 numeros más alejados del tablero y el centro del tablero
         patterns: [
             [
@@ -230,32 +259,388 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "Bot1",
+                name: "Middle Bot 1",
                 interval: 1700,
             },
             {
-                name: "Bot2",
+                name: "Slow Bot 1",
                 interval: 2500,
             },
             {
-                name: "Bot3",
+                name: "Slow Bot 2",
                 interval: 2000,
             },
             {
-                name: "Bot4",
+                name: "Middle Bot 2",
                 interval: 1300,
             },
         ]
-    }
+    },
+
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "This eye was watching me",
+        // Objetivo: OJO
+        patterns: [
+            [
+                6, 11, 16,
+                2, 22,
+                3, 13, 23,
+                4, 24,
+                10, 15, 20,
+            ]
+        ],
+        bots: [
+
+        ]
+    },
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Invert letter 'X'",
+        // Objetivo: Aspa Invertida
+        patterns: [
+            [
+                6, 11, 16,
+                2, 12, 22,
+                3, 8, 18, 23,
+                4, 14, 24,
+                10, 15, 20
+            ]
+        ],
+        bots: [
+
+        ]
+    },
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Hi bot",
+        // Objetivo: Letra 'H' y letra 'I'
+        patterns: [
+            [
+                1, 11, 21,
+                2, 12, 22,
+                3, 8, 13, 23,
+                4, 14, 24,
+                5, 15, 25,
+            ]
+        ],
+        bots: [
+
+        ]
+    },
+
+
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "A piramid",
+        // Objetivo: Una piramide de 8 numeros
+        patterns: [
+            [
+                13,
+                9, 14, 19,
+                5, 10, 15, 20, 25,
+            ],
+            [
+                1, 6, 11, 16, 21,
+                7, 12, 17,
+                13,
+            ],
+            [
+                1,
+                2, 7,
+                3, 8, 13,
+                4, 9,
+                5,
+            ],
+            [
+                21,
+                17, 22,
+                13, 18, 23,
+                19, 24,
+                25,
+            ],
+        ],
+        bots: [
+
+        ]
+    },
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "3 Bars",
+        // Objetivo: 3 Filas o 3 columnas separadas
+        patterns: [
+            [
+                1, 6, 11, 16, 21,
+                3, 8, 13, 18, 23,
+                5, 10, 15, 20, 25,
+            ],
+            [
+                1, 11, 21,
+                2, 12, 22,
+                3, 13, 23,
+                4, 14, 24,
+                5, 15, 25,
+            ],
+        ],
+        bots: [
+
+        ]
+    },
+
+    {
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Nine squares",
+        // Objetivo: Cuadrado de 9 numeros
+        patterns: [
+            [
+                1, 6, 11,
+                2, 7, 12,
+                3, 8, 13,
+            ],
+            [
+                6, 11, 16,
+                7, 12, 17,
+                8, 13, 18,
+            ],
+            [
+                11, 16, 21,
+                12, 17, 22,
+                13, 18, 23,
+            ],
+            [
+                2, 7, 12,
+                3, 8, 13,
+                4, 9, 14,
+            ],
+            [
+                7, 12, 17,
+                8, 13, 18,
+                9, 14, 19,
+            ],
+            [
+                12, 17, 22,
+                13, 18, 23,
+                14, 19, 24,
+            ],
+            [
+                3, 8, 13,
+                4, 9, 14,
+                5, 10, 15,
+            ],
+            [
+                8, 13, 18,
+                9, 14, 19,
+                10, 15, 20,
+            ],
+            [
+                13, 18, 23,
+                14, 19, 24,
+                15, 20, 25,
+            ],
+        ],
+        bots: [
+
+        ]
+    },
+
+    {
+        // Nivel con 2 objetivos en el tablero
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Big '+' and Little 'X'",
+        // Objetivo: Una gran cruz de 9 numeros y una letra 'X' de 5 numeros que comience desde el centro
+        // Nota: Existe 4 combinaciones
+        patterns: [
+            [
+                1, 11,
+                7, 12,
+                3, 8, 13, 18, 23,
+                14,
+                15,
+            ],
+            [
+                11, 21,
+                12, 17,
+                3, 8, 13, 18, 23,
+                14,
+                15,
+            ],
+            [
+                11,
+                12,
+                3, 8, 13, 18, 23,
+                14, 19,
+                15, 25,
+            ],
+            [
+                11,
+                12,
+                3, 8, 13, 18, 23,
+                9, 14,
+                5, 15,
+            ],
+
+
+
+        ],
+        bots: [
+            {
+                name: "Bot1",
+                interval: 1800,
+            },
+        ]
+    },
+
+
+
+    {
+        // Nivel Final
+        level: 0,
+        targetQuantity: 3,
+        targetText: "Invert Diamond",
+        // Objetivo: Un diamante invertido
+        patterns: [
+            [
+                1, 6, 16, 21,
+                2, 12, 22,
+                8, 13, 18,
+                4, 14, 24,
+                5, 10, 20, 25,
+            ]
+        ],
+        bots: [
+            {
+                name: "Middle Bot 1",
+                interval: 1200,
+            },
+            {
+                name: "Slow Bot",
+                interval: 1800,
+            },
+            {
+                name: "Middle Bot 2",
+                interval: 1500,
+            },
+            {
+                name: "Middle Bot 3",
+                interval: 1300,
+            },
+            {
+                name: "Fast Bot 1",
+                interval: 700
+            },
+            {
+                name: "Fast Bot 2",
+                interval: 600
+            }
+        ]
+    },
+
+
+    //
+
+    //
+
+
+
+
+    // {
+    //     level: 19,
+    //     targetQuantity: 5,
+    //     targetText: "Ying & Yang",
+    //     // Objetivo: El Ying y el Yang
+    //     patterns: [
+    //         [
+    //             X, X, 11, 16, 21,
+    //             X, 7, 12, 17, X,
+    //             3, 8, 13, X, X,
+    //             4, 9, X, X, 24,
+    //             5, X, X, 20, 25,
+    //         ],
+    //         [
+    //             1, 6, 11, 16, 21,
+    //             2, 7, 12, 17, 22,
+    //             3, 8, 13, 18, 23,
+    //             4, 9, 14, 19, 24,
+    //             5, 10, 15, 20, 25,
+    //         ]
+    //     ],
+    //     bots: [
+
+    //     ]
+    // },
+
+
+    {
+        // Nivel Final
+        level: 20,
+        targetQuantity: 5,
+        targetText: "Final Duel",
+        // Objetivo: Todo el tablero debe estar marcado
+        patterns: [
+            [
+                1, 6, 11, 16, 21,
+                2, 7, 12, 17, 22,
+                3, 8, 13, 18, 23,
+                4, 9, 14, 19, 24,
+                5, 10, 15, 20, 25,
+            ]
+        ],
+        bots: [
+            {
+                name: "Middle Bot 1",
+                interval: 1200,
+            },
+            {
+                name: "Slow Bot",
+                interval: 1800,
+            },
+            {
+                name: "Middle Bot 2",
+                interval: 1500,
+            },
+            {
+                name: "Middle Bot 3",
+                interval: 1300,
+            },
+            {
+                name: "Fast Bot 1",
+                interval: 700
+            },
+            {
+                name: "Fast Bot 2",
+                interval: 600
+            }
+        ]
+    },
 
 
 ]
+
+
+
+
+
+
 // Esto es un tablero de bingo de 5 * 5
 // 1   6  11  16  21
 // 2   7  12  17  22
 // 3   8  13  18  23
 // 4   9  14  19  24
 // 5  10  15  20  25
+
+
 
 
 

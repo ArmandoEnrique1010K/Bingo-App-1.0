@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react';
 import * as Tone from 'tone'
 
 export default function Music() {
+
     const [isPlaying, setIsPlaying] = useState(false);
     const [player, setPlayer] = useState<Tone.Player | null>(null);
 
@@ -9,10 +10,10 @@ export default function Music() {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
             // TODO: Modificar con AudioPad el archivo de audio para que se reproduzca en bucle sin interrupciones
-            url: "/music/background_hard.mp3",
+            url: "/music/background.mp3",
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
-            volume: -8, // Reduce el volumen
+            volume: -15, // Reduce el volumen
             // background hard: -8 / normal: -15
         }).toDestination(); // Conecta el audio a la salida principal
 
@@ -27,20 +28,16 @@ export default function Music() {
 
     // Función para iniciar la música
     const startMusic = async () => {
-        await Tone.start(); // Desbloquea el contexto de audio
-        player?.start(); // Inicia la reproducción
-        setIsPlaying(true);
+        await Tone.start();
+        if (player && player.loaded) {
+            player.start();
+            setIsPlaying(true);
+            console.log('El audio está en reproducción');
+        } else {
+            console.error('Audio buffer is not loaded yet');
+        }
     };
 
-    // const startMusic = async () => {
-    //     await Tone.start();
-    //     if (player && player.loaded) {
-    //         player.start();
-    //         setIsPlaying(true);
-    //     } else {
-    //         console.error('Audio buffer is not loaded yet');
-    //     }
-    // };
     // Función para detener la música
     const stopMusic = () => {
         player?.stop(); // Detiene la reproducción

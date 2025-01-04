@@ -13,12 +13,12 @@
   <!-- Define manualmente el patrón objetivo -->
   
   <!-- Pintar un recuadro (por ejemplo, en la posición (0,0)) -->
-  <rect x="0" y="0" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="80" y="0" width="40" height="40" fill="yellow" stroke="black"/>
 
   <!-- Posición (0,1) -->
-  <rect x="0" y="40" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="0" y="80" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="0" y="120" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="0" y="160" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="80" y="40" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="80" y="80" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="80" y="120" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="80" y="160" width="40" height="40" fill="yellow" stroke="black"/>
 
 </svg>
