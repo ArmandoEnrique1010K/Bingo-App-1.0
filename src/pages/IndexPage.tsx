@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
-import { useMusic } from '../hooks/useMusic'
+// import { useMusic } from '../hooks/useMusic'
 
 export default function Index() {
 
@@ -11,36 +11,40 @@ export default function Index() {
     // localStorage.setItem('unlockedLevels', unlockedLevels)
 
     // Llama al hook useMusic
-    const { nameMusic, volume, isPlaying, startMusic, stopMusic, setNameMusic, setVolume } = useMusic()
+    // const { nameMusic, volume, isPlaying, startMusic, stopMusic, setNameMusic, setVolume } = useMusic()
 
-    useEffect(() => {
-        setNameMusic("background")
-        setVolume(-15)
-        console.log(nameMusic)
-        setTimeout(() => {
-            stopMusic()
-            startMusic()
-            console.log("Reproduciendo " + nameMusic)
+    // useEffect(() => {
+    //     setNameMusic("background")
+    //     setVolume(-15)
+    //     console.log(nameMusic)
+    //     setTimeout(() => {
+    //         stopMusic()
+    //         startMusic()
+    //         console.log("Reproduciendo " + nameMusic)
 
-        }, 2000)
+    //     }, 2000)
 
-    }, [nameMusic])
+    // }, [nameMusic])
     const [menu, setMenu] = useState(false)
 
 
 
+    // useEffect(() => {
+    //     setNameMusic("background")
+    //     setVolume(-15)
+    // }, [])
 
-
-    const handleViewMenu = () => {
+    const handleViewMenu = async () => {
         setMenu(true)
-        startMusic()
-
+        // await startMusic()
     }
 
     return (
         <>
             <h1 className='text-4xl text-center'>BingoApp</h1>
             {
+                // menu === false && nameMusic ? (
+
                 menu === false ? (
                     <button onClick={handleViewMenu}>
                         Iniciar juego

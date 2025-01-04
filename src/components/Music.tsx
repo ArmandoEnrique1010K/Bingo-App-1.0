@@ -32,6 +32,15 @@ export default function Music() {
         setIsPlaying(true);
     };
 
+    // const startMusic = async () => {
+    //     await Tone.start();
+    //     if (player && player.loaded) {
+    //         player.start();
+    //         setIsPlaying(true);
+    //     } else {
+    //         console.error('Audio buffer is not loaded yet');
+    //     }
+    // };
     // Función para detener la música
     const stopMusic = () => {
         player?.stop(); // Detiene la reproducción

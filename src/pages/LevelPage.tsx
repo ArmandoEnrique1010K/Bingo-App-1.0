@@ -27,7 +27,7 @@ export default function LevelPage({ level }: LevelPageProps) {
     const [targets, setTargets] = useState<number[]>([]);
 
     // Estado para los posibles patrones ganadores
-    const [patterns, setPatterns] = useState<number[][]>();
+    const [patterns, setPatterns] = useState<number[][]>([]);
 
 
     // Estado para almacenar las posiciones de los números que ha seleccionado el usuario
@@ -119,26 +119,36 @@ export default function LevelPage({ level }: LevelPageProps) {
         }
     }
 
-    const { nameMusic,
-        volume,
-        isPlaying,
-        startMusic,
-        stopMusic,
-        setNameMusic,
-        setVolume
-    } = useMusic()
-    useEffect(() => {
-        setNameMusic("background_hard")
-        setVolume(-8)
-        console.log(nameMusic)
-        setTimeout(() => {
-            stopMusic()
-            startMusic()
-            console.log("Reproduciendo " + nameMusic)
+    // const { nameMusic,
+    //     volume,
+    //     isPlaying,
+    //     startMusic,
+    //     stopMusic,
+    //     setNameMusic,
+    //     setVolume
+    // } = useMusic()
 
-        }, 2000)
 
-    }, [nameMusic])
+    // useEffect(() => {
+
+    //     if (round > 0) {
+    //         startMusic();
+    //     }
+    // }, [round])
+
+
+    // useEffect(() => {
+    //     setNameMusic("background_hard")
+    //     setVolume(-8)
+    //     console.log(nameMusic)
+    //     setTimeout(() => {
+    //         stopMusic()
+    //         startMusic()
+    //         console.log("Reproduciendo " + nameMusic)
+
+    //     }, 2000)
+
+    // }, [nameMusic])
 
 
     return (
