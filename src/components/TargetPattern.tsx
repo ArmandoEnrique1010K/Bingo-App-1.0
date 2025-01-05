@@ -7,7 +7,7 @@ export default function TargetPattern({ level, text }) {
 
             {/* Dirección de la imagen que contiene el patrón */}
 
-            <img src={`/public/images/patterns/level_${level}.svg`} alt={`Patrón del nivel ${level}`} />
+            <img src={`/images/patterns/level_${level}.svg`} alt={`Patrón del nivel ${level}`} />
         </>
     )
 }

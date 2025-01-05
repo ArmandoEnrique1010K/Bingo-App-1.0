@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone'
+import { MusicalNoteIcon } from '@heroicons/react/24/solid'
 
 export default function Music() {
 
@@ -47,7 +48,9 @@ export default function Music() {
     return (
         <div>
             <button onClick={isPlaying ? stopMusic : startMusic}>
-                {isPlaying ? "Stop Music" : "Play Music"}
+                {/* {isPlaying ? "Stop Music" : "Play Music"} */}
+                <MusicalNoteIcon className='h-12 w-12 text-blue-300' aria-hidden="true" />
+
             </button>
         </div>
     );

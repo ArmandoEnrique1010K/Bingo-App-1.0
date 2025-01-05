@@ -11,6 +11,26 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
     // Mostrar el boton
     const [showButton, setShowButton] = useState(true);
 
+
+    // const target = useMemo(() => {
+    //     if (targets) {
+    //         console.log("Se oculta el boton")
+    //         setShowButton(false)
+    //     }
+
+    //     if (targets && targets.length !== 0) {
+    //         {
+    //             // Luego de 1,5 segundos muestra el botón
+    //             setTimeout(() => {
+    //                 setShowButton(true)
+    //                 console.log("Muestra el botón")
+    //             }, 1500)
+    //         }
+    //     }
+
+    //     return targets;
+    // }, [targets]);
+
     useEffect(() => {
         // if (targets || targets.length > 0) {
 
@@ -29,6 +49,8 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
             }
         }
     }, [targets])
+
+
     return (
         <>
             <div>

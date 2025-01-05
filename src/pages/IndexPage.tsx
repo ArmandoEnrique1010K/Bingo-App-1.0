@@ -1,43 +1,19 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 // import { useMusic } from '../hooks/useMusic'
 
-export default function Index() {
+type IndexProps = {
+    unlockedLevels: number[]
+}
+
+export default function IndexPage({ unlockedLevels }: IndexProps) {
 
 
-    // Estado para los niveles desbloqueados
-    // const [unlockedLevels, setUnlockedLevels] = useState<number[]>([])
+    const [menuLevels, setMenuLevels] = useState(false)
 
-    // // Guardalo en un localstorage
-    // localStorage.setItem('unlockedLevels', unlockedLevels)
-
-    // Llama al hook useMusic
-    // const { nameMusic, volume, isPlaying, startMusic, stopMusic, setNameMusic, setVolume } = useMusic()
-
-    // useEffect(() => {
-    //     setNameMusic("background")
-    //     setVolume(-15)
-    //     console.log(nameMusic)
-    //     setTimeout(() => {
-    //         stopMusic()
-    //         startMusic()
-    //         console.log("Reproduciendo " + nameMusic)
-
-    //     }, 2000)
-
-    // }, [nameMusic])
-    const [menu, setMenu] = useState(false)
-
-
-
-    // useEffect(() => {
-    //     setNameMusic("background")
-    //     setVolume(-15)
-    // }, [])
-
-    const handleViewMenu = async () => {
-        setMenu(true)
-        console.log("Mostrando el menú")
+    // Función para mostrar el menú principal
+    const showUnlockedLevels = async () => {
+        setMenuLevels(true)
     }
 
     return (
@@ -46,15 +22,23 @@ export default function Index() {
             {
                 // menu === false && nameMusic ? (
 
-                menu === false ? (
-                    <button onClick={handleViewMenu}>
+                menuLevels === false ? (
+                    <button onClick={showUnlockedLevels}>
                         Iniciar juego
                     </button>
                 ) : (<>
 
                     <p>Ganale a la computadora</p>
                     <p>Seleccione un nivel</p>
-                    <Link to="/level_1">Nivel 1</Link>
+
+                    {/* Solamente mostrara los niveles desbloqueados */}
+                    {
+                        unlockedLevels.map((l: number) => (
+                            <Link key={l}
+                                to={`/level_${l}`}>Nivel {l}</Link>
+                        ))
+                    }
+                    {/* <Link to="/level_1">Nivel 1</Link>
                     <Link to="/level_2">Nivel 2</Link>
                     <Link to="/level_3">Nivel 3</Link>
                     <Link to="/level_4">Nivel 4</Link>
@@ -62,7 +46,7 @@ export default function Index() {
                     <Link to="/level_6">Nivel 6</Link>
                     <Link to="/level_7">Nivel 7</Link>
                     <Link to="/level_8">Nivel 8</Link>
-
+ */}
 
 
 

@@ -7,6 +7,7 @@ import { Level } from "../types";
 // 4   9  14  19  24
 // 5  10  15  20  25
 
+
 // LISTA DE NIVELES
 // 1. Una columna o fila de 5 numeros
 // 2. Una pequeña cruz 5 numeros
@@ -709,3 +710,4 @@ export const levels: Level[] = [
 
 // PODRIA SERVIR
 // https://github.com/nsamelson/AIGameRunner/blob/a51fad7b8ed9ffeb3c972ccb65c29030c2b9985e/public/games/quixo.js
+

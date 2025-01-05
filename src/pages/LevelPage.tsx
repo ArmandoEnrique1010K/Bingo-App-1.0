@@ -7,14 +7,13 @@ import TargetsNumbers from "../components/TargetNumbers";
 import BoardNumbers from "../components/BoardNumbers";
 import TargetPattern from "../components/TargetPattern";
 import { Link } from "react-router";
-import Bot from "../components/Bot";
 import Bots from "../components/Bot/Bots";
 
 type LevelPageProps = {
     level: number
+    unlockLevel: (number: number) => void
 }
-
-export default function LevelPage({ level }: LevelPageProps) {
+export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // Buscar el nivel en el arreglo de niveles para obtener los datos
     const dataLevel = levels.find(l => l.level === level) || levels[0];
@@ -113,6 +112,7 @@ export default function LevelPage({ level }: LevelPageProps) {
             console.log("El jugador ha ganado el nivel " + level)
             setTargets([])
             setGameOver(true)
+            unlockLevel(level + 1);
         } else {
             console.log("Sigue intentando")
         }
@@ -191,7 +191,7 @@ export default function LevelPage({ level }: LevelPageProps) {
 
     // Powerup para impedir que un bot gane
 
-    //
+    // Powe
 
 
     return (
