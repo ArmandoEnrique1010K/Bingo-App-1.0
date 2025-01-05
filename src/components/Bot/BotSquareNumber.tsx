@@ -14,15 +14,12 @@ export default function BotSquareNumber({ handleSelectedNumber, number,
     return (
         <>
             <div
-                className={`text-xl p-4 border-solid border-red-950 border-2 ${handleSelectedNumber(number.number, number.position)}`}
-            // onClick={() => handleCheckNumber(number.number, number.position)}
+                className={`text-lg font-bold p-4 border-2 border-gray-600 rounded-lg bg-gray-700 text-white ${handleSelectedNumber(number.number, number.position)
+                    }`}
             >
-                {/* {
-                    showBotNumbers === true ? number.number : ""
-                } */}
-
-                {number.number}
+                {/* {number.number} */}
             </div>
+
 
         </>
     )

@@ -21,7 +21,7 @@ export default function Credits() {
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}
-            <button onClick={open}><InformationCircleIcon className='h-12 w-12 text-blue-300' aria-hidden="true" /></button>
+            <button onClick={open}><InformationCircleIcon className='h-10 w-10 text-blue-300' aria-hidden="true" /></button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}

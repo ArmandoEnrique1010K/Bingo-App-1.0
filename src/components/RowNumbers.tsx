@@ -13,7 +13,7 @@ type RowNumbersProps = {
 export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, min, max }: RowNumbersProps) {
     return (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-2">
                 {
                     numberBoard.filter(n => n.position >= min && n.position <= max).map((n) => (
                         <ButtonNumber key={n.position} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} n={n} />

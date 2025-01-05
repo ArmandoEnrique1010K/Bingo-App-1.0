@@ -11,7 +11,7 @@ type BoardNumbersProps = {
 export default function BoardNumbers({ board, handleClickButton, handleSelectedNumber }: BoardNumbersProps) {
     return (
         <>
-            <div className="flex flex-row" >
+            <div className="flex flex-row gap-4 p-4 bg-gray-900 rounded-lg shadow-lg">
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} min={1} max={5} />
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} min={6} max={10} />
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} min={11} max={15} />

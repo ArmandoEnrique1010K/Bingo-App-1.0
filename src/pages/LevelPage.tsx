@@ -218,14 +218,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     return (
         <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
-            <div className="container mx-auto p-8 flex flex-row items-center">
-                <div className="flex flex-col">
-                    <div className="mb-6 text-center">
-                        <h1 className="text-4xl font-bold mb-2">Nivel {level}</h1>
-                        <p className="text-xl">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
-                    </div>
+            <div className="container mx-auto p-8 flex flex-row items-center gap-6">
+                <div className="flex flex-col ">
                     <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
-                    <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
+                    <TargetPattern level={dataLevel.level} text={dataLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
 
                     {/* Este boton es para comprobar el patron ganador */}
                     {/* <button
@@ -236,14 +232,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         Comprobar el patron ganador
                     </button> */}
 
-                    <VictoryModal level={dataLevel.level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
 
 
                     {/* Botón para abandonar partida */}
                     {/* <button onClick={exitLevel} className="bg-red-600">
                         Abandonar partida
                     </button> */}
-                    <LeaveModal />
+                    {/* <LeaveModal /> */}
 
                     {
                         /* POWERUPS DE PRUEBA */
@@ -251,8 +246,19 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
 
                 </div>
-                <div className="flex">
+                <div>
+                    {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
+                    <div className="mb-6 text-center bg-gray-700 rounded-xl p-1">
+                        <h1 className="text-3xl font-bold mb-2">Nivel {level}</h1>
+                        <p className="text-xl">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                    </div>
+
                     <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
+                    <div>
+                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                        <LeaveModal />
+
+                    </div>
                 </div>
 
 

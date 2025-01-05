@@ -13,7 +13,7 @@ type BotRowNumbersProps = {
 export default function BotRowNumbers({ board, handleSelectedNumber, min, max /*, showBotNumbers*/ }: BotRowNumbersProps) {
     return (
         <>
-            <div className="flex flex-col">
+            <div className="flex flex-col gap-1">
                 {
                     board.filter(n => n.position >= min && n.position <= max).map((number) => (
                         <BotSquareNumber key={number.position} handleSelectedNumber={handleSelectedNumber} number={number}

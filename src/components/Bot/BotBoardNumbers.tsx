@@ -11,22 +11,18 @@ type BotBoardNumbersProps = {
 
 export default function BotBoardNumbers({ board, handleSelectedNumber /*, showBotNumbers*/ }: BotBoardNumbersProps) {
     return (
-        <>
-            <div className="flex flex-row p-2">
-                {/* {
+        <div className="grid grid-cols-5 gap-2">
+            {/* {
                     board.map((b, index) => (
                         <BotRowNumbers key={index} board={b} handleClickButton={handleClickButton} handleCheckNumber={handleCheckNumber} min={5 * index + 1} max={5 * index + 5} />
                     ))
                 } */}
-                <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={1} max={5}  /* showBotNumbers={showBotNumbers}*/ />
-                <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={6} max={10} /* showBotNumbers={showBotNumbers}*/ />
-                <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={11} max={15}/* showBotNumbers={showBotNumbers}*/ />
-                <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={16} max={20}/* showBotNumbers={showBotNumbers}*/ />
-                <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={21} max={25}/* showBotNumbers={showBotNumbers}*/ />
-
-
-            </div>
-        </>
+            <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={1} max={5}  /* showBotNumbers={showBotNumbers}*/ />
+            <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={6} max={10} /* showBotNumbers={showBotNumbers}*/ />
+            <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={11} max={15}/* showBotNumbers={showBotNumbers}*/ />
+            <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={16} max={20}/* showBotNumbers={showBotNumbers}*/ />
+            <BotRowNumbers board={board} handleSelectedNumber={handleSelectedNumber} min={21} max={25}/* showBotNumbers={showBotNumbers}*/ />
+        </div>
     )
 }
 

@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
-import { generateBoard } from '../utils/generateBoard';
-import { dynamicInterval } from '../utils/dynamicInterval';
-import { Board } from '../types';
-import BoardNumbers from './BoardNumbers';
+import { generateBoard } from '../../utils/generateBoard';
+import { dynamicInterval } from '../../utils/dynamicInterval';
+import { Board } from '../../types';
+import BoardNumbers from '../BoardNumbers';
 
 export default function Bot({ dataLevel, targets, interval, name, patterns, handleGameOver }) {
 
@@ -151,7 +151,7 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
 
     return (
         <div>
-            <div>Tablero del bot {name}</div>
+            <div>{name}</div>
             <BoardNumbers
                 board={botBoard}
                 handleSelectedNumber={handleSelectedNumber}

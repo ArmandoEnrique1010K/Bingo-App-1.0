@@ -10,8 +10,8 @@ export default function Music() {
     useEffect(() => {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
-            // TODO: Modificar con AudioPad el archivo de audio para que se reproduzca en bucle sin interrupciones
-            url: "/music/background.mp3",
+            // TODO: Agregar más archivos de audio
+            url: "/music/background.mp3", // Nombre del archivo de audio
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
             volume: -15, // Reduce el volumen
@@ -49,7 +49,7 @@ export default function Music() {
         <div>
             <button onClick={isPlaying ? stopMusic : startMusic}>
                 {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-                <MusicalNoteIcon className='h-10 w-10 text-blue-300' aria-hidden="true" />
+                <MusicalNoteIcon className='h-8 w-8 text-blue-300' aria-hidden="true" />
 
             </button>
         </div>

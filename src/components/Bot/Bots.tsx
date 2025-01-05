@@ -175,14 +175,38 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     }, [defeat])
 
     return (
-        <div>
-            <div>Tablero del bot {name}</div>
-            <BotBoardNumbers
-                board={botBoard}
-                handleSelectedNumber={handleSelectedNumber}
-            //positionTarget={positionTarget}
-            // showBotNumbers={showBotNumbers}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 bg-gray-900 rounded-lg shadow-lg">
+
+
+            {/* Sugerencia para futura actualización */}
+            {/* {bots.map((bot, index) => (
+                <div
+                    key={index}
+                    className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md"
+                >
+                    <h2 className="text-xl font-bold text-gray-200 mb-4">{bot.name}</h2>
+
+                    <BotBoardNumbers
+                        board={bot.board}
+                        handleSelectedNumber={bot.handleSelectedNumber}
+                    />
+                </div>
+            ))} */}
+
+            <div
+                className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md"
+
+            >
+                <h2 className="text-xl font-bold text-gray-200 mb-4">{name}</h2>
+                <BotBoardNumbers
+                    board={botBoard}
+                    handleSelectedNumber={handleSelectedNumber}
+                // showBotNumbers={showBotNumbers}
+                />
+
+            </div>
+
+
         </div>
     )
 }
