@@ -2,6 +2,7 @@ import { useState } from "react";
 // Importa un icono de hero icons, se utiliza el siguiente formato, existe una variedad de iconos
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import Music from './Music';
 
 // Este componente es una página que muestra la información del autor que desarrollo esta aplicación
 export default function Credits() {
@@ -21,7 +22,7 @@ export default function Credits() {
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}
-            <button onClick={open}><InformationCircleIcon className='h-10 w-10 text-blue-300' aria-hidden="true" /></button>
+            <button onClick={open}><InformationCircleIcon className='h-8 w-8 text-blue-300' aria-hidden="true" /></button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
@@ -54,7 +55,16 @@ export default function Credits() {
                                     <span className="font-bold">Librerias utilizadas:</span> ToneJS, HeadlessUI & HeroIcons.
                                 </p>
                                 <p>
-                                    <span className="font-bold">Música:</span> Tap Out (instrumental) - The Strokes (2013)
+                                    <span className="font-bold">Música:</span><br />
+                                    Tap Out (instrumental) - The Strokes (2013)
+                                    {/* <br />
+                                    Give Life Back to Music - Daft Punk
+                                    <br />
+                                    Ready to Start - Arcade Fire
+                                    <br />
+                                    Dayglow - Can I Call You Tonight? (2013)
+                                    <br />
+                                    End of Beginning (instrumental) */}
                                 </p>
                             </div>
                             <div className="mt-10">

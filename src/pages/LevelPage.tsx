@@ -217,10 +217,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     return (
-        <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
-            <div className="container mx-auto p-8 flex flex-row items-center gap-6">
-                <div className="flex flex-col ">
+        <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white m-auto">
+            <div className="container mx-auto p-2 flex flex-row items-center gap-6">
+                <div className="flex flex-col">
+                    {/* Componente de los numeros objetivos */}
                     <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+
+                    {/* Componente del patrón ganador */}
                     <TargetPattern level={dataLevel.level} text={dataLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
 
                     {/* Este boton es para comprobar el patron ganador */}
@@ -248,9 +251,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 </div>
                 <div>
                     {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
-                    <div className="mb-6 text-center bg-gray-700 rounded-xl p-1">
-                        <h1 className="text-3xl font-bold mb-2">Nivel {level}</h1>
-                        <p className="text-xl">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                    <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
+                        <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
+                        <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
                     </div>
 
                     <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />

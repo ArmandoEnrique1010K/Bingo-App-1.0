@@ -15,7 +15,6 @@ export default function Layout() {
                 <Help />
                 <Music />
                 <Credits />
-
             </div>
 
             <main className="p-6 bg-gray-100 flex-grow">

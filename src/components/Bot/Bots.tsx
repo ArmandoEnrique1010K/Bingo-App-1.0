@@ -195,7 +195,6 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
             <div
                 className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md"
-
             >
                 <h2 className="text-xl font-bold text-gray-200 mb-4">{name}</h2>
                 <BotBoardNumbers
