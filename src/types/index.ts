@@ -22,7 +22,7 @@ export type Numbers = {
     values: number[]
 }[]
 
-//
+// Cada numero del tablero tiene una posicion y el numero
 export type Board = {
     position: number,
     number: number

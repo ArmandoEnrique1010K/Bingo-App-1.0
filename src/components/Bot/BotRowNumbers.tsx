@@ -7,16 +7,18 @@ type BotRowNumbersProps = {
     // handleCheckNumber: (number: number, position: number) => string
     min: number
     max: number
-    showBotNumbers: boolean
+    // showBotNumbers: boolean
 }
 
-export default function BotRowNumbers({ board, handleSelectedNumber, min, max, showBotNumbers }: BotRowNumbersProps) {
+export default function BotRowNumbers({ board, handleSelectedNumber, min, max /*, showBotNumbers*/ }: BotRowNumbersProps) {
     return (
         <>
             <div className="flex flex-col">
                 {
                     board.filter(n => n.position >= min && n.position <= max).map((number) => (
-                        <BotSquareNumber key={number.position} handleSelectedNumber={handleSelectedNumber} number={number} showBotNumbers={showBotNumbers} />
+                        <BotSquareNumber key={number.position} handleSelectedNumber={handleSelectedNumber} number={number}
+                        //showBotNumbers={showBotNumbers}
+                        />
                     ))
                 }
             </div>

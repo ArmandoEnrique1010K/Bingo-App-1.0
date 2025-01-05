@@ -49,7 +49,7 @@ export default function Music() {
         <div>
             <button onClick={isPlaying ? stopMusic : startMusic}>
                 {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-                <MusicalNoteIcon className='h-12 w-12 text-blue-300' aria-hidden="true" />
+                <MusicalNoteIcon className='h-10 w-10 text-blue-300' aria-hidden="true" />
 
             </button>
         </div>

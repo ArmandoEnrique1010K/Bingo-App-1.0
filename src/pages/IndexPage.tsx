@@ -12,32 +12,48 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
     const [menuLevels, setMenuLevels] = useState(false)
 
     // Función para mostrar el menú principal
-    const showUnlockedLevels = async () => {
+    const showUnlockedLevels = () => {
         setMenuLevels(true)
     }
 
     return (
-        <>
-            <h1 className='text-4xl text-center'>BingoApp</h1>
-            {
-                // menu === false && nameMusic ? (
+        <div className="min-h-full max-h-full flex flex-col items-center bg-gray-800 text-white">
+            <h1 className="text-4xl font-bold text-center my-8">BingoApp</h1>
 
+            {
                 menuLevels === false ? (
-                    <button onClick={showUnlockedLevels}>
+                    // READY: Este botón debe cubrir toda la pantalla
+                    <button
+                        className="w-full flex-grow
+                        flex items-center justify-center bg-blue-600 text-white text-2xl font-semibold 
+                        hover:bg-blue-700 active:bg-blue-800
+                        p-4 
+                        "
+                        onClick={showUnlockedLevels}
+                    >
                         Iniciar juego
                     </button>
                 ) : (<>
 
-                    <p>Ganale a la computadora</p>
-                    <p>Seleccione un nivel</p>
+                    <div className="w-full max-w-4xl px-4">
+                        <p className="text-lg text-center mb-6">Seleccione un nivel para empezar</p>
+                        {/* Grid para niveles desbloqueados */}
+                        <div className="grid grid-cols-5 gap-4">
+                            {
+                                unlockedLevels.map((l: number) => (
+                                    <Link
+                                        key={l}
+                                        to={`/level_${l}`}
+                                        className="bg-blue-500 text-white text-center py-4 rounded-md shadow-lg hover:bg-blue-600 active:bg-blue-700"
+                                    >
+                                        Nivel {l}
+                                    </Link>
+                                ))
+                            }
+                        </div>
 
-                    {/* Solamente mostrara los niveles desbloqueados */}
-                    {
-                        unlockedLevels.map((l: number) => (
-                            <Link key={l}
-                                to={`/level_${l}`}>Nivel {l}</Link>
-                        ))
-                    }
+
+                    </div>
                     {/* <Link to="/level_1">Nivel 1</Link>
                     <Link to="/level_2">Nivel 2</Link>
                     <Link to="/level_3">Nivel 3</Link>
@@ -46,13 +62,9 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                     <Link to="/level_6">Nivel 6</Link>
                     <Link to="/level_7">Nivel 7</Link>
                     <Link to="/level_8">Nivel 8</Link>
- */}
-
-
-
-
+                    */}
                 </>)
             }
-        </>
+        </div>
     )
 }

@@ -6,7 +6,7 @@ import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 // Este componente es una página que muestra la información del autor que desarrollo esta aplicación
 export default function Credits() {
 
-    const [isOpen, setIsOpen] = useState(true);
+    const [isOpen, setIsOpen] = useState(false);
 
     function open() {
         setIsOpen(true)
@@ -37,7 +37,7 @@ export default function Credits() {
                             <DialogTitle as="h2" className="text-4xl font-semibold text-center text-gray-900 mb-10">
                                 Créditos del autor
                             </DialogTitle>
-                            <div className="space-y-3 text-xl text-gray-700">
+                            <div className="space-y-3 text-lg text-gray-700">
                                 <p>
                                     <span className="font-bold">Desarrollado por: ArmandoEnrique1010K</span>
                                 </p>
@@ -97,3 +97,5 @@ export default function Credits() {
 // ICONOS DE HEROICONS
 // https://www.npmjs.com/package/@heroicons/react
 
+// HEADLESS UI
+// https://headlessui.com/react/dialog

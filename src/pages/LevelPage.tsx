@@ -6,8 +6,9 @@ import { Board } from "../types";
 import TargetsNumbers from "../components/TargetNumbers";
 import BoardNumbers from "../components/BoardNumbers";
 import TargetPattern from "../components/TargetPattern";
-import { Link } from "react-router";
 import Bots from "../components/Bot/Bots";
+import LeaveModal from "../components/LeaveModal";
+import GameOverModal from "../components/GameOverModal";
 
 type LevelPageProps = {
     level: number
@@ -39,7 +40,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const [victory, setVictory] = useState(false)
 
     // Estado para el fin del juego
-    const [gameOver, setGameOver] = useState(false);
+    const [defeat, setDefeat] = useState(false);
 
     // Estado para el turno o ronda
     const [round, setRound] = useState(0)
@@ -52,11 +53,22 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Efecto para cargar el tablero
-    useEffect(() => {
-        const board = generateBoard();
-        setBoard(board);
-    }, [])
+    // useEffect(() => {
+    //     const board = generateBoard();
+    //     setBoard(board);
+    // }, [])
 
+    // Se debera limpiar todos los numeros marcados del tablero cuando pase de nivel o pierda el nivel
+    useEffect(() => {
+        if (victory === false || defeat === false) {
+            setTargets([])
+            // No funciona cuando paso de nivel
+            setBoard(generateBoard());
+            setSelectedPositions([])
+            setSelectedNumbers([])
+            setRound(0)
+        }
+    }, [victory, defeat])
 
     // Función para cambiar los numeros objetivos
     const handleChangeTargets = () => {
@@ -67,13 +79,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         }, 1000)
     }
 
-    // Función para establecer el fin del juego
-    const handleGameOver = () => {
-        // TODO: Si gameOver es true debe bloquear al jugador de que no siga jugando
-        setGameOver(true);
+    // Función para establecer el fin del juego (si el oponente gano)
+    const handleDefeat = () => {
+        setDefeat(true);
     }
 
-    // TODO: Se debe verificar que el usuario no haga clic sobre un numero que ya esta marcado
+
+    // Verifica que el numero ya se encuentre marcado en el tablero
     const handleVerifySelectedNumber = (number, position) => {
         if (selectedNumbers.includes(number)) {
             console.log("Este número ya ha sido seleccionado")
@@ -110,94 +122,62 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         // Verifica si los numeros que se encuentra en positionTarget, coinciden con los numeros (todos los numeros) de un arreglo que se encuentra en patterWinner
         if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
             console.log("El jugador ha ganado el nivel " + level)
+            setVictory(true);
             setTargets([])
-            setGameOver(true)
+            // setGameOver(true)
             unlockLevel(level + 1);
+            // AQUI DEBERA LLAMAR A UNA FUNCIÓN PARA MOSTRAR LA VENTANA MODAL
+            // handleOpen(true)
         } else {
             console.log("Sigue intentando")
         }
     }
 
-    // const { nameMusic,
-    //     volume,
-    //     isPlaying,
-    //     startMusic,
-    //     stopMusic,
-    //     setNameMusic,
-    //     setVolume
-    // } = useMusic()
-
-
-    // useEffect(() => {
-
-    //     if (round > 0) {
-    //         startMusic();
-    //     }
-    // }, [round])
-
-
-    // useEffect(() => {
-    //     setNameMusic("background_hard")
-    //     setVolume(-8)
-    //     console.log(nameMusic)
-    //     setTimeout(() => {
-    //         stopMusic()
-    //         startMusic()
-    //         console.log("Reproduciendo " + nameMusic)
-
-    //     }, 2000)
-
-    // }, [nameMusic])
 
 
     // POWERUPS
 
-    // Estado para visualizar los numeros de los bots
-    const [showBotNumbers, setShowBotNumbers] = useState(false)
-    const [showBotNumbersRoundsLeft, setShowBotNumbersRoundsLeft] = useState(0);
+    // // Estado para visualizar los numeros de los bots
+    // const [showBotNumbers, setShowBotNumbers] = useState(false)
+    // const [showBotNumbersRoundsLeft, setShowBotNumbersRoundsLeft] = useState(0);
 
 
-    // Muestra los numeros de los bots por 5 rondas
-    const handleshowBotNumbers = () => {
+    // // Muestra los numeros de los bots por 5 rondas
+    // const handleshowBotNumbers = () => {
 
-        setShowBotNumbers(true);
-        setShowBotNumbersRoundsLeft(5); // Dura 5 rondas
+    //     setShowBotNumbers(true);
+    //     setShowBotNumbersRoundsLeft(5); // Dura 5 rondas
 
-        // const currentRound = round
-        // const fifthRound = round + 5
-        // setShowBotNumbers(true);
-        // if (round === fifthRound) {
-        //     setShowBotNumbers(false);
-        // }
-    }
+    // }
 
-    useEffect(() => {
-        if (showBotNumbersRoundsLeft > 0) {
-            setShowBotNumbersRoundsLeft(showBotNumbersRoundsLeft - 1);
+    // useEffect(() => {
+    //     if (showBotNumbersRoundsLeft > 0) {
+    //         setShowBotNumbersRoundsLeft(showBotNumbersRoundsLeft - 1);
 
-            if (showBotNumbersRoundsLeft === 1) {
-                // Última ronda: desactiva el power-up
-                setShowBotNumbers(false);
-            }
-        }
-    }, [round]); // Ejecuta cada vez que `round` cambia
+    //         if (showBotNumbersRoundsLeft === 1) {
+    //             // Última ronda: desactiva el power-up
+    //             setShowBotNumbers(false);
+    //         }
+    //     }
+    // }, [round]); // Ejecuta cada vez que `round` cambia
 
 
-    // POWERUP para forzar un numero del tablero
+    // // POWERUP para forzar un numero del tablero
 
-    // Powerup para marcar numeros aleatorios
+    // // Powerup para marcar numeros aleatorios
 
-    // Powerup para ralentizar bots
+    // // Powerup para ralentizar bots
 
-    // Powerup para impedir que un bot gane
+    // // Powerup para impedir que un bot gane
 
-    // Powe
+    // // Powe
 
 
     return (
         <div className="w-max mx-auto flex flex-col">
             <div className="flex flex-row">
                 <div className="flex flex-col">
+                    <div>Nivel {level}</div>
                     <div>Ronda: {round}</div>
                     {
                         (
@@ -210,12 +190,17 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         onClick={() => handleCheckWinnerPattern()
                         }
                     > Comprobar el patron ganador</button>
-                    <Link to="/">Abandonar partida</Link>
+
+                    {/* Botón para abandonar partida */}
+                    {/* <button onClick={exitLevel} className="bg-red-600">
+                        Abandonar partida
+                    </button> */}
+                    <LeaveModal />
 
                     {
                         /* POWERUPS DE PRUEBA */
                     }
-                    <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button>
+                    {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
 
                 </div>
                 <div className="flex">
@@ -229,9 +214,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 {
                     dataLevel.bots.map((bot) => (
 
-                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
-                            //
-                            showBotNumbers={showBotNumbers}
+                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat}
+                        //
+                        // showBotNumbers={showBotNumbers}
                         />
                         // <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
                         // />
@@ -239,7 +224,16 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 }
                 {
                     // SI EL OPONENTE HA GANADO
-                    gameOver === true ? (<div className="bg-red-600 text-yellow-50">Se acabo el juego</div>) : ""
+                    defeat === true ? (
+                        // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
+                        <GameOverModal type="defeat" level={dataLevel.level} />
+                    ) : ""
+                }
+                {
+                    victory === true ? (
+                        // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
+                        <GameOverModal type="victory" level={dataLevel.level} />
+                    ) : ""
                 }
             </div>
             {/* TODO: Al hacer clic en el botón End Game se debe limpiar los datos */}

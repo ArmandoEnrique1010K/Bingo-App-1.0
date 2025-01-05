@@ -11,10 +11,10 @@ type BotsProps = {
     name: string,
     patterns: number[][],
     handleGameOver: () => void
-    showBotNumbers: boolean
+    // showBotNumbers: boolean
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, showBotNumbers }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -106,17 +106,30 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     }
 
     // Función para seleccionar un numero
-    const handleSelectedNumber = (number: number) => {
-        // TODO: Mejorar el performance de esta función
-        if (botSelectedNumbers.includes(number)) {
-            // Este mensaje se imprime cada vez que el bot marca un numero, imprime todos los numeros que fueron marcados
-            console.log("La casilla del numero " + number + " ha sido seleccionada")
-            return "bg-blue-500 text-white"
-        }
-        // Estilo por defecto
-        return "bg-orange-500 text-black"
+    // Conviene usar un useEffect para evitar llamadas innecesarias (segun ChatGPT)
+    // const handleSelectedNumber = (number: number) => {
+    //     // TODO: Mejorar el performance de esta función
+    //     if (botSelectedNumbers.includes(number)) {
+    //         // Este mensaje se imprime cada vez que el bot marca un numero, imprime todos los numeros que fueron marcados
+    //         console.log("La casilla del numero " + number + " ha sido seleccionada")
+    //         return "bg-blue-500 text-white"
+    //     }
+    //     // Estilo por defecto
+    //     return "bg-orange-500 text-black"
 
-    }
+    // }
+    const handleSelectedNumber = (number: number) => {
+        return botSelectedNumbers.includes(number)
+            ? "bg-blue-500 text-white"
+            : "bg-orange-500 text-black";
+    };
+
+    useEffect(() => {
+        if (botSelectedNumbers.length > 0) {
+            const lastNumber = botSelectedNumbers[botSelectedNumbers.length - 1];
+            console.log(`La casilla del número ${lastNumber} ha sido seleccionada`);
+        }
+    }, [botSelectedNumbers]);
 
 
     // Función para verificar si el oponente ha ganado
@@ -149,8 +162,8 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             <BotBoardNumbers
                 board={botBoard}
                 handleSelectedNumber={handleSelectedNumber}
-                //positionTarget={positionTarget}
-                showBotNumbers={showBotNumbers}
+            //positionTarget={positionTarget}
+            // showBotNumbers={showBotNumbers}
             />
         </div>
     )
