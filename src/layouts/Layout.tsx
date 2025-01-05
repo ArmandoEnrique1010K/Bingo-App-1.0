@@ -1,7 +1,7 @@
 import { Outlet } from "react-router";
-import Credits from "../components/Credits";
-import Music from "../components/Music";
-import Help from '../components/Help';
+import Credits from "../components/Menu/Credits";
+import Music from "../components/Menu/Music";
+import Help from '../components/Menu/Help';
 
 export default function Layout() {
 

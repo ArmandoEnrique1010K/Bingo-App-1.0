@@ -2,12 +2,14 @@ import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useState } from "react";
 import { useNavigate } from 'react-router';
 
-type GameOverModal = {
+type DefeatModalProps = {
     level: number
     defeat: boolean
+    //
+    setDefeat: any
 }
 
-export default function DefeatModal({ level, defeat, setDefeat }: GameOverModal) {
+export default function DefeatModal({ level, defeat, setDefeat }: DefeatModalProps) {
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -24,7 +26,7 @@ export default function DefeatModal({ level, defeat, setDefeat }: GameOverModal)
     function exit() {
         navigate('/')
         setDefeat(false)
-        close()
+        // close()
     }
 
     // Siguiente nivel

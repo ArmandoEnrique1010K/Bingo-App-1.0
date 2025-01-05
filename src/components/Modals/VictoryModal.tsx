@@ -2,12 +2,12 @@ import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { useState } from "react";
 import { Link, useNavigate } from 'react-router';
 
-type VictoryModal = {
+type VictoryModalProps = {
     level: number
     handleCheckWinnerPattern: () => boolean
 }
 
-export default function VictoryModal({ level, handleCheckWinnerPattern }: VictoryModal) {
+export default function VictoryModal({ level, handleCheckWinnerPattern }: VictoryModalProps) {
 
     const [isOpen, setIsOpen] = useState(false);
 
