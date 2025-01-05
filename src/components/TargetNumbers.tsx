@@ -24,6 +24,7 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
                 // Luego de 1,5 segundos muestra el botón
                 setTimeout(() => {
                     setShowButton(true)
+                    console.log("Muestra el botón")
                 }, 1500)
             }
         }

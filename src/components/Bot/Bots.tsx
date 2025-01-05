@@ -1,10 +1,20 @@
-import { useEffect, useRef, useState } from 'react'
-import { generateBoard } from '../utils/generateBoard';
-import { dynamicInterval } from '../utils/dynamicInterval';
-import { Board } from '../types';
-import BoardNumbers from './BoardNumbers';
+import { useEffect, useRef, useState } from "react";
+import { generateBoard } from "../../utils/generateBoard";
+import { Board, Level } from "../../types";
+import { dynamicInterval } from "../../utils/dynamicInterval";
+import BotBoardNumbers from "./BotBoardNumbers";
 
-export default function Bot({ dataLevel, targets, interval, name, patterns, handleGameOver }) {
+type BotsProps = {
+    dataLevel: Level,
+    targets: number[],
+    interval: number,
+    name: string,
+    patterns: number[][],
+    handleGameOver: () => void
+    showBotNumbers: boolean
+}
+
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, showBotNumbers }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -52,7 +62,7 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
             //     // Temporizador dinamico, asigna por el bot
             // }, dynamicInterval() * interval * (index + 1)); // Incrementa el tiempo de espera para cada número
             const timeoutId = setTimeout(() => {
-                handleTargetNumber(target.number, target.position);
+                handleCheckNumber(target.number, target.position);
             }, dynamicInterval() * interval * (index + 1));
 
             timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
@@ -79,7 +89,7 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
 
 
     // Función para marcar el numero de forma automatica
-    const handleTargetNumber = (number: number, position: number) => {
+    const handleCheckNumber = (number: number, position: number) => {
         setBotSelectedNumbers((prev) => {
             if (!prev.includes(number)) {
                 return [...prev, number];
@@ -94,13 +104,16 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
             return prev;
         })
     }
+
+    // Función para seleccionar un numero
     const handleSelectedNumber = (number: number) => {
+        // TODO: Mejorar el performance de esta función
         if (botSelectedNumbers.includes(number)) {
+            // Este mensaje se imprime cada vez que el bot marca un numero, imprime todos los numeros que fueron marcados
             console.log("La casilla del numero " + number + " ha sido seleccionada")
-            // console.log("La casilla de la posición " + position + " ha sido seleccionada")
             return "bg-blue-500 text-white"
         }
-        // Por defecto
+        // Estilo por defecto
         return "bg-orange-500 text-black"
 
     }
@@ -133,12 +146,11 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
     return (
         <div>
             <div>Tablero del bot {name}</div>
-            <BoardNumbers
+            <BotBoardNumbers
                 board={botBoard}
                 handleSelectedNumber={handleSelectedNumber}
-                handleClickButton={handleTargetNumber}
-
-            //positionTarget={positionTarget}
+                //positionTarget={positionTarget}
+                showBotNumbers={showBotNumbers}
             />
         </div>
     )

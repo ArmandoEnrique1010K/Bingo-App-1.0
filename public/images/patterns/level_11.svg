@@ -1,5 +1,4 @@
 <svg width="200" height="200" xmlns="http://www.w3.org/2000/svg">
-  <!-- Dibujar la cuadrícula 5x5 -->
   <rect width="200" height="200" fill="white" stroke="black"/>
   <line x1="40" y1="0" x2="40" y2="200" stroke="black"/>
   <line x1="80" y1="0" x2="80" y2="200" stroke="black"/>
@@ -11,25 +10,25 @@
   <line x1="0" y1="160" x2="200" y2="160" stroke="black"/>
   
   <!-- 
-  Patron del nivel 1 (Columna de 5 numeros)
+  Patron del nivel 11 (Numero 1)
+  O O X O O
+  O X X O O
   O O X O O
   O O X O O
-  O O X O O
-  O O X O O
-  O O X O O
+  O X X X O
   -->
 
+<rect x="80" y="0" width="40" height="40" fill="yellow" stroke="black"/>
 
-  <!-- Define manualmente el patrón objetivo -->
+<rect x="40" y="40" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="80" y="40" width="40" height="40" fill="yellow" stroke="black"/>
 
-  <!-- Pintar un recuadro (por ejemplo, en la posición (0,0)) -->
-  <rect x="80" y="0" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="80" y="80" width="40" height="40" fill="yellow" stroke="black"/>
 
-  <!-- Posición (0,1) -->
-  <rect x="80" y="40" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="80" y="120" width="40" height="40" fill="yellow" stroke="black"/>
 
-  <rect x="80" y="80" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="80" y="120" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="80" y="160" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="40" y="160" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="80" y="160" width="40" height="40" fill="yellow" stroke="black"/>
+<rect x="120" y="160" width="40" height="40" fill="yellow" stroke="black"/>
 
 </svg>

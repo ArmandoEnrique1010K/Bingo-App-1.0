@@ -8,6 +8,7 @@ import BoardNumbers from "../components/BoardNumbers";
 import TargetPattern from "../components/TargetPattern";
 import { Link } from "react-router";
 import Bot from "../components/Bot";
+import Bots from "../components/Bot/Bots";
 
 type LevelPageProps = {
     level: number
@@ -149,6 +150,49 @@ export default function LevelPage({ level }: LevelPageProps) {
     // }, [nameMusic])
 
 
+    // POWERUPS
+
+    // Estado para visualizar los numeros de los bots
+    const [showBotNumbers, setShowBotNumbers] = useState(false)
+    const [showBotNumbersRoundsLeft, setShowBotNumbersRoundsLeft] = useState(0);
+
+
+    // Muestra los numeros de los bots por 5 rondas
+    const handleshowBotNumbers = () => {
+
+        setShowBotNumbers(true);
+        setShowBotNumbersRoundsLeft(5); // Dura 5 rondas
+
+        // const currentRound = round
+        // const fifthRound = round + 5
+        // setShowBotNumbers(true);
+        // if (round === fifthRound) {
+        //     setShowBotNumbers(false);
+        // }
+    }
+
+    useEffect(() => {
+        if (showBotNumbersRoundsLeft > 0) {
+            setShowBotNumbersRoundsLeft(showBotNumbersRoundsLeft - 1);
+
+            if (showBotNumbersRoundsLeft === 1) {
+                // Última ronda: desactiva el power-up
+                setShowBotNumbers(false);
+            }
+        }
+    }, [round]); // Ejecuta cada vez que `round` cambia
+
+
+    // POWERUP para forzar un numero del tablero
+
+    // Powerup para marcar numeros aleatorios
+
+    // Powerup para ralentizar bots
+
+    // Powerup para impedir que un bot gane
+
+    //
+
 
     return (
         <div className="w-max mx-auto flex flex-col">
@@ -168,10 +212,14 @@ export default function LevelPage({ level }: LevelPageProps) {
                     > Comprobar el patron ganador</button>
                     <Link to="/">Abandonar partida</Link>
 
+                    {
+                        /* POWERUPS DE PRUEBA */
+                    }
+                    <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button>
 
                 </div>
                 <div className="flex">
-                    <BoardNumbers type="player" board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
+                    <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
                 </div>
 
 
@@ -180,7 +228,13 @@ export default function LevelPage({ level }: LevelPageProps) {
             <div className="flex flex-row">
                 {
                     dataLevel.bots.map((bot) => (
-                        <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver} />
+
+                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
+                            //
+                            showBotNumbers={showBotNumbers}
+                        />
+                        // <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
+                        // />
                     ))
                 }
                 {

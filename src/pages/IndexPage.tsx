@@ -37,6 +37,7 @@ export default function Index() {
 
     const handleViewMenu = async () => {
         setMenu(true)
+        console.log("Mostrando el menú")
     }
 
     return (
@@ -61,6 +62,11 @@ export default function Index() {
                     <Link to="/level_6">Nivel 6</Link>
                     <Link to="/level_7">Nivel 7</Link>
                     <Link to="/level_8">Nivel 8</Link>
+
+
+
+
+
                 </>)
             }
         </>
