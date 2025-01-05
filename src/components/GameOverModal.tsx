@@ -40,7 +40,7 @@ export default function GameOverModal({ type, level }: GameOverModal) {
 
     // Recordar que useEffect dispara el efecto cuando cambia type
     useEffect(() => {
-        if (type === "victory") {
+        if (type === "defeat") {
             setIsOpen(true)
         }
     }, [type])

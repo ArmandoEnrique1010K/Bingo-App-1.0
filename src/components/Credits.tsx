@@ -17,7 +17,7 @@ export default function Credits() {
     }
 
 
-    // TODO: Convertir este componente en una ventana modal que se pueda abrir desde el menú principal
+    // READY Convertir este componente en una ventana modal que se pueda abrir desde el menú principal
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}

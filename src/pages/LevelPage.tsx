@@ -19,6 +19,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Buscar el nivel en el arreglo de niveles para obtener los datos
     const dataLevel = levels.find(l => l.level === level) || levels[0];
 
+    // // Estado para el nivel actual
+    // const [currentLevel] = useState<number>(dataLevel.level)
+
+
     // Estado para el los numeros del tablero
     const [board, setBoard] = useState<Board>([]);
 
@@ -59,16 +63,39 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // }, [])
 
     // Se debera limpiar todos los numeros marcados del tablero cuando pase de nivel o pierda el nivel
+    // useEffect(() => {
+    //     if (victory === false || defeat === false) {
+    //         setTargets([])
+    //         // No funciona cuando paso de nivel
+    //         setBoard(generateBoard());
+    //         setSelectedPositions([])
+    //         setSelectedNumbers([])
+    //         setRound(0)
+    //     }
+    // }, [victory, defeat])
+
     useEffect(() => {
-        if (victory === false || defeat === false) {
-            setTargets([])
-            // No funciona cuando paso de nivel
-            setBoard(generateBoard());
-            setSelectedPositions([])
-            setSelectedNumbers([])
-            setRound(0)
-        }
-    }, [victory, defeat])
+        setBoard(generateBoard());
+        setTargets([]);
+        setSelectedPositions([]);
+        setSelectedNumbers([]);
+        setRound(0);
+    }, [level]);
+
+    // TODO: los bots tambien se deben reiniciar
+    // TODO: ¿Que pasaria si el jugador pierde?
+
+    // MUESTRA LA VENTANA MODAL Y LUEGO SI EL JUGADOR HACE CLIC EN EMPEZAR DE NUEVO, SE DEBE LIMPIAR LOS DATOS
+    useEffect(() => {
+        setBoard(generateBoard());
+        setTargets([]);
+        setSelectedPositions([]);
+        setSelectedNumbers([]);
+        setRound(0);
+    }, [defeat]);
+
+
+
 
     // Función para cambiar los numeros objetivos
     const handleChangeTargets = () => {
@@ -86,19 +113,20 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Verifica que el numero ya se encuentre marcado en el tablero
-    const handleVerifySelectedNumber = (number, position) => {
+    const handleVerifySelectedNumber = (number: number): boolean => {
         if (selectedNumbers.includes(number)) {
             console.log("Este número ya ha sido seleccionado")
-            return true
+            return true;
         }
+        return false;
     }
 
 
     // Función para marcar un número seleccionado
-    const handleClickButton = (number, position) => {
+    const handleClickButton = (number: number, position: number) => {
         // Si uno de los números seleccionados es igual al número objetivo, se agrega la posición a los números seleccionados
         if (targets.includes(number)) {
-            if (!handleVerifySelectedNumber(number, position)) {
+            if (!handleVerifySelectedNumber(number)) {
                 setSelectedPositions([...selectedPositions, position]);
                 setSelectedNumbers([...selectedNumbers, number]);
                 console.log("Numero seleccionado: " + number)
@@ -107,7 +135,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     }
 
     // Función para aplicar un estilo al número seleccionado
-    const handleSelectedNumber = (number, position) => {
+    const handleSelectedNumber = (number: number, position: number) => {
         if (selectedPositions.includes(position)) {
             // console.log("La casilla del numero " + number + " ha sido seleccionada")
             // console.log("La casilla de la posición " + position + " ha sido seleccionada")
@@ -215,6 +243,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     dataLevel.bots.map((bot) => (
 
                         <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat}
+
                         //
                         // showBotNumbers={showBotNumbers}
                         />
