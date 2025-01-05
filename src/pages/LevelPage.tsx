@@ -8,8 +8,6 @@ import BoardNumbers from "../components/BoardNumbers";
 import TargetPattern from "../components/TargetPattern";
 import Bots from "../components/Bot/Bots";
 import LeaveModal from "../components/LeaveModal";
-import GameOverModal from "../components/GameOverModal";
-import { Level } from '../types/index';
 import DefeatModal from "../components/Modals/DefeatModal";
 import VictoryModal from "../components/Modals/VictoryModal";
 
@@ -219,16 +217,14 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     return (
-        <div className="w-max mx-auto flex flex-col">
-            <div className="flex flex-row">
+        <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white">
+            <div className="container mx-auto p-8 flex flex-row items-center">
                 <div className="flex flex-col">
-                    <div>Nivel {level}</div>
-                    <div>Ronda: {round}</div>
-                    {
-                        (
-                            <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
-                        )
-                    }
+                    <div className="mb-6 text-center">
+                        <h1 className="text-4xl font-bold mb-2">Nivel {level}</h1>
+                        <p className="text-xl">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                    </div>
+                    <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
                     <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
 
                     {/* Este boton es para comprobar el patron ganador */}
@@ -275,19 +271,6 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         // />
                     ))
                 }
-                {/* {
-                    // SI EL OPONENTE HA GANADO
-                    defeat === true ? (
-                        // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
-                        <GameOverModal type="defeat" level={dataLevel.level} />
-                    ) : ""
-                }
-                {
-                    victory === true ? (
-                        // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
-                        <GameOverModal type="victory" level={dataLevel.level} />
-                    ) : ""
-                } */}
             </div>
             {/* READY???: Al hacer clic en el botón End Game se debe limpiar los datos */}
             {

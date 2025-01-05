@@ -40,7 +40,7 @@ export const levels: Level[] = [
     {
         level: 1,
         // targetQuantity: 3,
-        targetQuantity: 10,
+        targetQuantity: 5,
         targetText: "A column or row of five numbers",
         // Objetivo: Una columna o fila de 5 numeros
         patterns: [
