@@ -10,11 +10,11 @@ type BotsProps = {
     interval: number,
     name: string,
     patterns: number[][],
-    handleGameOver: () => void
+    handleGameOver: () => void,
     // showBotNumbers: boolean
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ setDefeat, defeat }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -141,6 +141,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             setTimeout(() => {
                 // setVictory(true);
                 handleGameOver();
+                setDefeat(true)
                 console.log("SE ACABO EL JUEGO");
             }, 5000);
 
@@ -155,6 +156,23 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     useEffect(() => {
         handleCheckWinnerPatternBot();
     }, [botSelectedNumbers]);
+
+
+    // Si el jugador gana, se debe reiniciar el bot
+    useEffect(() => {
+        setBotBoard(generateBoard());
+        setBotSelectedPositions([]);
+        setBotSelectedNumbers([]);
+    }, [dataLevel.level])
+
+    // Si el bot gana, debe reiniciar el bot
+    useEffect(() => {
+        if (defeat === false) {
+            setBotBoard(generateBoard());
+            setBotSelectedPositions([]);
+            setBotSelectedNumbers([]);
+        }
+    }, [defeat])
 
     return (
         <div>

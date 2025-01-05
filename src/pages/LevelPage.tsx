@@ -9,6 +9,9 @@ import TargetPattern from "../components/TargetPattern";
 import Bots from "../components/Bot/Bots";
 import LeaveModal from "../components/LeaveModal";
 import GameOverModal from "../components/GameOverModal";
+import { Level } from '../types/index';
+import DefeatModal from "../components/Modals/DefeatModal";
+import VictoryModal from "../components/Modals/VictoryModal";
 
 type LevelPageProps = {
     level: number
@@ -46,6 +49,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Estado para el fin del juego
     const [defeat, setDefeat] = useState(false);
 
+    // Estado para reiniciar el nivel
+    const [reboot, setReboot] = useState(false)
+
     // Estado para el turno o ronda
     const [round, setRound] = useState(0)
 
@@ -80,6 +86,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setSelectedPositions([]);
         setSelectedNumbers([]);
         setRound(0);
+        setVictory(false);
+        setDefeat(false)
     }, [level]);
 
     // TODO: los bots tambien se deben reiniciar
@@ -87,11 +95,14 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // MUESTRA LA VENTANA MODAL Y LUEGO SI EL JUGADOR HACE CLIC EN EMPEZAR DE NUEVO, SE DEBE LIMPIAR LOS DATOS
     useEffect(() => {
-        setBoard(generateBoard());
-        setTargets([]);
-        setSelectedPositions([]);
-        setSelectedNumbers([]);
-        setRound(0);
+        if (defeat === false) {
+            setBoard(generateBoard());
+            setTargets([]);
+            setSelectedPositions([]);
+            setSelectedNumbers([]);
+            setRound(0);
+            setVictory(false)
+        }
     }, [defeat]);
 
 
@@ -153,11 +164,17 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             setVictory(true);
             setTargets([])
             // setGameOver(true)
-            unlockLevel(level + 1);
-            // AQUI DEBERA LLAMAR A UNA FUNCIÓN PARA MOSTRAR LA VENTANA MODAL
-            // handleOpen(true)
+
+            // Desbloquea el siguiente nivel
+            // 20 es el nivel final
+            if (level !== 20) {
+                unlockLevel(level + 1);
+            }
+            // showModalVictory(true)
+            return true;
         } else {
             console.log("Sigue intentando")
+            return false;
         }
     }
 
@@ -213,11 +230,18 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         )
                     }
                     <TargetPattern level={dataLevel.level} text={dataLevel.targetText} />
-                    <button
+
+                    {/* Este boton es para comprobar el patron ganador */}
+                    {/* <button
                         className="flex bg-cyan-400 p-2"
                         onClick={() => handleCheckWinnerPattern()
                         }
-                    > Comprobar el patron ganador</button>
+                    >
+                        Comprobar el patron ganador
+                    </button> */}
+
+                    <VictoryModal level={dataLevel.level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+
 
                     {/* Botón para abandonar partida */}
                     {/* <button onClick={exitLevel} className="bg-red-600">
@@ -242,7 +266,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 {
                     dataLevel.bots.map((bot) => (
 
-                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat}
+                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} setDefeat={setDefeat}
 
                         //
                         // showBotNumbers={showBotNumbers}
@@ -251,7 +275,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         // />
                     ))
                 }
-                {
+                {/* {
                     // SI EL OPONENTE HA GANADO
                     defeat === true ? (
                         // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
@@ -263,9 +287,15 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         // <div className="bg-red-600 text-yellow-50">Se acabo el juego</div>
                         <GameOverModal type="victory" level={dataLevel.level} />
                     ) : ""
-                }
+                } */}
             </div>
-            {/* TODO: Al hacer clic en el botón End Game se debe limpiar los datos */}
+            {/* READY???: Al hacer clic en el botón End Game se debe limpiar los datos */}
+            {
+                defeat === true ? (
+                    // Esto es una ventana modal que se muestra automaticamente
+                    <DefeatModal level={dataLevel.level} defeat={defeat} setDefeat={setDefeat} />
+                ) : ""
+            }
         </div>
     )
 }

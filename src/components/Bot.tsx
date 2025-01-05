@@ -107,21 +107,40 @@ export default function Bot({ dataLevel, targets, interval, name, patterns, hand
 
 
     // Función para verificar si el oponente ha ganado
+    // const handleCheckWinnerPatternBot = () => {
+    //     if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
+    //         // TODO: Solamente si el tablero del bot coincide con uno de los patrones debera imprimir este mensaje, no cada vez que el bot siga marcando
+    //         console.log("Tu oponente " + name + " ganó el nivel " + dataLevel.level);
+
+    //         // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
+    //         setTimeout(() => {
+    //             // setVictory(true);
+    //             handleGameOver();
+    //             console.log("SE ACABO EL JUEGO");
+    //         }, 5000);
+
+    //     }
+    // };
+
+    // Estado para controlar si el juego ya terminó
+    const [isGameOver, setIsGameOver] = useState(false);
+
+    // Función para verificar si el oponente ha ganado
     const handleCheckWinnerPatternBot = () => {
+        if (isGameOver) return; // Salir si el juego ya terminó
+
+        // Comprobar si alguna combinación del bot coincide con los patrones de victoria
         if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
             console.log("Tu oponente " + name + " ganó el nivel " + dataLevel.level);
 
-            // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
+            setIsGameOver(true); // Marcar que el juego ha terminado para evitar futuras ejecuciones
+
+            // Esperar 5 segundos antes de mostrar el mensaje de victoria
             setTimeout(() => {
-                // setVictory(true);
-                handleGameOver();
+                handleGameOver(); // Función para manejar el final del juego
                 console.log("SE ACABO EL JUEGO");
             }, 5000);
-
         }
-        // else {
-        //     console.log("Tu oponente sigue intentando");
-        // }
     };
 
 

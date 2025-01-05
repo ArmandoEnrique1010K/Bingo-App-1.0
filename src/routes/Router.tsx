@@ -2,10 +2,9 @@ import { lazy, Suspense, useEffect, useState } from "react";
 import { BrowserRouter, Navigate, Route, Routes } from "react-router";
 import Layout from "../layouts/Layout";
 
-// Mejora el performance de la apliación web al momento de hacer un build
+// Mejora el performance de la aplicación web al momento de hacer un build
 const IndexPage = lazy(() => import('../pages/IndexPage'));
 const Level = lazy(() => import('../pages/LevelPage'));
-
 
 export default function Router() {
 
