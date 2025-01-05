@@ -14,7 +14,7 @@ export default function BotSquareNumber({ handleSelectedNumber, number,
     return (
         <>
             <div
-                className={`text-lg font-bold p-4 border-2 border-gray-600 rounded-lg bg-gray-700 text-white ${handleSelectedNumber(number.number, number.position)
+                className={`text-lg font-bold p-3 border-2 border-gray-600 rounded-lg bg-gray-700 text-white ${handleSelectedNumber(number.number, number.position)
                     }`}
             >
                 {/* {number.number} */}

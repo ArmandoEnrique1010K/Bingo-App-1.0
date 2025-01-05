@@ -175,7 +175,10 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     }, [defeat])
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 p-4 bg-gray-900 rounded-lg shadow-lg">
+        // md:grid-cols-2 lg:grid-cols-4 
+        // <div className="grid grid-cols-4 grid-rows-2 gap-6 p-4 bg-gray-900 rounded-lg shadow-lg">
+        <div>
+
 
 
             {/* Sugerencia para futura actualización */}
@@ -194,9 +197,9 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             ))} */}
 
             <div
-                className="flex flex-col items-center p-4 bg-gray-800 rounded-lg shadow-md"
+                className="flex flex-col items-center p-2 bg-gray-800 rounded-lg shadow-md"
             >
-                <h2 className="text-xl font-bold text-gray-200 mb-4">{name}</h2>
+                <h2 className="text-lg font-bold text-gray-200 mb-2">{name}</h2>
                 <BotBoardNumbers
                     board={botBoard}
                     handleSelectedNumber={handleSelectedNumber}

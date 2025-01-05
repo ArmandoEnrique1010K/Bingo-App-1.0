@@ -22,7 +22,7 @@ export default function TargetPattern({ level, text }: TargetPatternProps) {
                     />
                 </div>
                 {/* El texto debe tener un elipsis */}
-                <div className="text-lg text-gray-300 text-center my-auto w-32">
+                <div className="text-lg text-gray-300 text-center my-auto w-40">
                     {text}
                 </div>
 

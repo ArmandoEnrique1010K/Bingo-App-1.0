@@ -11,7 +11,7 @@ type BotBoardNumbersProps = {
 
 export default function BotBoardNumbers({ board, handleSelectedNumber /*, showBotNumbers*/ }: BotBoardNumbersProps) {
     return (
-        <div className="grid grid-cols-5 gap-2">
+        <div className="grid grid-cols-5 gap-1">
             {/* {
                     board.map((b, index) => (
                         <BotRowNumbers key={index} board={b} handleClickButton={handleClickButton} handleCheckNumber={handleCheckNumber} min={5 * index + 1} max={5 * index + 5} />
