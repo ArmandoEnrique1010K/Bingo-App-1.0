@@ -1,5 +1,5 @@
-import { Board } from "../types"
-import RowNumbers from "./RowNumbers"
+import { Board } from "../../types"
+import RowNumbers from "../Player/RowNumbers"
 
 type BoardNumbersProps = {
     board: Board,
@@ -18,7 +18,6 @@ export default function BoardNumbers({ board, handleClickButton, handleSelectedN
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} min={16} max={20} />
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} min={21} max={25} />
             </div>
-
         </>
     )
 }

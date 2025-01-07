@@ -61,12 +61,10 @@ export default function Music() {
     };
 
     return (
-        <div>
-            <button onClick={isPlaying ? stopMusic : startMusic}>
-                {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-                <MusicalNoteIcon className='h-6 w-6 text-blue-300' aria-hidden="true" />
+        <button onClick={isPlaying ? stopMusic : startMusic}>
+            {/* {isPlaying ? "Stop Music" : "Play Music"} */}
+            <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-300" : "text-cyan-600"} `} aria-hidden="true" />
 
-            </button>
-        </div>
+        </button>
     );
 }

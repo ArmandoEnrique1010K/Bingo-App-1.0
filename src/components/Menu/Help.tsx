@@ -17,7 +17,7 @@ export default function Help() {
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}
-            <button onClick={open}><QuestionMarkCircleIcon className='h-8 w-8 text-blue-300' aria-hidden="true" /></button>
+            <button onClick={open}><QuestionMarkCircleIcon className='h-8 w-8 text-cyan-300' aria-hidden="true" /></button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
@@ -37,14 +37,14 @@ export default function Help() {
 
 
                                 <p>
-                                    Bienvenido a BingoApp. Esta aplicación ha sido diseñada para ofrecerte una experiencia única para jugar Bingo con Bots simulados.
+                                    Bienvenido a BingoApp. Tu objetivo es derrotar a los bots en un juego de Bingo, se el primero en formar el patrón ganador.
                                 </p>
                                 <p>
                                     En el menú principal, encontrarás varios botones para interactuar con la aplicación
                                 </p>
                                 <p>
                                     <span className="font-bold">Niveles: </span>
-                                    Aquí podrás acceder a los diferentes niveles del juego o la aplicación. Podrás desbloquear nuevos niveles a medida que avanzas. Los niveles desbloqueados se guardan en el almacenamiento local de tu navegador, lo que significa que tu progreso se conserva incluso después de cerrar la aplicación.
+                                    Aquí podrás acceder a los diferentes niveles del juego o la aplicación. Podrás desbloquear nuevos niveles a medida que avanzas.
                                 </p>
 
                                 <p>
@@ -52,24 +52,22 @@ export default function Help() {
                                 </p>
 
                                 <p>
-                                    <span className="font-bold">Creditos: </span>Al hacer clic en el icono de "Información", accederás a los créditos del autor de la aplicación.
+                                    <span className="font-bold">Creditos: </span>Observa los créditos de la aplicación.
                                 </p>
+                                <h3 className='text-2xl pt-4 font-bold'>Iniciar partida</h3>
                                 <p>
-                                    Al iniciar una partida tu deberas hacer clic en el botón de "Iniciar partida", se generaran unos numeros que tu debes buscarlos en el tablero y marcarlos, al mismo tiempo los bots tambien iran marcando los números.
+                                    Al iniciar una partida tu deberas hacer clic en el botón de "Iniciar partida", se generaran unos numeros aleatorios, los cuales tu debes buscarlos en el tablero y marcarlos, al mismo tiempo los bots tambien iran marcando los números.
                                 </p>
                                 <p>
                                     Existen 3 tipos de bots:
-                                    <p>Slow Bot</p>
-                                    <p>Middle Bot</p>
-                                    <p>Fast Bot</p>
-                                    {/* <p>Trap Bot</p> */}
+                                    <ul>
+                                        <li className='list-disc list-inside'>Slow bot</li>
+                                        <li className='list-disc list-inside'>Middle Bot</li>
+                                        <li className='list-disc list-inside'>Fast Bot</li>
+                                    </ul>
                                 </p>
 
-                                <p>El juego termina cuando tu o tu oponente forma el patrón requerido</p>
-
-
-
-
+                                <p>El juego termina cuando tú formas el patrón objetivo en el tablero y pulsas el botón "Comprobar patrón" para ganar la partida o si tu oponente forma el patrón objetivo y tu piedes, lo cual tendras que volver a intentar la partida.</p>
                             </div>
                             <div className="mt-10">
                                 <Button

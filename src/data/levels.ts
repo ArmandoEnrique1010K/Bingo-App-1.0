@@ -41,7 +41,7 @@ export const levels: Level[] = [
         level: 1,
         // targetQuantity: 3,
         targetQuantity: 5,
-        targetText: "A column or row of five numbers",
+        targetText: "Una columna o una fila de 5 números",
         // Objetivo: Una columna o fila de 5 numeros
         patterns: [
             [1, 2, 3, 4, 5],
@@ -57,7 +57,7 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "Slow Bot",
+                name: "Junior Bot",
                 // Tiempo de respuesta del bot en milisegundos
                 interval: 500,
                 //                 interval: 2400,
@@ -68,7 +68,7 @@ export const levels: Level[] = [
     {
         level: 2,
         targetQuantity: 3,
-        targetText: "A little cross of five numbers",
+        targetText: "Una cruz de 5 números",
         // Objetivo: Una pequeña cruz 5 numeros
         patterns: [
             [6, 2, 7, 12, 8],
@@ -91,7 +91,7 @@ export const levels: Level[] = [
     {
         level: 3,
         targetQuantity: 3,
-        targetText: "A box of six numbers",
+        targetText: "Un rectangulo de 6 números",
         // Objetivo: Un cuadro de 6 numeros
         patterns: [
             [1, 2, 6, 7, 11, 12],
@@ -117,7 +117,7 @@ export const levels: Level[] = [
     {
         level: 4,
         targetQuantity: 3,
-        targetText: "A little letter 'X'",
+        targetText: "Un aspa de 5 números",
         // Objetivo: Una letra X de 5 numeros
         patterns: [
             [1, 11, 7, 3, 13],
@@ -145,7 +145,7 @@ export const levels: Level[] = [
     {
         level: 5,
         targetQuantity: 3,
-        targetText: "Two Squares in diagonals",
+        targetText: "2 cuadrados de 2x2 en 2 esquinas",
         // Objetivo: Dos cuadrados en diagonales
         patterns: [
             [1, 6, 2, 7, 19, 24, 20, 25],
@@ -164,7 +164,7 @@ export const levels: Level[] = [
     {
         level: 6,
         targetQuantity: 3,
-        targetText: "A four squared",
+        targetText: "Cuatro al cuadrado es igual a dieciseis",
         // Objetivo: Cuatro al cuadrado
         patterns: [
             [1, 6, 11, 16, 2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19],
@@ -186,7 +186,7 @@ export const levels: Level[] = [
     {
         level: 7,
         targetQuantity: 4,
-        targetText: "This eye was watching me",
+        targetText: "El me está mirandome",
         // Objetivo: OJO
         patterns: [
             [
@@ -207,7 +207,7 @@ export const levels: Level[] = [
     {
         level: 8,
         targetQuantity: 4,
-        targetText: "F for fast",
+        targetText: "F de ¿velocidad?",
         // Objetivo: La letra F
         patterns: [
             [
@@ -229,7 +229,7 @@ export const levels: Level[] = [
     {
         level: 9,
         targetQuantity: 4,
-        targetText: "Eight quarters",
+        targetText: "Nueve cuartos",
         // Objetivo: Los 8 numeros más alejados del tablero y el centro del tablero
         patterns: [
             [
@@ -259,7 +259,7 @@ export const levels: Level[] = [
         // Nivel con 2 objetivos en el tablero
         level: 10,
         targetQuantity: 4,
-        targetText: "Big 'X' and Little '+'",
+        targetText: "Gran aspa de 9 y pequeña cruz de 5",
         // Objetivo: Una gran aspa de 9 numeros y una cruz de 5 numeros que comience desde el centro
         // Nota: Existe 4 combinaciones
         patterns: [
@@ -310,7 +310,7 @@ export const levels: Level[] = [
     {
         level: 11,
         targetQuantity: 4,
-        targetText: "The number one",
+        targetText: "El número 1",
         // Objetivo: El numero 1
         // TODO: AGREGAR MÁS COMBINACIONES
         patterns: [
@@ -336,7 +336,7 @@ export const levels: Level[] = [
     {
         level: 12,
         targetQuantity: 4,
-        targetText: "Hi bot",
+        targetText: "'H' + 'I' = 'HI'",
         // Objetivo: Letra 'H' y letra 'I'
         patterns: [
             [
@@ -354,7 +354,7 @@ export const levels: Level[] = [
     {
         level: 13,
         targetQuantity: 4,
-        targetText: "Nine squares",
+        targetText: "9 patrones para un cudrado de 9",
         // Objetivo: Cuadrado de 9 numeros
         patterns: [
             [
@@ -410,7 +410,7 @@ export const levels: Level[] = [
     {
         level: 14,
         targetQuantity: 5,
-        targetText: "A piramid",
+        targetText: "Una piramide 'simetrica' de 8 números",
         // Objetivo: Una piramide de 8 numeros
         patterns: [
             [
@@ -445,7 +445,7 @@ export const levels: Level[] = [
     {
         level: 15,
         targetQuantity: 5,
-        targetText: "Invert letter 'X'",
+        targetText: "Aspa, ¿a la inversa?",
         // Objetivo: Aspa Invertida
         patterns: [
             [
@@ -463,7 +463,7 @@ export const levels: Level[] = [
     {
         level: 16,
         targetQuantity: 5,
-        targetText: "3 Bars",
+        targetText: "3 Barras (filas o columnas)",
         // Objetivo: 3 Filas o 3 columnas separadas
         patterns: [
             [
@@ -487,7 +487,7 @@ export const levels: Level[] = [
         // Nivel Final
         level: 17,
         targetQuantity: 5,
-        targetText: "Invert Diamond",
+        targetText: "Diamante a la inversa o ¿5 cruces?",
         // Objetivo: Un diamante invertido
         patterns: [
             [
@@ -529,7 +529,7 @@ export const levels: Level[] = [
         // Nivel con 2 objetivos en el tablero
         level: 18,
         targetQuantity: 5,
-        targetText: "Big '+' and Little 'X'",
+        targetText: "Gran cruz de 9 y pequeña aspa de 5, ¿Otra vez?",
         // Objetivo: Una gran cruz de 9 numeros y una letra 'X' de 5 numeros que comience desde el centro
         // Nota: Existe 4 combinaciones
         patterns: [
@@ -572,7 +572,7 @@ export const levels: Level[] = [
     {
         level: 19,
         targetQuantity: 5,
-        targetText: "Staircase",
+        targetText: "¿Existen 4 formas de subir escaleras?",
         // Objetivo: Escalera de 15 numeros
         patterns: [
             [
@@ -627,7 +627,7 @@ export const levels: Level[] = [
         // Nivel Final
         level: 20,
         targetQuantity: 5,
-        targetText: "All board is marked",
+        targetText: "La batalla termina cuando el jugador ha marcado todo el tablero",
         // Objetivo: Todo el tablero debe estar marcado
         patterns: [
             [

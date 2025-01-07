@@ -3,11 +3,11 @@ import { levels } from "../data/levels";
 import { generateTargets } from "../utils/generateTargets";
 import { generateBoard } from "../utils/generateBoard";
 import { Board } from "../types";
-import TargetsNumbers from "../components/TargetNumbers";
-import BoardNumbers from "../components/BoardNumbers";
-import TargetPattern from "../components/TargetPattern";
+import TargetsNumbers from "../components/Target/TargetNumbers";
+import BoardNumbers from "../components/Player/BoardNumbers";
+import TargetPattern from "../components/Target/TargetPattern";
 import Bots from "../components/Bot/Bots";
-import LeaveModal from "../components/LeaveModal";
+import LeaveModal from "../components/Modals/LeaveModal";
 import DefeatModal from "../components/Modals/DefeatModal";
 import VictoryModal from "../components/Modals/VictoryModal";
 
@@ -216,8 +216,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // // Powe
 
 
+    // Efecto de gradiente en tailwindcss
+    // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
     return (
-        <div className="w-full min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-700 text-white m-auto">
+        <div className="w-full min-h-screen bg-gray-800 text-white m-auto">
             <div className="container mx-auto p-2 flex flex-row items-center gap-6 justify-center">
                 <div className="flex flex-col">
                     {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
@@ -258,7 +260,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 </div>
                 <div>
                     <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
-                    <div className="bg-gray-700 rounded-xl p-4">
+                    {/* TODO: ARRREGLAR LOS ESTILOS */}
+                    <div className="bg-gray-700 rounded-xl flex flex-row gap-3 px-3 py-2 justify-center">
                         <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
                         <LeaveModal />
                     </div>

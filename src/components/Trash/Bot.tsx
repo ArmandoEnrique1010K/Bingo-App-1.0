@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { generateBoard } from '../../utils/generateBoard';
 import { dynamicInterval } from '../../utils/dynamicInterval';
 import { Board } from '../../types';
-import BoardNumbers from '../BoardNumbers';
+import BoardNumbers from '../Player/BoardNumbers';
 
 export default function Bot({ dataLevel, targets, interval, name, patterns, handleGameOver }) {
 
