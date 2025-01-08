@@ -222,24 +222,25 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
     return (
         <div className="w-full min-h-screen bg-gray-800 text-white m-auto">
-            <div className="container mx-auto py-4 flex flex-row items-start gap-6 justify-center">
-                <div className="flex flex-col">
-                    {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
-                    <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
-                        <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
-                        <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
-                    </div>
+            <div className="flex flex-col">
+                <div className="container mx-auto py-4 flex flex-row items-start gap-6 justify-center">
+                    <div className="flex flex-col">
+                        {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
+                        <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
+                            <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
+                            <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                        </div>
 
 
-                    {/* Componente de los numeros objetivos */}
-                    {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
-                    <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                        {/* Componente de los numeros objetivos */}
+                        {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
+                        <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
 
-                    {/* Componente del patrón ganador */}
-                    <TargetPattern level={dataLevel.level} text={dataLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                        {/* Componente del patrón ganador */}
+                        <TargetPattern level={dataLevel.level} text={dataLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
 
-                    {/* Este boton es para comprobar el patron ganador */}
-                    {/* <button
+                        {/* Este boton es para comprobar el patron ganador */}
+                        {/* <button
                         className="flex bg-cyan-400 p-2"
                         onClick={() => handleCheckWinnerPattern()
                         }
@@ -249,43 +250,48 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
 
-                    {/* Botón para abandonar partida */}
-                    {/* <button onClick={exitLevel} className="bg-red-600">
+                        {/* Botón para abandonar partida */}
+                        {/* <button onClick={exitLevel} className="bg-red-600">
                         Abandonar partida
                     </button> */}
-                    {/* <LeaveModal /> */}
+                        {/* <LeaveModal /> */}
 
-                    {
-                        /* POWERUPS DE PRUEBA */
-                    }
-                    {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
+                        {
+                            /* POWERUPS DE PRUEBA */
+                        }
+                        {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
 
-                </div>
-                <div className="flex flex-col">
-                    <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
-                    <div className="bg-gray-700 flex flex-row gap-3 px-3 justify-center items-center rounded-b-xl py-4">
-                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                        <LeaveModal />
                     </div>
+                    <div className="flex flex-col">
+                        <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
+                        <div className="bg-gray-700 flex flex-row gap-3 px-3 justify-center items-center rounded-b-xl py-4">
+                            <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                            <LeaveModal />
+                        </div>
+                    </div>
+
+
+                </div>
+
+                {/* SECCION PARA AGRUPAR TODOS LOS BOTS */}
+                <div className="grid grid-cols-4 grid-rows-2 items-center justify-center mx-auto mt-4 gap-2 mb-4">
+                    {
+                        dataLevel.bots.map((bot) => (
+
+                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} setDefeat={setDefeat}
+
+                            //
+                            // showBotNumbers={showBotNumbers}
+                            />
+                            // <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
+                            // />
+                        ))
+                    }
                 </div>
 
 
             </div>
 
-            <div className="flex flex-row">
-                {
-                    dataLevel.bots.map((bot) => (
-
-                        <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} setDefeat={setDefeat}
-
-                        //
-                        // showBotNumbers={showBotNumbers}
-                        />
-                        // <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
-                        // />
-                    ))
-                }
-            </div>
             {/* READY???: Al hacer clic en el botón End Game se debe limpiar los datos */}
             {
                 defeat === true ? (

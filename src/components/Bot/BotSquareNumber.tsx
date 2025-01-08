@@ -1,5 +1,5 @@
 type BotSquareNumberProps = {
-    handleSelectedNumber: (number: number, position: number) => void,
+    handleSelectedNumber: (number: number, position: number) => boolean,
     // handleCheckNumber: (number: number, position: number) => string
     number: {
         position: number,
@@ -14,7 +14,7 @@ export default function BotSquareNumber({ handleSelectedNumber, number,
     return (
         <>
             <div
-                className={`text-lg font-bold p-3 border-2 border-gray-600 rounded-lg bg-gray-700 text-white ${handleSelectedNumber(number.number, number.position)
+                className={`text-lg font-bold p-2 border-2 border-gray-600 text-white ${handleSelectedNumber(number.number, number.position) === true ? "bg-cyan-500" : "bg-gray-500"
                     }`}
             >
                 {/* {number.number} */}

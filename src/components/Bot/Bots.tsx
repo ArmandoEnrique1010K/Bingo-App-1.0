@@ -120,9 +120,11 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // }
     const handleSelectedNumber = (number: number) => {
         return botSelectedNumbers.includes(number)
-            ? "bg-blue-500 text-white"
-            : "bg-orange-500 text-black";
     };
+
+
+    // ? "bg-blue-500 text-white"
+    // : "bg-orange-500 text-black";
 
     useEffect(() => {
         if (botSelectedNumbers.length > 0) {
@@ -177,8 +179,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     return (
         // md:grid-cols-2 lg:grid-cols-4 
         // <div className="grid grid-cols-4 grid-rows-2 gap-6 p-4 bg-gray-900 rounded-lg shadow-lg">
-        <div>
-
+        <>
 
 
             {/* Sugerencia para futura actualización */}
@@ -197,9 +198,9 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             ))} */}
 
             <div
-                className="flex flex-col items-center p-2 bg-gray-800 rounded-lg shadow-md"
+                className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
             >
-                <h2 className="text-lg font-bold text-gray-200 mb-2">{name}</h2>
+                <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
                 <BotBoardNumbers
                     board={botBoard}
                     handleSelectedNumber={handleSelectedNumber}
@@ -207,8 +208,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                 />
 
             </div>
+        </>
 
-
-        </div>
     )
 }
