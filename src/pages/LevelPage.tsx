@@ -7,9 +7,9 @@ import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
 import Bots from "../components/Bot/Bots";
-import LeaveModal from "../components/Modals/LeaveModal";
-import DefeatModal from "../components/Modals/DefeatModal";
-import VictoryModal from "../components/Modals/VictoryModal";
+import LeaveModal from "../components/Modal/LeaveModal";
+import DefeatModal from "../components/Modal/DefeatModal";
+import VictoryModal from "../components/Modal/VictoryModal";
 
 type LevelPageProps = {
     level: number
@@ -220,10 +220,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
     return (
         <div className="w-full min-h-screen bg-gray-800 text-white m-auto">
-            <div className="container mx-auto p-2 flex flex-row items-center gap-6 justify-center">
+            <div className="container mx-auto py-4 flex flex-row items-center gap-6 justify-center">
                 <div className="flex flex-col">
                     {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
-                    <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
+                    <div className="mb-4 text-center bg-gray-700 rounded-xl p-">
                         <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
                         <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
                     </div>

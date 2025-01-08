@@ -63,7 +63,7 @@ export default function Music() {
     return (
         <button onClick={isPlaying ? stopMusic : startMusic}>
             {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-            <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-300" : "text-cyan-600"} `} aria-hidden="true" />
+            <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
 
         </button>
     );

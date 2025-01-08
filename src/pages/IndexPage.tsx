@@ -25,26 +25,25 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                     // READY: Este botón debe cubrir toda la pantalla
                     <button
                         className="w-full flex-grow
-                        flex items-center justify-center bg-blue-600 text-white text-2xl font-semibold 
-                        hover:bg-blue-700 active:bg-blue-800
-                        p-4 
-                        "
+                        flex items-center justify-center bg-cyan-500 text-white text-2xl font-semibold 
+                        hover:bg-cyan-600 active:bg-cyan-700
+                        p-4"
                         onClick={showUnlockedLevels}
                     >
                         Iniciar juego
                     </button>
                 ) : (<>
 
-                    <div className="w-full max-w-4xl px-4">
+                    <div className="w-full max-w-4xl px-4 mb-4">
                         <p className="text-lg text-center mb-6">Seleccione un nivel para empezar</p>
                         {/* Grid para niveles desbloqueados */}
-                        <div className="grid grid-cols-5 gap-4">
+                        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
                             {
                                 unlockedLevels.map((l: number) => (
                                     <Link
                                         key={l}
                                         to={`/level_${l}`}
-                                        className="bg-blue-500 text-white text-center py-4 rounded-md shadow-lg hover:bg-blue-600 active:bg-blue-700"
+                                        className="bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:bg-cyan-600 active:bg-cyan-700"
                                     >
                                         Nivel {l}
                                     </Link>
