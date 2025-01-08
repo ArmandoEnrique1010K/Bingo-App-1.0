@@ -208,7 +208,18 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // }, [round]); // Ejecuta cada vez que `round` cambia
 
 
-    // // POWERUP para forzar un numero del tablero
+    // TODO: INVESTIGAR SOBRE EL USO DE POWERUPS
+
+    // Se pueden desbloquear al completar el nivel: 3, 6, 9, 12, 15, 18
+
+    // Ralentizar a todos los bots (ralentiza el tiempo de demora) por 3 rondas
+    // Un bot pierde 5 rondas
+    // Forzar un numero deseado (selecciona el número que será sorteado en la siguiente ronda)
+    // Desmarcar 1 número (afecta a todos los bots, recordar que el numero puede volver a aparecer en la lista de numeros objetivos) 
+    // Marcar números vecinos (si n es el numero seleccionado, debe marcar los numeros: n-2, n-1, n+1 y n+2)
+    // Clarividencia (tu puedes ver los números de los bots por 5 rondas)
+
+
 
     // // Powerup para marcar numeros aleatorios
 

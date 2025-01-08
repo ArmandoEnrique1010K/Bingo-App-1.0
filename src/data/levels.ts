@@ -249,6 +249,10 @@ export const levels: Level[] = [
 
         ]
     },
+    //     S - Bot: 2200 - 1600
+    // M - Bot: 1500 - 1000
+    // F - Bot: 900 - 500
+
     {
         level: 9,
         targetQuantity: 4,
