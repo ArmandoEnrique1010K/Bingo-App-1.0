@@ -41,11 +41,11 @@ export default function VictoryModal({ level, handleCheckWinnerPattern }: Victor
 
     return (
         <>
+            {/* Eliminar este atributo es la solución? aria-hidden="true" */}
             <button onClick={check}
-                className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-500 active:bg-cyan-600 transition duration-300'
-                aria-hidden="true">Comprobar patrón</button>
+                className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300'>Comprobar patrón</button>
 
-            <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={open}>
+            <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none" onClose={open}>
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-800 bg-opacity-50">
                     <div className="flex min-h-full items-center justify-center p-4">
 
@@ -66,7 +66,7 @@ export default function VictoryModal({ level, handleCheckWinnerPattern }: Victor
                                     }
                                 </p>
                             </div>
-                            <div className="mt-10 flex flex-row gap-12">
+                            <div className="mt-10 flex flex-row gap-4">
                                 {
                                     // <Button
                                     //     onClick={nextLevel}
@@ -74,11 +74,17 @@ export default function VictoryModal({ level, handleCheckWinnerPattern }: Victor
                                     // >
                                     //     Siguiente nivel
                                     // </Button>
-                                    <Link to={`/level_${level + 1}`} onClick={close}>Siguiente nivel</Link>
+
+                                    level !== 20 ? (
+
+                                        <Link className="w-full py-2 px-4 font-semibold bg-cyan-500 text-white rounded-lg text-lg hover:bg-cyan-600 active:bg-cyan-700 focus:outline-none transition-all duration-300 text-center"
+                                            to={`/level_${level + 1}`} onClick={close}>Siguiente nivel</Link>
+
+                                    ) : ("")
                                 }
                                 <Button
                                     onClick={exit}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 font-semibold bg-gray-500 text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700  focus:outline-none transition-all duration-300"
                                 >
                                     Salir al menú
                                 </Button>

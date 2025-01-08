@@ -5,15 +5,15 @@ import { MusicalNoteIcon } from '@heroicons/react/24/solid'
 export default function Music() {
 
     const [isPlaying, setIsPlaying] = useState(false);
-    const [currentTrack, setCurrentTrack] = useState(0);
+    // const [currentTrack, setCurrentTrack] = useState(0);
     const [player, setPlayer] = useState<Tone.Player | null>(null);
 
     // Lista de canciones
-    const trackList = [
-        "/music/track1.mp3",
-        "/music/track2.mp3",
-        "/music/track3.mp3",
-    ];
+    // const trackList = [
+    //     "/music/track1.mp3",
+    //     "/music/track2.mp3",
+    //     "/music/track3.mp3",
+    // ];
 
 
     useEffect(() => {

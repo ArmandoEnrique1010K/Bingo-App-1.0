@@ -2,7 +2,6 @@ import { useState } from "react";
 // Importa un icono de hero icons, se utiliza el siguiente formato, existe una variedad de iconos
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
-import Music from './Music';
 
 // Este componente es una página que muestra la información del autor que desarrollo esta aplicación
 export default function Credits() {

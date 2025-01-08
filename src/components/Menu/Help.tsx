@@ -60,12 +60,12 @@ export default function Help() {
                                 </p>
                                 <p>
                                     Existen 3 tipos de bots:
-                                    <ul>
-                                        <li className='list-disc list-inside'>Slow bot</li>
-                                        <li className='list-disc list-inside'>Middle Bot</li>
-                                        <li className='list-disc list-inside'>Fast Bot</li>
-                                    </ul>
                                 </p>
+                                <ul>
+                                    <li className='list-disc list-inside'>Slow bot</li>
+                                    <li className='list-disc list-inside'>Middle Bot</li>
+                                    <li className='list-disc list-inside'>Fast Bot</li>
+                                </ul>
 
                                 <p>El juego termina cuando tú formas el patrón objetivo en el tablero y pulsas el botón "Comprobar patrón" para ganar la partida o si tu oponente forma el patrón objetivo y tu piedes, lo cual tendras que volver a intentar la partida.</p>
                             </div>

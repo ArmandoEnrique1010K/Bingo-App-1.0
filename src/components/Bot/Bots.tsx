@@ -12,9 +12,14 @@ type BotsProps = {
     patterns: number[][],
     handleGameOver: () => void,
     // showBotNumbers: boolean
+    handleSetDefeat: (boolean: boolean) => void,
+    defeat: boolean,
+    handleSetVictory: (boolean: boolean) => void,
+    victory: boolean
+
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ setDefeat, defeat }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -134,18 +139,46 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     }, [botSelectedNumbers]);
 
 
+    // Usar una referencia para verificar si el jugador gana dentro de los 5 segundos
+    const victoryRef = useRef(victory);
+
+
     // Función para verificar si el oponente ha ganado
     const handleCheckWinnerPatternBot = () => {
         if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
             console.log("Tu oponente " + name + " ganó el nivel " + dataLevel.level);
 
+
             // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
-            setTimeout(() => {
-                // setVictory(true);
-                handleGameOver();
-                setDefeat(true)
-                console.log("SE ACABO EL JUEGO");
+            // setTimeout(() => {
+            //     handleGameOver();
+            //     setDefeat(true)
+            //     console.log("SE ACABO EL JUEGO");
+            // }, 5000);
+
+
+            // TODO: SI EL BOT HA GANADO PRIMERO, ANTES DE LOS 5 SEGUNDOS QUE DEBEN TRASNCURRIRSE, EL JUGADOR GANO EN ESE TIEMPO, SE DEBE COLOCAR DEFEAT COMO FALSE
+            // if (victory === true) {
+            //     setDefeat(false);
+            // }
+
+            // Marcar derrota después de 5 segundos
+            const timeoutId = setTimeout(() => {
+                if (victory === true) {
+                    // Si el jugador ganó antes de que termine el tiempo, cancelar la derrota
+                    console.log("El jugador ganó antes de que el bot terminara");
+                    handleSetDefeat(false);
+                } else {
+                    // Si el jugador no ganó, marcar la derrota
+                    handleGameOver();
+                    handleSetDefeat(true);
+                    console.log("SE ACABO EL JUEGO: el bot ganó");
+                }
             }, 5000);
+
+            // Opcional: Limpieza del timeout si es necesario
+            return () => clearTimeout(timeoutId);
+
 
         }
         // else {

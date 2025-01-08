@@ -44,7 +44,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Estado para el fin del juego si el jugador gano
     const [victory, setVictory] = useState(false)
 
-    // Estado para el fin del juego
+    // Estado para el fin del juego si el bot gana
     const [defeat, setDefeat] = useState(false);
 
     // Estado para reiniciar el nivel
@@ -162,6 +162,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
             console.log("El jugador ha ganado el nivel " + level)
             setVictory(true);
+            setDefeat(false) // Redundancia
             setTargets([])
             // setGameOver(true)
 
@@ -217,6 +218,14 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // // Powe
 
+
+    const handleSetDefeat = (boolean) => {
+        setDefeat(boolean)
+    }
+
+    const handleSetVictory = (boolean) => {
+        setVictory(boolean)
+    }
 
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
@@ -274,11 +283,14 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 </div>
 
                 {/* SECCION PARA AGRUPAR TODOS LOS BOTS */}
-                <div className="grid grid-cols-4 grid-rows-2 items-center justify-center mx-auto mt-4 gap-2 mb-4">
+                {/* grid grid-cols-4 grid-rows-2 */}
+
+                {/* TODO: AUN NO ES RESPONSIVO */}
+                <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
                     {
                         dataLevel.bots.map((bot) => (
 
-                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} setDefeat={setDefeat}
+                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
 
                             //
                             // showBotNumbers={showBotNumbers}

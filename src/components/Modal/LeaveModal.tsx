@@ -23,7 +23,7 @@ export default function LeaveModal() {
 
     return (
         <>
-            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-500 active:bg-cyan-600 transition duration-300' aria-hidden="true">Abandonar partida</button>
+            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300' aria-hidden="true">Abandonar partida</button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
@@ -44,16 +44,16 @@ export default function LeaveModal() {
                                     Tu progreso actual se perdera
                                 </p>
                             </div>
-                            <div className="mt-10 flex flex-row gap-12">
+                            <div className="mt-10 flex flex-row gap-4">
                                 <Button
                                     onClick={leaveLevel}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 bg-gray-500 text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700 focus:outline-none transition-all duration-300"
                                 >
                                     Si
                                 </Button>
                                 <Button
                                     onClick={close}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 bg-cyan-500 text-white rounded-lg text-lg hover:bg-cyan-600 active:bg-cyan-700 focus:outline-none transition-all duration-300"
                                 >
                                     No
                                 </Button>

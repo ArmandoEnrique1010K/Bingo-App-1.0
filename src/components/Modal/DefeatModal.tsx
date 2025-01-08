@@ -69,20 +69,20 @@ export default function DefeatModal({ level, defeat, setDefeat }: DefeatModalPro
                             <div className="space-y-3 text-lg text-gray-700">
                                 <p className='text-center'>
 
-                                    ¿Desea volver a intentar este nivel?
+                                    Uno de los bots te ha ganado. ¿Desea volver a intentar este nivel?
 
                                 </p>
                             </div>
-                            <div className="mt-10 flex flex-row gap-12">
+                            <div className="mt-10 flex flex-row gap-4">
                                 <Button
                                     onClick={tryAgain}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 font-semibold bg-cyan-500 text-white rounded-lg text-lg hover:bg-cyan-600 active:bg-cyan-700 focus:outline-none transition-all duration-300"
                                 >
                                     Volver a intentarlo
                                 </Button>
                                 <Button
                                     onClick={exit}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 font-semibold bg-gray-500 text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700  focus:outline-none transition-all duration-300"
                                 >
                                     Salir al menú
                                 </Button>
