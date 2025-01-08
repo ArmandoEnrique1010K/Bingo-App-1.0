@@ -3,7 +3,7 @@ import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
     numberBoard: Board,
-    handleSelectedNumber: (number: number, position: number) => boolean,
+    handleSelectedNumber: (position: number) => boolean,
     handleClickButton: (number: number, position: number) => void,
     min: number,
     max: number,

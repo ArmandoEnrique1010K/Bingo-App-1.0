@@ -48,7 +48,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const [defeat, setDefeat] = useState(false);
 
     // Estado para reiniciar el nivel
-    const [reboot, setReboot] = useState(false)
+    // const [reboot, setReboot] = useState(false)
 
     // Estado para el turno o ronda
     const [round, setRound] = useState(0)
@@ -143,8 +143,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         }
     }
 
-    // Función para aplicar un estilo al número seleccionado
-    const handleSelectedNumber = (number: number, position: number) => {
+    // Función para aplicar un estilo al número seleccionado según su posición
+    const handleSelectedNumber = (position: number) => {
         if (selectedPositions.includes(position)) {
             // console.log("La casilla del numero " + number + " ha sido seleccionada")
             // console.log("La casilla de la posición " + position + " ha sido seleccionada")
@@ -219,11 +219,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // // Powe
 
 
-    const handleSetDefeat = (boolean) => {
+    const handleSetDefeat = (boolean: boolean) => {
         setDefeat(boolean)
     }
 
-    const handleSetVictory = (boolean) => {
+    const handleSetVictory = (boolean: boolean) => {
         setVictory(boolean)
     }
 
@@ -308,7 +308,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             {
                 defeat === true ? (
                     // Esto es una ventana modal que se muestra automaticamente
-                    <DefeatModal level={dataLevel.level} defeat={defeat} setDefeat={setDefeat} />
+                    <DefeatModal level={dataLevel.level} handleSetDefeat={handleSetDefeat} />
                 ) : ""
             }
         </div>

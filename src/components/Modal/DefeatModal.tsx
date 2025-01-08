@@ -4,12 +4,10 @@ import { useNavigate } from 'react-router';
 
 type DefeatModalProps = {
     level: number
-    defeat: boolean
-    //
-    setDefeat: any
+    handleSetDefeat: (boolean: boolean) => void
 }
 
-export default function DefeatModal({ level, defeat, setDefeat }: DefeatModalProps) {
+export default function DefeatModal({ level, handleSetDefeat }: DefeatModalProps) {
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -25,7 +23,7 @@ export default function DefeatModal({ level, defeat, setDefeat }: DefeatModalPro
 
     function exit() {
         navigate('/')
-        setDefeat(false)
+        handleSetDefeat(false)
         // close()
     }
 
@@ -38,7 +36,7 @@ export default function DefeatModal({ level, defeat, setDefeat }: DefeatModalPro
     // Volver a intentarlo
     function tryAgain() {
         navigate(`/level_${level}`)
-        setDefeat(false)
+        handleSetDefeat(false)
         close()
     }
 

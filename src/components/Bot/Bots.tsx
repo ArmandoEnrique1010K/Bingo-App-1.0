@@ -140,7 +140,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
 
     // Usar una referencia para verificar si el jugador gana dentro de los 5 segundos
-    const victoryRef = useRef(victory);
+    // const victoryRef = useRef(victory);
 
 
     // Función para verificar si el oponente ha ganado
@@ -172,6 +172,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                     // Si el jugador no ganó, marcar la derrota
                     handleGameOver();
                     handleSetDefeat(true);
+                    handleSetVictory(false);
                     console.log("SE ACABO EL JUEGO: el bot ganó");
                 }
             }, 5000);

@@ -4,7 +4,7 @@ import RowNumbers from "../Player/RowNumbers"
 type BoardNumbersProps = {
     board: Board,
     handleClickButton: (number: number, position: number) => void,
-    handleSelectedNumber: (number: number, position: number) => boolean
+    handleSelectedNumber: (position: number) => boolean
 }
 
 
