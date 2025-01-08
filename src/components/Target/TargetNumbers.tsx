@@ -58,7 +58,7 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
         h-48
         mb-4">
             {/* <div className="bg-gray-800 p-6 rounded-lg shadow-lg"> */}
-            <h2 className=" text-cyan-400 text-xl font-bold mb-2">Objetivos</h2>
+            <h2 className=" text-cyan-400 text-xl font-semibold mb-2">Objetivos</h2>
 
             <div className="flex flex-wrap justify-center gap-4 p-3">
                 {targets.map((n, index) => (
@@ -81,14 +81,14 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
                 showButton === true || round === 0 ? (
                     <div className="text-center mt-2">
                         <button
-                            className="bg-cyan-400 text-white font-semibold px-6 py-3 
+                            className="bg-cyan-500 text-white font-semibold px-6 py-3 
                             rounded-lg shadow-black shadow-md 
-                            hover:bg-cyan-500 active:bg-cyan-600
+                            hover:bg-cyan-600 active:bg-cyan-700
                             transition duration-300
                             mb-4"
                             onClick={() => handleChangeTargets()}>{
                                 // No olvides cambiar el texto del botón dependiendo de si hay objetivos o no
-                                targets.length === 0 ? "Iniciar partida" : "Siguiente"
+                                targets.length === 0 ? "Iniciar partida" : "Siguiente ronda"
 
                                 // round === 0 ? "Iniciar partida" : targets.length !== 0 && showButton === true && "Siguiente ronda"
                             }</button>

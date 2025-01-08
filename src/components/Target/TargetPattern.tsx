@@ -18,7 +18,7 @@ export default function TargetPattern({ level, text }: TargetPatternProps) {
                     <img
                         src={`/images/patterns/level_${level}.svg`}
                         alt={`Patrón del nivel ${level}`}
-                        className="w-44 h-44 rounded-md border-4 border-cyan-500 shadow-lg"
+                        className="w-40 h-40 rounded-md shadow-lg"
                     />
                 </div>
                 {/* El texto debe tener un elipsis */}

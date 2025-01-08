@@ -42,7 +42,7 @@ export default function VictoryModal({ level, handleCheckWinnerPattern }: Victor
     return (
         <>
             <button onClick={check}
-                className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-500 active:bg-cyan-600 transition duration-300 mb-4'
+                className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-500 active:bg-cyan-600 transition duration-300'
                 aria-hidden="true">Comprobar patrón</button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={open}>

@@ -40,7 +40,7 @@ export const levels: Level[] = [
     {
         level: 1,
         // targetQuantity: 3,
-        targetQuantity: 5,
+        targetQuantity: 3,
         targetText: "Una columna o una fila de 5 números",
         // Objetivo: Una columna o fila de 5 numeros
         patterns: [
@@ -59,7 +59,7 @@ export const levels: Level[] = [
             {
                 name: "Junior Bot",
                 // Tiempo de respuesta del bot en milisegundos
-                interval: 500,
+                interval: 2400,
                 //                 interval: 2400,
             }
         ]

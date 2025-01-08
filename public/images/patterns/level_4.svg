@@ -18,11 +18,11 @@
   O O O O O
   -->
 
-  <rect x="40" y="40" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="120" y="40" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="80" y="80" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="40" y="120" width="40" height="40" fill="yellow" stroke="black"/>
-  <rect x="120" y="120" width="40" height="40" fill="yellow" stroke="black"/>
+  <rect x="40" y="40" width="40" height="40" fill="rgb(6,182,212)" stroke="black"/>
+  <rect x="120" y="40" width="40" height="40" fill="rgb(6,182,212)" stroke="black"/>
+  <rect x="80" y="80" width="40" height="40" fill="rgb(6,182,212)" stroke="black"/>
+  <rect x="40" y="120" width="40" height="40" fill="rgb(6,182,212)" stroke="black"/>
+  <rect x="120" y="120" width="40" height="40" fill="rgb(6,182,212)" stroke="black"/>
 
 
 
