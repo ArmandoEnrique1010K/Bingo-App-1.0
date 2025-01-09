@@ -20,8 +20,14 @@ export const getRowNumbers = (row: number) => {
 
         // Realiza un shuffle sin mutar el arreglo original
         const shuffledValues = fisherYatesShuffle([...selectedRow.values]);
-
-        return shuffledValues.slice(0, 5);
+        const result = shuffledValues.slice(0, 5);
+        // console.log(shuffledValues)
+        // console.log(result)
+        // EL CENTRO DEBE SER UN 0
+        if (row === 3) {
+            result[2] = 0;
+        }
+        return result
     }
 
     return []

@@ -81,8 +81,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     useEffect(() => {
         setBoard(generateBoard());
         setTargets([]);
-        setSelectedPositions([]);
-        setSelectedNumbers([]);
+        setSelectedPositions([13]);
+        setSelectedNumbers([0]);
         setRound(0);
         setVictory(false);
         setDefeat(false)
@@ -96,8 +96,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         if (defeat === false) {
             setBoard(generateBoard());
             setTargets([]);
-            setSelectedPositions([]);
-            setSelectedNumbers([]);
+            setSelectedPositions([13]);
+            setSelectedNumbers([0]);
             setRound(0);
             setVictory(false)
         }

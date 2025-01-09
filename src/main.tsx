@@ -6,7 +6,9 @@ import App from './App.tsx'
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-  </StrictMode>,
+  </StrictMode>
+  // <App />
+
 )
 
 // https://platzi.com/clases/3578-npm/52462-eliminacion-de-dependencias-y-package-lock/

@@ -17,7 +17,8 @@ export default function ButtonNumber({ handleClickButton, handleSelectedNumber, 
 
                 onClick={() => handleClickButton(n.number, n.position)}>
                 {/* {n.position} --- */}
-                {n.number}
+                {n.position === 13 ? 'Free' : n.number}
+                {/* {n.number} */}
             </button>
 
         </>

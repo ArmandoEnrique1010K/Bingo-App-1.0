@@ -197,16 +197,16 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // Si el jugador gana, se debe reiniciar el bot
     useEffect(() => {
         setBotBoard(generateBoard());
-        setBotSelectedPositions([]);
-        setBotSelectedNumbers([]);
+        setBotSelectedPositions([13]);
+        setBotSelectedNumbers([0]);
     }, [dataLevel.level])
 
     // Si el bot gana, debe reiniciar el bot
     useEffect(() => {
         if (defeat === false) {
             setBotBoard(generateBoard());
-            setBotSelectedPositions([]);
-            setBotSelectedNumbers([]);
+            setBotSelectedPositions([13]);
+            setBotSelectedNumbers([0]);
         }
     }, [defeat])
 
