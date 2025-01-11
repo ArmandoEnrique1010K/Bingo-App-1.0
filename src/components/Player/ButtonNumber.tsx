@@ -1,9 +1,9 @@
 type ButtonNumberProps = {
-    handleClickButton: (number: number, position: number) => void,
-    handleSelectedNumber: (position: number) => boolean,
+    handleClickButton: (number: number, position: { x: number, y: number }) => void,
+    handleSelectedNumber: (position: { x: number, y: number }) => boolean,
     n: {
         number: number,
-        position: number
+        position: { x: number, y: number }
     },
 }
 
@@ -13,11 +13,12 @@ export default function ButtonNumber({ handleClickButton, handleSelectedNumber, 
             <button
                 // className="p-2 border-solid border-red-950 border-2 bg-red-300" 
                 // className={`text-xl p-4 border-solid border-red-950 border-2 ${handleSelectedNumber(n.number, n.position)}`}
-                className={`text-2xl font-bold w-16 h-16 border-none rounded-lg text-white hover:bg-cyan-700 active:bg-cyan-600 transition duration-300 ${handleSelectedNumber(n.position) === true ? "bg-cyan-500" : "bg-gray-500"}`}
+                className={`text-2xl font-bold w-16 h-16 border-none rounded-lg text-white hover:bg-cyan-700 active:bg-cyan-600 transition duration-300 
+                    ${handleSelectedNumber({ x: n.position.x, y: n.position.y }) === true ? "bg-cyan-500" : "bg-gray-500"}`}
 
-                onClick={() => handleClickButton(n.number, n.position)}>
+                onClick={() => handleClickButton(n.number, { x: n.position.x, y: n.position.y })}>
                 {/* {n.position} --- */}
-                {n.position === 13 ? 'Free' : n.number}
+                {n.position.y === 2 && n.position.x === 2 ? 'Free' : n.number}
                 {/* {n.number} */}
             </button>
 

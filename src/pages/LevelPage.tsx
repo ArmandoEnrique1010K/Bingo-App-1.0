@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { levels } from "../data/levels";
 import { generateTargets } from "../utils/generateTargets";
 import { generateBoard } from "../utils/generateBoard";
-import { Board } from "../types";
+import { Board, Pattern } from "../types";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
@@ -14,30 +14,21 @@ import VictoryModal from "../components/Modal/VictoryModal";
 type LevelPageProps = {
     level: number
     unlockLevel: (number: number) => void
-    // unlockPowerUp: (powerUpId: number) => void
-    // unlockedPowerUps: number[]
 }
 export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
-    // Buscar el nivel en el arreglo de niveles para obtener los datos
-    const dataLevel = levels.find(l => l.level === level) || levels[0];
+    // Obtiene los datos del nivel actual usando el metodo find.
+    // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi nula de que suceda eso)
+    const currentLevel = levels.find(l => l.level === level) || levels[0];
 
-    // // Estado para el nivel actual
-    // const [currentLevel] = useState<number>(dataLevel.level)
+    // Variables de estado
+    const [board, setBoard] = useState<Board>([]); // Tablero
+    const [targets, setTargets] = useState<number[]>([]); // Numeros objetivos
+    const [patterns, setPatterns] = useState<Pattern[]>([]); // Patrones ganadores
 
+    // Posiciones de los numeros que ha seleccionado el usuario
+    const [selectedPositions, setSelectedPositions] = useState<{ x: number, y: number }[]>([]);
 
-    // Estado para el los numeros del tablero
-    const [board, setBoard] = useState<Board>([]);
-
-    // Estado para los números objetivo
-    const [targets, setTargets] = useState<number[]>([]);
-
-    // Estado para los posibles patrones ganadores
-    const [patterns, setPatterns] = useState<number[][]>([]);
-
-
-    // Estado para almacenar las posiciones de los números que ha seleccionado el usuario
-    const [selectedPositions, setSelectedPositions] = useState<number[]>([]);
     // Estado para almacenar los números que ha seleccionado el usuario
     const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
 
@@ -57,9 +48,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // Efecto para cargar los posibles patrones
     useEffect(() => {
-        const patterns = dataLevel.patterns;
+        const patterns = currentLevel.patterns;
         setPatterns(patterns);
-    }, [dataLevel])
+    }, [currentLevel])
 
 
     // Efecto para cargar el tablero
@@ -83,7 +74,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     useEffect(() => {
         setBoard(generateBoard());
         setTargets([]);
-        setSelectedPositions([13]);
+        // setSelectedPositions([13]);
+        setSelectedPositions([{ x: 2, y: 2 }]);
         setSelectedNumbers([0]);
         setRound(0);
         setVictory(false);
@@ -98,7 +90,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         if (defeat === false) {
             setBoard(generateBoard());
             setTargets([]);
-            setSelectedPositions([13]);
+            setSelectedPositions([{ x: 2, y: 2 }]);
             setSelectedNumbers([0]);
             setRound(0);
             setVictory(false)
@@ -113,7 +105,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setTargets([]);
         setRound(round + 1)
         setTimeout(() => {
-            setTargets(generateTargets(dataLevel.targetQuantity));
+            setTargets(generateTargets(currentLevel.targetQuantity));
         }, 1000)
     }
 
@@ -134,20 +126,27 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Función para marcar un número seleccionado
-    const handleClickButton = (number: number, position: number) => {
+    const handleClickButton = (number: number, position: { x: number, y: number }) => {
         // Si uno de los números seleccionados es igual al número objetivo, se agrega la posición a los números seleccionados
         if (targets.includes(number)) {
             if (!handleVerifySelectedNumber(number)) {
                 setSelectedPositions([...selectedPositions, position]);
                 setSelectedNumbers([...selectedNumbers, number]);
-                console.log("Numero seleccionado: " + number)
+                console.log("El usuario selecciono el numero: " + number)
             }
         }
     }
 
     // Función para aplicar un estilo al número seleccionado según su posición
-    const handleSelectedNumber = (position: number) => {
-        if (selectedPositions.includes(position)) {
+    const handleSelectedNumber = (position: { x: number, y: number }) => {
+        // console.log("Posiciones seleccionadas: " + JSON.stringify(selectedPositions))
+
+        // Ejemplo: [{x: 2, y:2}, {x:1, y:1}]
+
+        // if (selectedPositions.includes(position)) {
+        // }
+
+        if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
             // console.log("La casilla del numero " + number + " ha sido seleccionada")
             // console.log("La casilla de la posición " + position + " ha sido seleccionada")
             return true;
@@ -171,7 +170,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Función para verificar si el usuario ha completado un patrón ganador
     const handleCheckWinnerPattern = () => {
         // Verifica si los numeros que se encuentra en positionTarget, coinciden con los numeros (todos los numeros) de un arreglo que se encuentra en patterWinner
-        if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
+        // if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
+
+        // TODO: DIFERENCIA ENTRE EVERY, SOME E INCLUDES
+        if (patterns?.some(p => p.every(n => selectedPositions.some(pos => pos.x === n.x && pos.y === n.y)))) {
+
             console.log("El jugador ha ganado el nivel " + level)
             setVictory(true);
             setDefeat(false) // Redundancia
@@ -413,7 +416,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
 
                         {/* Componente del patrón ganador */}
-                        <TargetPattern level={dataLevel.level} text={dataLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
 
                         {/* Este boton es para comprobar el patron ganador */}
                         {/* <button
@@ -455,25 +458,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 {/* TODO: AUN NO ES RESPONSIVO */}
                 <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
                     {
-                        dataLevel.bots.map((bot) => (
+                        currentLevel.bots.map((bot) => (
 
-                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
+                            <Bots key={bot.name} dataLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
 
-                            // delayedSlowBot={delayedSlowBot} 
-                            // activateTurnOffBot={activateTurnOffBot}
-
-                            //     // turnedOff={turnedOff} setTurnedOff={setTurnedOff}
-
-                            //     selectedBot={selectedBot} 
-                            //     setSelectedBot={setSelectedBot} handleSelectedBot={handleSelectedBot} 
-                            //     bots={dataLevel.bots}
-                            //     turnedOffBots={turnOffBotRoundsLeft}
-
-                            //
-                            // showBotNumbers={showBotNumbers}
                             />
-                            // <Bot key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleGameOver}
-                            // />
                         ))
                     }
                 </div>
@@ -485,7 +474,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             {
                 defeat === true ? (
                     // Esto es una ventana modal que se muestra automaticamente
-                    <DefeatModal level={dataLevel.level} handleSetDefeat={handleSetDefeat} />
+                    <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
                 ) : ""
             }
         </div>

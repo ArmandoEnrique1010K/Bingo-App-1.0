@@ -1,14 +1,15 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
-// import { useMusic } from '../hooks/useMusic'
 
 type IndexProps = {
+    // Arreglo de niveles desbloqueados
     unlockedLevels: number[]
 }
 
+// Pagina de inicio
 export default function IndexPage({ unlockedLevels }: IndexProps) {
 
-
+    // Estado para mostrar los niveles
     const [menuLevels, setMenuLevels] = useState(false)
 
     // Función para mostrar el menú principal
@@ -22,7 +23,7 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
 
             {
                 menuLevels === false ? (
-                    // READY: Este botón debe cubrir toda la pantalla
+                    // Este botón debe cubrir toda la pantalla, al hacer clic en el mostrara los niveles desbloqueados
                     <button
                         className="w-full flex-grow
                         flex items-center justify-center bg-cyan-500 text-white text-2xl font-semibold 
@@ -39,29 +40,19 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                         {/* Grid para niveles desbloqueados */}
                         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-5 gap-4">
                             {
-                                unlockedLevels.map((l: number) => (
+                                // Muestra un enlace para acceder al nivel desbloqueado
+                                unlockedLevels.map((level: number) => (
                                     <Link
-                                        key={l}
-                                        to={`/level_${l}`}
+                                        key={level}
+                                        to={`/level_${level}`}
                                         className="bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:bg-cyan-600 active:bg-cyan-700"
                                     >
-                                        Nivel {l}
+                                        Nivel {level}
                                     </Link>
                                 ))
                             }
                         </div>
-
-
                     </div>
-                    {/* <Link to="/level_1">Nivel 1</Link>
-                    <Link to="/level_2">Nivel 2</Link>
-                    <Link to="/level_3">Nivel 3</Link>
-                    <Link to="/level_4">Nivel 4</Link>
-                    <Link to="/level_5">Nivel 5</Link>
-                    <Link to="/level_6">Nivel 6</Link>
-                    <Link to="/level_7">Nivel 7</Link>
-                    <Link to="/level_8">Nivel 8</Link>
-                    */}
                 </>)
             }
         </div>
