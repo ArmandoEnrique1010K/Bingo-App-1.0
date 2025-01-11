@@ -10,12 +10,15 @@ import Bots from "../components/Bot/Bots";
 import LeaveModal from "../components/Modal/LeaveModal";
 import DefeatModal from "../components/Modal/DefeatModal";
 import VictoryModal from "../components/Modal/VictoryModal";
+import { powerUps } from "../data/powerUps";
 
 type LevelPageProps = {
     level: number
     unlockLevel: (number: number) => void
+    unlockPowerUp: (powerUpId: number) => void
+    unlockedPowerUps: number[]
 }
-export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
+export default function LevelPage({ level, unlockLevel, unlockPowerUp, unlockedPowerUps }: LevelPageProps) {
 
     // Buscar el nivel en el arreglo de niveles para obtener los datos
     const dataLevel = levels.find(l => l.level === level) || levels[0];
@@ -156,6 +159,16 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         // return "bg-orange-500 text-black"
     }
 
+    // Los powerups se desbloquean al completar los niveles:
+    const powerUpLevels = [3, 6, 9, 12, 15, 18];
+
+    const unlockPowerUpsByLevel = (level: number) => {
+        const index = powerUpLevels.indexOf(level);
+        if (index !== -1) {
+            unlockPowerUp(index + 1); // Desbloquea el power-up correspondiente
+        }
+    };
+
     // Función para verificar si el usuario ha completado un patrón ganador
     const handleCheckWinnerPattern = () => {
         // Verifica si los numeros que se encuentra en positionTarget, coinciden con los numeros (todos los numeros) de un arreglo que se encuentra en patterWinner
@@ -172,6 +185,15 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 unlockLevel(level + 1);
             }
             // showModalVictory(true)
+
+            // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
+            // if (level === 3){
+            //     unlockPowerUp(1)
+            // }
+
+            // Trata de desbloquear un powerup
+            unlockPowerUpsByLevel(level)
+
             return true;
         } else {
             console.log("Sigue intentando")
@@ -220,6 +242,139 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Clarividencia (tu puedes ver los números de los bots por 5 rondas)
 
 
+    //console.log(unlockedPowerUps)
+    // [1, 2]
+
+    // Buscar powerups desbloqueado por cada elemento de unlockedPowerUps
+    //console.log(powerUps)
+
+    // console.log(unlockedPowerUps)
+    // const unlockedPowerUpsList = powerUps.filter(p => unlockedPowerUps.includes(p.id));
+    // unlockedPowerUpsList.forEach(p => {
+    //     console.log(`Power-Up Desbloqueado: ${p.name}`);
+    // });
+
+    const statusPowerUps = powerUps.map(p => p.status)
+    const [powerUpsStatus, setPowerUpsStatus] = useState<boolean[]>(statusPowerUps);
+
+    // PRIMER POTENCIADOR
+    const [delayedSlowBot, setDelayedSlowBot] = useState(1);
+    const [slowBotNumbersRoundsLeft, setSlowBotNumbersRoundsLeft] = useState(0);
+
+    // SEGUNDO POTENCIADOR
+    const [turnOffBotRoundsLeft, setTurnOffBotRoundsLeft] = useState<{ [key: string]: number }>({});
+    //  const [activateTurnOffBot, setActivateTrunOffBot] = useState(false) // Activado el potenciador
+    const [selectedBot, setSelectedBot] = useState('') // Bot seleccionado
+
+    // const [turnedOff, setTurnedOff] = useState(false); // Apagado del bot
+    const [activateTurnOffBot, setActivateTurnOffBot] = useState<boolean>(false);
+
+    const handleActivatePowerUp = (powerUpId: number) => {
+        // SLOW BOTS
+        if (powerUpId === 1) {
+            // Tiempo de retraso (triplica el tiempo de demora del bot)
+            setDelayedSlowBot(3);
+            setSlowBotNumbersRoundsLeft(5);
+            // Slice requiere 2 argumentos, la posición inicial y la posición final
+            const newArray = [
+                ...powerUpsStatus.slice(0, powerUpId - 1),
+                false,
+                ...powerUpsStatus.slice(powerUpId)
+            ]
+
+            setPowerUpsStatus(newArray);
+            console.log('ID DEL POTENCIADOR: ' + powerUpId)
+            console.log(newArray)
+            console.log(newArray[powerUpId - 1])
+            console.log('Todos los bots van a ser lentos durante 5 turnos')
+        }
+
+        // TURN OFF BOT
+        if (powerUpId === 2) {
+            // ACTIVA EL POTENCIADOR PARA SELECCIONAR UN BOT
+            setActivateTurnOffBot(true)
+
+
+            setTurnOffBotRoundsLeft(5)
+            const newArray = [
+                ...powerUpsStatus.slice(0, powerUpId - 1),
+                false,
+                ...powerUpsStatus.slice(powerUpId)
+            ]
+
+            setPowerUpsStatus(newArray);
+
+
+
+            console.log('Un bot se va a desactivar, seleccione un bot')
+        }
+    }
+
+    const handleSelectedBot = (botId: string) => {
+        setSelectedBot(botId);
+        setTurnOffBotRoundsLeft(prev => ({ ...prev, [botId]: 5 }));
+        setActivateTurnOffBot(false);
+        console.log(`El bot ${botId} se ha desactivado por 5 turnos`);
+    };
+
+    // EFECTO PARA RALENTIZAR BOTS
+    useEffect(() => {
+        if (slowBotNumbersRoundsLeft > 0) {
+            setSlowBotNumbersRoundsLeft(slowBotNumbersRoundsLeft - 1);
+
+            if (slowBotNumbersRoundsLeft === 1) {
+                // Última ronda: desactiva el power-up
+                setDelayedSlowBot(1)
+                console.log('SE ACABO EL EFECTO DE SLOW BOT')
+            }
+        }
+    }, [round]); // Ejecuta cada vez que `round` cambia
+
+
+    // FUNCIONA, SELECCIONA EL BOT Y LO DESACTIVA
+    // useEffect(() => {
+    //     if (selectedBot !== "") {
+    //         setActivateTrunOffBot(false)
+    //         // Apaga el bot
+    //         setTurnedOff(true)
+    //         console.log("EL BOT " + selectedBot + " SE DESACTIVO POR 5 TURNOS")
+    //     }
+
+    //     if (turnOffBotRoundsLeft > 0) {
+    //         setTurnOffBotRoundsLeft(turnOffBotRoundsLeft - 1);
+
+    //         if (turnOffBotRoundsLeft === 1) {
+    //             // Última ronda: desactiva el power-up
+    //             setTurnedOff(false)
+    //             setSelectedBot("")
+    //             console.log('SE ACABO EL EFECTO DE TURN OFF BOT')
+    //         }
+    //     }
+
+    // }, [selectedBot, round])
+
+    useEffect(() => {
+        const updatedRoundsLeft = { ...turnOffBotRoundsLeft };
+        Object.keys(turnOffBotRoundsLeft).forEach(botId => {
+            if (turnOffBotRoundsLeft[botId] > 0) {
+                updatedRoundsLeft[botId] -= 1;
+
+                if (turnOffBotRoundsLeft[botId] === 1) {
+                    delete updatedRoundsLeft[botId];
+                    console.log(`Se acabó el efecto de TURN OFF BOT para el bot ${botId}`);
+                }
+            }
+        });
+        setTurnOffBotRoundsLeft(updatedRoundsLeft);
+    }, [round]);
+
+
+    // const unlocked = powerUps.filter(p => p.id);
+    // unlocked.forEach(p => {
+    //     console.log(`Power-Up Desbloqueado: ${p.name}`);
+    // });
+
+
 
     // // Powerup para marcar numeros aleatorios
 
@@ -237,6 +392,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const handleSetVictory = (boolean: boolean) => {
         setVictory(boolean)
     }
+
+
 
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
@@ -283,6 +440,29 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                     </div>
                     <div className="flex flex-col">
+                        {
+                            powerUps.filter(p => unlockedPowerUps.includes(p.id)).map(p => (
+                                <div key={p.id}>
+                                    {
+                                        powerUpsStatus[p.id - 1] === true ? (
+                                            <button className="mx-2 bg-green-500" onClick={() => handleActivatePowerUp(p.id)}>{p.name}</button>
+                                        ) : (
+                                            ""
+                                        )
+                                    }
+
+                                    {
+                                        powerUpsStatus[p.id - 1] === false ? (
+                                            <div className="bg-red-600">{p.name}</div>
+                                        ) : (
+                                            ""
+                                        )
+
+                                    }
+                                </div>
+
+                            ))
+                        }
                         <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
                         <div className="bg-gray-700 flex flex-row gap-3 px-3 justify-center items-center rounded-b-xl py-4">
                             <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
@@ -301,7 +481,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     {
                         dataLevel.bots.map((bot) => (
 
-                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
+                            <Bots key={bot.name} dataLevel={dataLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory} delayedSlowBot={delayedSlowBot} activateTurnOffBot={activateTurnOffBot}
+
+                                // turnedOff={turnedOff} setTurnedOff={setTurnedOff}
+
+                                selectedBot={selectedBot} setSelectedBot={setSelectedBot} handleSelectedBot={handleSelectedBot} bots={dataLevel.bots}
 
                             //
                             // showBotNumbers={showBotNumbers}

@@ -27,3 +27,11 @@ export type Board = {
     position: number,
     number: number
 }[]
+
+
+// POTENCIADOR
+export type PowerUp = {
+    id: number,
+    name: string,
+    status: boolean
+}

@@ -15,11 +15,12 @@ type BotsProps = {
     handleSetDefeat: (boolean: boolean) => void,
     defeat: boolean,
     handleSetVictory: (boolean: boolean) => void,
-    victory: boolean
+    victory: boolean,
+    delayedSlowBot: number
 
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory, delayedSlowBot, activateTurnOffBot, selectedBot, setSelectedBot, turnedOff }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -68,7 +69,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             // }, dynamicInterval() * interval * (index + 1)); // Incrementa el tiempo de espera para cada número
             const timeoutId = setTimeout(() => {
                 handleCheckNumber(target.number, target.position);
-            }, dynamicInterval() * interval * (index + 1));
+            }, dynamicInterval() * interval * delayedSlowBot * (index + 1));
 
             timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
 
@@ -95,6 +96,8 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
     // Función para marcar el numero de forma automatica
     const handleCheckNumber = (number: number, position: number) => {
+
+        // SI ESTA ACTIVO EL SEGUNDO POWERUP, NO MARCA LOS NUMEROS
         setBotSelectedNumbers((prev) => {
             if (!prev.includes(number)) {
                 return [...prev, number];
@@ -210,6 +213,16 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
         }
     }, [defeat])
 
+
+    // SEGUNDO POWERUPS
+    const handleSelectedBot = (name: string) => {
+        setSelectedBot(name)
+        console.log(selectedBot);
+
+
+        console.log("BOT " + name + " SELECCIONADO")
+    }
+
     return (
         // md:grid-cols-2 lg:grid-cols-4 
         // <div className="grid grid-cols-4 grid-rows-2 gap-6 p-4 bg-gray-900 rounded-lg shadow-lg">
@@ -230,18 +243,35 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                     />
                 </div>
             ))} */}
+            {
+                activateTurnOffBot === true ? (
+                    <button
+                        className="flex flex-col items-center p-2 bg-red-700 rounded-lg shadow-md"
+                        onClick={() => handleSelectedBot(name)}
+                    >
+                        <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
+                        <BotBoardNumbers
+                            board={botBoard}
+                            handleSelectedNumber={handleSelectedNumber}
+                        // showBotNumbers={showBotNumbers}
+                        />
 
-            <div
-                className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
-            >
-                <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
-                <BotBoardNumbers
-                    board={botBoard}
-                    handleSelectedNumber={handleSelectedNumber}
-                // showBotNumbers={showBotNumbers}
-                />
+                    </button>
+                ) : (
+                    <div
+                        className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
+                    >
+                        <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
+                        <BotBoardNumbers
+                            board={botBoard}
+                            handleSelectedNumber={handleSelectedNumber}
+                        // showBotNumbers={showBotNumbers}
+                        />
 
-            </div>
+                    </div>
+
+                )
+            }
         </>
 
     )

@@ -15,11 +15,26 @@ export default function Router() {
         return localStorageLevels ? JSON.parse(localStorageLevels) : [1]
     }
 
+    const initialPowerUps = (): number[] => {
+        const localStoragePowerUps = localStorage.getItem('unlockedPowerUps')
+        // Siempre el nivel 1 estara desbloqueado
+        return localStoragePowerUps ? JSON.parse(localStoragePowerUps) : []
+    }
+
     const [unlockedLevels, setUnlockedLevels] = useState<number[]>(initialLevels)
+
+    // Estado para los powerups
+    const [unlockedPowerUps, setUnlockedPowerUps] = useState<number[]>(initialPowerUps)
 
     useEffect(() => {
         localStorage.setItem('unlockedLevels', JSON.stringify(unlockedLevels))
     }, [unlockedLevels])
+
+
+    // FALTA
+    useEffect(() => {
+        localStorage.setItem('unlockedPowerUps', JSON.stringify(unlockedPowerUps))
+    }, [unlockedPowerUps])
 
     const unlockLevel = (level: number) => {
         if (!verifyUnlockedLevel(level)) {
@@ -31,6 +46,18 @@ export default function Router() {
     const verifyUnlockedLevel = (level: number) => {
         return unlockedLevels.includes(level);
     };
+
+    // DESBLOQUEAR POWERUPS
+    const unlockPowerUp = (powerUpId: number) => {
+        if (!verifyUnlockedPowerUp(powerUpId)) {
+            setUnlockedPowerUps([...unlockedPowerUps, powerUpId])
+        }
+    }
+
+    // Verificar que el powerup ya se encuentre desbloqueado
+    const verifyUnlockedPowerUp = (powerUpId: number) => {
+        return unlockedPowerUps.includes(powerUpId)
+    }
 
     // TODO: Investigar sobre Protected Routes
 
@@ -68,7 +95,7 @@ export default function Router() {
                         unlockedLevels.map((level) => (
                             <Route key={level} path={`/level_${level}`} element={
                                 <Suspense fallback="Cargando...">
-                                    <Level level={level} unlockLevel={unlockLevel} />
+                                    <Level level={level} unlockLevel={unlockLevel} unlockPowerUp={unlockPowerUp} unlockedPowerUps={unlockedPowerUps} />
                                 </Suspense>
                             } />
                         ))
