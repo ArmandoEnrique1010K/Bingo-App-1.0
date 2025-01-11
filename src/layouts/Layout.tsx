@@ -5,7 +5,6 @@ import Help from '../components/Menu/Help';
 
 export default function Layout() {
 
-
     // Este componente representa la barra de menu
     return (
 

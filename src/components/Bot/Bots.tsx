@@ -16,15 +16,10 @@ type BotsProps = {
     defeat: boolean,
     handleSetVictory: (boolean: boolean) => void,
     victory: boolean,
-    delayedSlowBot: number
-    handleSelectedBot: (botId: string) => void
 
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory, delayedSlowBot, activateTurnOffBot, selectedBot, setSelectedBot,
-    // turnedOff, setTurnedOff, 
-
-    handleSelectedBot, bots, turnedOffBots }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -74,7 +69,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             const timeoutId = setTimeout(() => {
 
                 handleCheckNumber(target.number, target.position);
-            }, dynamicInterval() * interval * delayedSlowBot * (index + 1));
+            }, dynamicInterval() * interval * (index + 1));
 
             timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
 
@@ -103,28 +98,23 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     const handleCheckNumber = (number: number, position: number) => {
 
         // TODO: SOLAMENTE DEBERIA SELECCIONAR UN BOT PARA DESACTIVARLO
-        console.log(dataLevel.bots);
-        console.log(turnedOffBots);
         // SI ESTA ACTIVO EL SEGUNDO POWERUP, NO MARCA LOS NUMEROS
         // if (turnedOff === false) {
-        if (!Object.keys(turnedOffBots).includes(bots.name)) {
 
-            setBotSelectedNumbers((prev) => {
-                if (!prev.includes(number)) {
-                    return [...prev, number];
-                }
-                return prev;
-            });
+        setBotSelectedNumbers((prev) => {
+            if (!prev.includes(number)) {
+                return [...prev, number];
+            }
+            return prev;
+        });
 
-            setBotSelectedPositions((prev) => {
-                if (!prev.includes(position)) {
-                    return [...prev, position];
-                }
-                return prev;
-            })
-        } else {
-            return
-        }
+        setBotSelectedPositions((prev) => {
+            if (!prev.includes(position)) {
+                return [...prev, position];
+            }
+            return prev;
+        })
+
     }
 
     // Función para seleccionar un numero
@@ -260,33 +250,20 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                 </div>
             ))} */}
             {
-                activateTurnOffBot === true ? (
-                    <button
-                        className="flex flex-col items-center p-2 bg-red-700 rounded-lg shadow-md"
-                        onClick={() => handleSelectedBot(name)}
-                    >
-                        <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
-                        <BotBoardNumbers
-                            board={botBoard}
-                            handleSelectedNumber={handleSelectedNumber}
-                        // showBotNumbers={showBotNumbers}
-                        />
 
-                    </button>
-                ) : (
-                    <div
-                        className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
-                    >
-                        <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
-                        <BotBoardNumbers
-                            board={botBoard}
-                            handleSelectedNumber={handleSelectedNumber}
-                        // showBotNumbers={showBotNumbers}
-                        />
+                <div
+                    className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
+                >
+                    <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
+                    <BotBoardNumbers
+                        board={botBoard}
+                        handleSelectedNumber={handleSelectedNumber}
+                    // showBotNumbers={showBotNumbers}
+                    />
 
-                    </div>
+                </div>
 
-                )
+
             }
         </>
 

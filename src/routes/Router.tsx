@@ -4,59 +4,35 @@ import Layout from "../layouts/Layout";
 
 // Mejora el performance de la aplicación web al momento de hacer un build
 const IndexPage = lazy(() => import('../pages/IndexPage'));
-const Level = lazy(() => import('../pages/LevelPage'));
+const LevelPage = lazy(() => import('../pages/LevelPage'));
 
 export default function Router() {
 
-    // Estado para los niveles desbloqueados
+    // Almacenar los niveles desbloqueados en un arreglo utilizando LocalStorage
     const initialLevels = (): number[] => {
         const localStorageLevels = localStorage.getItem('unlockedLevels')
         // Siempre el nivel 1 estara desbloqueado
         return localStorageLevels ? JSON.parse(localStorageLevels) : [1]
     }
 
-    const initialPowerUps = (): number[] => {
-        const localStoragePowerUps = localStorage.getItem('unlockedPowerUps')
-        // Siempre el nivel 1 estara desbloqueado
-        return localStoragePowerUps ? JSON.parse(localStoragePowerUps) : []
-    }
-
+    // Estado para los niveles desbloqueados
     const [unlockedLevels, setUnlockedLevels] = useState<number[]>(initialLevels)
 
-    // Estado para los powerups
-    const [unlockedPowerUps, setUnlockedPowerUps] = useState<number[]>(initialPowerUps)
-
+    // Efecto para desbloquear los niveles
     useEffect(() => {
         localStorage.setItem('unlockedLevels', JSON.stringify(unlockedLevels))
     }, [unlockedLevels])
-
-
-    // FALTA
-    useEffect(() => {
-        localStorage.setItem('unlockedPowerUps', JSON.stringify(unlockedPowerUps))
-    }, [unlockedPowerUps])
-
-    const unlockLevel = (level: number) => {
-        if (!verifyUnlockedLevel(level)) {
-            setUnlockedLevels([...unlockedLevels, level])
-        }
-    }
 
     // Función para verificar que el nivel ya se encuentre desbloqueado
     const verifyUnlockedLevel = (level: number) => {
         return unlockedLevels.includes(level);
     };
 
-    // DESBLOQUEAR POWERUPS
-    const unlockPowerUp = (powerUpId: number) => {
-        if (!verifyUnlockedPowerUp(powerUpId)) {
-            setUnlockedPowerUps([...unlockedPowerUps, powerUpId])
+    // Función para desbloquear un ivel
+    const unlockLevel = (level: number) => {
+        if (!verifyUnlockedLevel(level)) {
+            setUnlockedLevels([...unlockedLevels, level])
         }
-    }
-
-    // Verificar que el powerup ya se encuentre desbloqueado
-    const verifyUnlockedPowerUp = (powerUpId: number) => {
-        return unlockedPowerUps.includes(powerUpId)
     }
 
     // TODO: Investigar sobre Protected Routes
@@ -88,21 +64,19 @@ export default function Router() {
                             <Level level={3} unlockLevel={unlockLevel} />
                         </Suspense>
                     } />
- */}
+                    */}
 
                     {/* // READY: Esto debe ser dinamico (Ruta dinamica hacia los niveles desbloqueados) */}
                     {
                         unlockedLevels.map((level) => (
                             <Route key={level} path={`/level_${level}`} element={
                                 <Suspense fallback="Cargando...">
-                                    <Level level={level} unlockLevel={unlockLevel} unlockPowerUp={unlockPowerUp} unlockedPowerUps={unlockedPowerUps} />
+                                    <LevelPage level={level} unlockLevel={unlockLevel}
+                                    />
                                 </Suspense>
                             } />
                         ))
                     }
-
-                    {/* Algo no funciona aqui */}
-                    {/* <Route path="/**" element={<Navigate to={'/'} />}></Route> */}
 
                     {/* Ahora si funciona, si se va a cualquier otra pagina o INTENTA HACER TRAMPA SALTEANDO DE NIVEL, se le va a redirigir hacia la pagina principal */}
                     <Route path="*" element={<Navigate to="/" />} />
