@@ -29,11 +29,14 @@ export type Numbers = {
 
 // Cada numero del tablero tiene una posicion y el numero
 export type Board = {
-    x: number,
-    y: number
+    position: Position
     number: number
 }[]
 
+export type Position = {
+    x: number,
+    y: number
+}
 
 // POTENCIADOR
 export type PowerUp = {

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
-import { Board, Level } from "../../types";
+import { Board, Level, Pattern } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
 
@@ -9,7 +9,7 @@ type BotsProps = {
     targets: number[],
     interval: number,
     name: string,
-    patterns: number[][],
+    patterns: Pattern[]
     handleGameOver: () => void,
     // showBotNumbers: boolean
     handleSetDefeat: (boolean: boolean) => void,
@@ -25,7 +25,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     const [botBoard, setBotBoard] = useState<Board>([])
 
     // Estado para almacenar las posiciones de los números que ha seleccionado el bot
-    const [botSelectedPositions, setBotSelectedPositions] = useState<number[]>([]);
+    const [botSelectedPositions, setBotSelectedPositions] = useState<{ x: number, y: number }[]>([]);
 
     // Estado para almacenar los números que ha seleccionado el bot
     const [botSelectedNumbers, setBotSelectedNumbers] = useState<number[]>([]);
@@ -73,7 +73,6 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
             timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
 
-
             // Limpiar temporizadores si los objetivos cambian
             return () => {
                 timeoutIdsRef.current.forEach((id) => clearTimeout(id));
@@ -88,14 +87,16 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
         // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
         if (targets && targets.length > 0) {
             const arrayTargets = botBoard.filter(n => targets.includes(n.number));
-            console.log(arrayTargets);
+            // console.log("Numeros objetivos " + JSON.stringify(arrayTargets));
+            console.log(`Números objetivos: `)
+            console.log(arrayTargets)
         }
     }, [targets])
 
 
 
     // Función para marcar el numero de forma automatica
-    const handleCheckNumber = (number: number, position: number) => {
+    const handleCheckNumber = (number: number, position: { x: number, y: number }) => {
 
         // TODO: SOLAMENTE DEBERIA SELECCIONAR UN BOT PARA DESACTIVARLO
         // SI ESTA ACTIVO EL SEGUNDO POWERUP, NO MARCA LOS NUMEROS
@@ -109,11 +110,26 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
         });
 
         setBotSelectedPositions((prev) => {
-            if (!prev.includes(position)) {
+
+            // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+
+            // if (!prev.includes(position)) {
+            //     return [...prev, position];
+            // }
+
+            if (!prev.some((pos: { x: number, y: number }) => pos.x === position.x && pos.y === position.y)) {
                 return [...prev, position];
             }
+
             return prev;
         })
+
+        // setBotSelectedPositions((prev: { x: number, y: number }) => {
+        //     if (!prev.some(pos => pos.x === position.x && pos.y === position.y)) {
+        //         return [...prev, position];
+        //     }
+        //     return prev;
+        // })
 
     }
 
@@ -132,8 +148,17 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // }
 
     // TODO: Esto se tiene que desactivar???
-    const handleSelectedNumber = (number: number) => {
-        return botSelectedNumbers.includes(number)
+    const handleSelectedPosition = (position: { x: number, y: number }) => {
+        // return botSelectedPositions.some()
+
+        if (botSelectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+            return true;
+        }
+        return false;
+
+
+
+        // return botSelectedNumbers.includes(number)
     };
 
 
@@ -154,8 +179,14 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
     // Función para verificar si el oponente ha ganado
     const handleCheckWinnerPatternBot = () => {
-        if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
-            console.log("Tu oponente " + name + " ganó el nivel " + dataLevel.level);
+        // ANTES:
+        // if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
+        if (patterns?.some(p => p.every(n => botSelectedPositions.some(pos => pos.x === n.x && pos.y === n.y)))) {
+
+
+            // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+
+            console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero, tienes 5 segundos para intentar ganarle, nivel: " + dataLevel.level);
 
 
             // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
@@ -206,7 +237,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // Si el jugador gana, se debe reiniciar el bot
     useEffect(() => {
         setBotBoard(generateBoard());
-        setBotSelectedPositions([13]);
+        setBotSelectedPositions([{ x: 2, y: 2 }]);
         setBotSelectedNumbers([0]);
     }, [dataLevel.level])
 
@@ -214,7 +245,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     useEffect(() => {
         if (defeat === false) {
             setBotBoard(generateBoard());
-            setBotSelectedPositions([13]);
+            setBotSelectedPositions([{ x: 2, y: 2 }]);
             setBotSelectedNumbers([0]);
         }
     }, [defeat])
@@ -257,7 +288,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                     <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
                     <BotBoardNumbers
                         board={botBoard}
-                        handleSelectedNumber={handleSelectedNumber}
+                        handleSelectedPosition={handleSelectedPosition}
                     // showBotNumbers={showBotNumbers}
                     />
 

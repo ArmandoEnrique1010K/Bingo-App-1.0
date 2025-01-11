@@ -14,12 +14,12 @@ export default function RowNumbers({ numberBoard, handleSelectedNumber, handleCl
         <>
             <div className="flex flex-col gap-2">
                 {
-                    numberBoard.filter(n => n.y >= 0 && n.y <= 4 && n.x === max).map((n) => (
+                    numberBoard.filter(n => n.position.y >= 0 && n.position.y <= 4 && n.position.x === max).map((n) => (
                         <ButtonNumber
-                            key={n.y}
+                            key={n.position.y}
                             handleSelectedNumber={handleSelectedNumber}
                             handleClickButton={handleClickButton}
-                            n={{ number: n.number, position: { x: n.x, y: n.y } }}
+                            n={{ number: n.number, position: { x: n.position.x, y: n.position.y } }}
                         />
                     ))
                 }

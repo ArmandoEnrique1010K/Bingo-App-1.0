@@ -6,7 +6,7 @@ import { Board, Pattern } from "../types";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
-import Bots from "../components/Bot/Bots";
+import Bot from "../components/Bot/Bot";
 import LeaveModal from "../components/Modal/LeaveModal";
 import DefeatModal from "../components/Modal/DefeatModal";
 import VictoryModal from "../components/Modal/VictoryModal";
@@ -177,9 +177,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
             console.log("El jugador ha ganado el nivel " + level)
             setVictory(true);
-            setDefeat(false) // Redundancia
+            setDefeat(false)
+
+            // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
             setTargets([])
-            // setGameOver(true)
+
 
             // Desbloquea el siguiente nivel
             // 20 es el nivel final
@@ -460,7 +462,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     {
                         currentLevel.bots.map((bot) => (
 
-                            <Bots key={bot.name} dataLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
+                            <Bot key={bot.name} dataLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
 
                             />
                         ))

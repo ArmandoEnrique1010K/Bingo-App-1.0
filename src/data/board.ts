@@ -21,128 +21,178 @@ import { Board } from "../types";
 
 export const board: Board = [
     {
-        x: 0,
-        y: 4,
+        position: {
+            x: 0,
+            y: 4,
+        },
         number: 0,
     },
     {
-        x: 0,
-        y: 3,
+        position: {
+            x: 0,
+            y: 3,
+        },
         number: 0
     },
     {
-        x: 0,
-        y: 2,
+        position: {
+            x: 0,
+            y: 2,
+        },
         number: 0
     },
     {
-        x: 0,
-        y: 1,
+        position: {
+            x: 0,
+            y: 1,
+        },
         number: 0
     },
     {
-        x: 0,
-        y: 0,
+        position: {
+            x: 0,
+            y: 0,
+        },
         number: 0
     },
     {
-        x: 1,
-        y: 4,
+        position: {
+            x: 1,
+            y: 4,
+        },
         number: 0,
     },
     {
-        x: 1,
-        y: 3,
+        position: {
+            x: 1,
+            y: 3,
+        },
         number: 0
     },
     {
-        x: 1,
-        y: 2,
+        position: {
+            x: 1,
+            y: 2,
+        },
         number: 0
     },
     {
-        x: 1,
-        y: 1,
+        position: {
+            x: 1,
+            y: 1,
+        },
         number: 0
     },
     {
-        x: 1,
-        y: 0,
+        position: {
+            x: 1,
+            y: 0,
+        },
         number: 0
     },
     {
-        x: 2,
-        y: 4,
+        position: {
+            x: 2,
+            y: 4,
+        },
         number: 0,
     },
     {
-        x: 2,
-        y: 3,
+        position: {
+            x: 2,
+            y: 3,
+        },
         number: 0
     },
     {
-        x: 2,
-        y: 2,
+        position: {
+            x: 2,
+            y: 2,
+        },
         number: 0
     },
     {
-        x: 2,
-        y: 1,
+        position: {
+            x: 2,
+            y: 1,
+        },
         number: 0
     },
     {
-        x: 2,
-        y: 0,
+        position: {
+            x: 2,
+            y: 0,
+        },
         number: 0
     },
     {
-        x: 3,
-        y: 4,
+        position: {
+            x: 3,
+            y: 4,
+        },
         number: 0,
     },
     {
-        x: 3,
-        y: 3,
+        position: {
+            x: 3,
+            y: 3,
+        },
         number: 0
     },
     {
-        x: 3,
-        y: 2,
+        position: {
+            x: 3,
+            y: 2,
+        },
         number: 0
     },
     {
-        x: 3,
-        y: 1,
+        position: {
+            x: 3,
+            y: 1,
+        },
         number: 0
     },
     {
-        x: 3,
-        y: 0,
+        position: {
+            x: 3,
+            y: 0,
+        },
         number: 0
     },
     {
-        x: 4,
-        y: 4,
+        position: {
+            x: 4,
+            y: 4,
+        },
         number: 0,
     },
     {
-        x: 4,
-        y: 3,
+        position: {
+            x: 4,
+            y: 3,
+        },
         number: 0
     },
     {
-        x: 4,
-        y: 2,
+        position: {
+            x: 4,
+            y: 2,
+        },
         number: 0
     },
     {
-        x: 4,
-        y: 1,
+        position: {
+            x: 4,
+            y: 1,
+        },
         number: 0
     },
     {
-        x: 4,
-        y: 0,
+        position: {
+            x: 4,
+            y: 0,
+        },
         number: 0
     }
 ]
