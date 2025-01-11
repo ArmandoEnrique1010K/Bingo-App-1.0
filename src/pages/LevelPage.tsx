@@ -486,6 +486,7 @@ export default function LevelPage({ level, unlockLevel, unlockPowerUp, unlockedP
                                 // turnedOff={turnedOff} setTurnedOff={setTurnedOff}
 
                                 selectedBot={selectedBot} setSelectedBot={setSelectedBot} handleSelectedBot={handleSelectedBot} bots={dataLevel.bots}
+                                turnedOffBots={turnOffBotRoundsLeft}
 
                             //
                             // showBotNumbers={showBotNumbers}

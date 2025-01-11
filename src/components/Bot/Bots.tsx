@@ -17,10 +17,14 @@ type BotsProps = {
     handleSetVictory: (boolean: boolean) => void,
     victory: boolean,
     delayedSlowBot: number
+    handleSelectedBot: (botId: string) => void
 
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory, delayedSlowBot, activateTurnOffBot, selectedBot, setSelectedBot, turnedOff }: BotsProps) {
+export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory, delayedSlowBot, activateTurnOffBot, selectedBot, setSelectedBot,
+    // turnedOff, setTurnedOff, 
+
+    handleSelectedBot, bots, turnedOffBots }: BotsProps) {
 
     // Tablero del bot
     const [botBoard, setBotBoard] = useState<Board>([])
@@ -68,6 +72,7 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
             //     // Temporizador dinamico, asigna por el bot
             // }, dynamicInterval() * interval * (index + 1)); // Incrementa el tiempo de espera para cada número
             const timeoutId = setTimeout(() => {
+
                 handleCheckNumber(target.number, target.position);
             }, dynamicInterval() * interval * delayedSlowBot * (index + 1));
 
@@ -97,20 +102,29 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // Función para marcar el numero de forma automatica
     const handleCheckNumber = (number: number, position: number) => {
 
+        // TODO: SOLAMENTE DEBERIA SELECCIONAR UN BOT PARA DESACTIVARLO
+        console.log(dataLevel.bots);
+        console.log(turnedOffBots);
         // SI ESTA ACTIVO EL SEGUNDO POWERUP, NO MARCA LOS NUMEROS
-        setBotSelectedNumbers((prev) => {
-            if (!prev.includes(number)) {
-                return [...prev, number];
-            }
-            return prev;
-        });
+        // if (turnedOff === false) {
+        if (!Object.keys(turnedOffBots).includes(bots.name)) {
 
-        setBotSelectedPositions((prev) => {
-            if (!prev.includes(position)) {
-                return [...prev, position];
-            }
-            return prev;
-        })
+            setBotSelectedNumbers((prev) => {
+                if (!prev.includes(number)) {
+                    return [...prev, number];
+                }
+                return prev;
+            });
+
+            setBotSelectedPositions((prev) => {
+                if (!prev.includes(position)) {
+                    return [...prev, position];
+                }
+                return prev;
+            })
+        } else {
+            return
+        }
     }
 
     // Función para seleccionar un numero
@@ -126,6 +140,8 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     //     return "bg-orange-500 text-black"
 
     // }
+
+    // TODO: Esto se tiene que desactivar???
     const handleSelectedNumber = (number: number) => {
         return botSelectedNumbers.includes(number)
     };
@@ -215,13 +231,13 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
 
     // SEGUNDO POWERUPS
-    const handleSelectedBot = (name: string) => {
-        setSelectedBot(name)
-        console.log(selectedBot);
+    // const handleSelectedBot = (name: string) => {
+    //     setSelectedBot(name)
+    //     console.log(selectedBot);
+    //     // setTurnedOff(true)
 
-
-        console.log("BOT " + name + " SELECCIONADO")
-    }
+    //     console.log("BOT " + name + " SELECCIONADO")
+    // }
 
     return (
         // md:grid-cols-2 lg:grid-cols-4 
