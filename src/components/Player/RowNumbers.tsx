@@ -3,13 +3,14 @@ import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
     numberBoard: Board,
-    handleSelectedNumber: (position: { x: number, y: number }) => boolean,
-    handleClickButton: (number: number, position: { x: number, y: number }) => void,
+    handleSelectedNumber: (idBoard: number, position: { x: number, y: number }) => boolean,
+    handleClickButton: (idBoard: number, number: number, position: { x: number, y: number }) => void,
     max: number,
+    idBoard: number
 }
 
 
-export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, max }: RowNumbersProps) {
+export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, max, idBoard }: RowNumbersProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
@@ -20,6 +21,7 @@ export default function RowNumbers({ numberBoard, handleSelectedNumber, handleCl
                             handleSelectedNumber={handleSelectedNumber}
                             handleClickButton={handleClickButton}
                             n={{ number: n.number, position: { x: n.position.x, y: n.position.y } }}
+                            idBoard={idBoard}
                         />
                     ))
                 }

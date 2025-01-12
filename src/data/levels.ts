@@ -58,6 +58,7 @@ export const levels: Level[] = [
         level: 1,
         targetQuantity: 3,
         targetText: "Una columna o una fila de 5 números",
+        boards: 2,
         patterns: [
             [{ x: 0, y: 4 }, { x: 0, y: 3 }, { x: 0, y: 2 }, { x: 0, y: 1 }, { x: 0, y: 0 }],
             [{ x: 1, y: 4 }, { x: 1, y: 3 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 1, y: 0 }],
@@ -85,7 +86,7 @@ export const levels: Level[] = [
         level: 2,
         targetQuantity: 3,
         targetText: "Una cruz de 5 números",
-
+        boards: 1,
         // Posiciones de los numeros en el tablero
         /*
         1   6   11  16  21

@@ -6,6 +6,7 @@ export type Level = {
     level: number
     targetQuantity: number
     targetText: string
+    boards: number
     // Este es un arreglo bidimensional o matriz (arreglo que contiene otro arreglo, cuyos elementos son numeros) para los patrones de los posibles patrones ganadores en el tablero
     patterns: Pattern[]
     bots: Bot[]

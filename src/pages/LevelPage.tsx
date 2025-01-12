@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { levels } from "../data/levels";
 import { generateTargets } from "../utils/generateTargets";
 import { generateBoard } from "../utils/generateBoard";
-import { Board, Pattern } from "../types";
+import { Pattern, Position } from "../types";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
@@ -22,16 +22,21 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const currentLevel = levels.find(l => l.level === level) || levels[0];
 
     // Variables de estado
-    const [board, setBoard] = useState<Board>([]); // Tablero
+    const [board, setBoard] = useState<{ id: number, board: { position: Position; number: number; }[] }[]>([]); // Tableros del jugador
     const [targets, setTargets] = useState<number[]>([]); // Numeros objetivos
     const [patterns, setPatterns] = useState<Pattern[]>([]); // Patrones ganadores
 
+    // POR CADA TABLERO
+
     // Posiciones de los numeros que ha seleccionado el usuario
-    const [selectedPositions, setSelectedPositions] = useState<{ x: number, y: number }[]>([]);
+    // const [selectedPositions, setSelectedPositions] = useState<{ x: number, y: number }[]>([]);
+
+    const [selectedPositions, setSelectedPositions] = useState<{ idBoard: number, positions: { x: number, y: number }[] }[]>([]);
+
 
     // Estado para almacenar los números que ha seleccionado el usuario
-    const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
-
+    // const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
+    const [selectedNumbers, setSelectedNumbers] = useState<{ idBoard: number, numbers: number[] }[]>([]);
 
 
     // Estado para el fin del juego si el jugador gano
@@ -71,16 +76,46 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     //     }
     // }, [victory, defeat])
 
+
+    // GENERA NUEVOS TABLEROS DE ACUERDO A LA CANTIDAD ASIGNADA EN EL NIVEL
+    const newBoards = Array.from({ length: currentLevel.boards }).map((_, index) => ({
+        // Se evita el id igual a 0
+        id: index + 1,
+        board: generateBoard()
+    }));
+
+    // console.log((newBoards))
+
     useEffect(() => {
-        setBoard(generateBoard());
+        // setBoard(generateBoard());
+
+        // TODO: Debe llamar a generateBoard por cada tablero para generar uno nuevo
+
+
+        setBoard(newBoards)
+
         setTargets([]);
         // setSelectedPositions([13]);
-        setSelectedPositions([{ x: 2, y: 2 }]);
-        setSelectedNumbers([0]);
+
+        // ASIGNA EN TODOS LOS TABLEROS
+        // setSelectedPositions([{ x: 2, y: 2 }]);
+        // setSelectedNumbers([0]);
+        setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            idBoard: index,
+            positions: [{ x: 2, y: 2 }]
+        })))
+        setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            idBoard: index,
+            numbers: [0]
+        })))
+
+
         setRound(0);
         setVictory(false);
         setDefeat(false)
     }, [level]);
+
+
 
     // READY: los bots tambien se deben reiniciar
     // TODO: ¿Que pasaria si el jugador pierde?
@@ -88,10 +123,21 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // MUESTRA LA VENTANA MODAL Y LUEGO SI EL JUGADOR HACE CLIC EN EMPEZAR DE NUEVO, SE DEBE LIMPIAR LOS DATOS
     useEffect(() => {
         if (defeat === false) {
-            setBoard(generateBoard());
+            setBoard(newBoards);
             setTargets([]);
-            setSelectedPositions([{ x: 2, y: 2 }]);
-            setSelectedNumbers([0]);
+
+
+            // setSelectedPositions([{ x: 2, y: 2 }]);
+            // setSelectedNumbers([0]);
+            setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+                idBoard: index,
+                positions: [{ x: 2, y: 2 }]
+            })))
+            setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+                idBoard: index,
+                numbers: [0]
+            })))
+
             setRound(0);
             setVictory(false)
         }
@@ -116,8 +162,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Verifica que el numero ya se encuentre marcado en el tablero
-    const handleVerifySelectedNumber = (number: number): boolean => {
-        if (selectedNumbers.includes(number)) {
+    const handleVerifySelectedNumber = (idBoard: number, number: number): boolean => {
+        if (selectedNumbers.some(board => board.idBoard === idBoard && board.numbers.includes(number))) {
             console.log("Este número ya ha sido seleccionado")
             return true;
         }
@@ -126,32 +172,49 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Función para marcar un número seleccionado
-    const handleClickButton = (number: number, position: { x: number, y: number }) => {
+    const handleClickButton = (idBoard: number, number: number, position: { x: number, y: number }) => {
         // Si uno de los números seleccionados es igual al número objetivo, se agrega la posición a los números seleccionados
         if (targets.includes(number)) {
-            if (!handleVerifySelectedNumber(number)) {
-                setSelectedPositions([...selectedPositions, position]);
-                setSelectedNumbers([...selectedNumbers, number]);
+            if (!handleVerifySelectedNumber(idBoard, number)) {
+                setSelectedPositions(prevState =>
+                    prevState.map(board =>
+                        board.idBoard === idBoard
+                            ? { ...board, positions: [...board.positions, position] }
+                            : board
+                    )
+                );
+                setSelectedNumbers(prevState =>
+                    prevState.map(board =>
+                        board.idBoard === idBoard
+                            ? { ...board, numbers: [...board.numbers, number] }
+                            : board
+                    )
+                );
                 console.log("El usuario selecciono el numero: " + number)
             }
         }
     }
 
     // Función para aplicar un estilo al número seleccionado según su posición
-    const handleSelectedNumber = (position: { x: number, y: number }) => {
+    const handleSelectedNumber = (idBoard: number, position: { x: number, y: number }) => {
         // console.log("Posiciones seleccionadas: " + JSON.stringify(selectedPositions))
+        if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
+            return true;
+        }
 
         // Ejemplo: [{x: 2, y:2}, {x:1, y:1}]
 
         // if (selectedPositions.includes(position)) {
         // }
 
-        if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
-            // console.log("La casilla del numero " + number + " ha sido seleccionada")
-            // console.log("La casilla de la posición " + position + " ha sido seleccionada")
-            return true;
-            // return "bg-blue-500 text-white"
-        }
+        // if (selectedPositions.some(board => board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
+        //     return true;
+        //     // return "bg-blue-500 text-white"
+        // }
+
+        // console.log("La casilla del numero " + number + " ha sido seleccionada")
+        // console.log("La casilla de la posición " + position + " ha sido seleccionada")
+
         // Por defecto
         return false;
         // return "bg-orange-500 text-black"
@@ -173,37 +236,74 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         // if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
 
         // TODO: DIFERENCIA ENTRE EVERY, SOME E INCLUDES
-        if (patterns?.some(p => p.every(n => selectedPositions.some(pos => pos.x === n.x && pos.y === n.y)))) {
 
-            console.log("El jugador ha ganado el nivel " + level)
-            setVictory(true);
-            setDefeat(false)
+        // TODO: EN UNO DE LOS TABLEROS, SI EXISTE EL PATRON OBJETIVO, DEBE TERMINAR LA PARTIDA
 
-            // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
-            setTargets([])
+        // ERROR: AL PARECER REALIZA UNA COMPARACIÓN UNIENDO TODOS TABLEROS???
+        // if (patterns?.some(p => p.every(n => selectedPositions.some(pos => pos.positions.some(position => position.x === n.x && position.y === n.y))))) {
+
+        //     console.log("El jugador ha ganado el nivel " + level)
+        //     setVictory(true);
+        //     setDefeat(false)
+
+        //     // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
+        //     setTargets([])
 
 
-            // Desbloquea el siguiente nivel
-            // 20 es el nivel final
-            if (level !== 20) {
-                unlockLevel(level + 1);
+        //     // Desbloquea el siguiente nivel
+        //     // 20 es el nivel final
+        //     if (level !== 20) {
+        //         unlockLevel(level + 1);
+        //     }
+        //     // showModalVictory(true)
+
+        //     // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
+        //     // if (level === 3){
+        //     //     unlockPowerUp(1)
+        //     // }
+
+        //     // Trata de desbloquear un powerup
+        //     // unlockPowerUpsByLevel(level)
+
+        //     return true;
+        // } else {
+        //     console.log("Sigue intentando")
+        //     return false;
+        // }
+
+
+        for (const board of selectedPositions) {
+            if (patterns?.some(p => p.every(n => board.positions.some(position => position.x === n.x && position.y === n.y)))) {
+                console.log("El jugador ha ganado el nivel " + level);
+                setVictory(true);
+                setDefeat(false);
+
+                // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
+                setTargets([]);
+
+                // Desbloquea el siguiente nivel
+                // 20 es el nivel final
+                if (level !== 20) {
+                    unlockLevel(level + 1);
+                }
+                // showModalVictory(true)
+
+                // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
+                // if (level === 3){
+                //     unlockPowerUp(1)
+                // }
+
+                // Trata de desbloquear un powerup
+                // unlockPowerUpsByLevel(level)
+
+                return true;
             }
-            // showModalVictory(true)
-
-            // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
-            // if (level === 3){
-            //     unlockPowerUp(1)
-            // }
-
-            // Trata de desbloquear un powerup
-            // unlockPowerUpsByLevel(level)
-
-            return true;
-        } else {
-            console.log("Sigue intentando")
-            return false;
         }
-    }
+
+        console.log("Sigue intentando");
+        return false;
+    };
+
 
 
 
@@ -444,7 +544,21 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                     </div>
                     <div className="flex flex-col">
-                        <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} />
+                        {
+                            // READY: CREAR UN ARREGLO, LA CANTIDAD DE ELEMENTOS ESTA DADO POR "currentLevel.boards", DEBE RENDERIZAR BOARDNUMBERS POR CADA ELEMENTO DEL ARREGLO
+                            Array.from({ length: currentLevel.boards }).map((_, index) => (
+                                <BoardNumbers
+                                    key={index}
+                                    idBoard={index}
+                                    board={board.find(b => b.id === index + 1)?.board || []}
+                                    handleSelectedNumber={handleSelectedNumber}
+                                    handleClickButton={handleClickButton}
+                                />
+                            ))
+
+
+                        }
+                        {/* <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} /> */}
                         <div className="bg-gray-700 flex flex-row gap-3 px-3 justify-center items-center rounded-b-xl py-4">
                             <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
                             <LeaveModal />
