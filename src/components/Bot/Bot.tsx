@@ -1,15 +1,16 @@
 import { useEffect, useRef, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
-import { Board, Level, Pattern } from "../../types";
+import { Level, Pattern, Position } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
 
 type BotsProps = {
-    dataLevel: Level,
+    currentLevel: Level,
     targets: number[],
     interval: number,
     name: string,
     patterns: Pattern[]
+    boards: number
     handleGameOver: () => void,
     // showBotNumbers: boolean
     handleSetDefeat: (boolean: boolean) => void,
@@ -19,27 +20,43 @@ type BotsProps = {
 
 }
 
-export default function Bots({ dataLevel, targets, interval, name, patterns, handleGameOver, /* showBotNumbers*/ handleSetDefeat, defeat, handleSetVictory, victory }: BotsProps) {
+export default function Bots({ currentLevel, targets, interval, name, patterns, handleGameOver, handleSetDefeat, defeat, handleSetVictory, victory, boards }: BotsProps) {
 
     // Tablero del bot
-    const [botBoard, setBotBoard] = useState<Board>([])
+    // const [botBoard, setBotBoard] = useState<Board>([])
+    const [botBoard, setBotBoard] = useState<{ id: number, board: { position: Position; number: number; }[] }[]>([]);
 
     // Estado para almacenar las posiciones de los números que ha seleccionado el bot
-    const [botSelectedPositions, setBotSelectedPositions] = useState<{ x: number, y: number }[]>([]);
+    // const [botSelectedPositions, setBotSelectedPositions] = useState<{ x: number, y: number }[]>([]);
+    const [botSelectedPositions, setBotSelectedPositions] = useState<{ idBoard: number, positions: { x: number, y: number }[] }[]>([]);
 
     // Estado para almacenar los números que ha seleccionado el bot
-    const [botSelectedNumbers, setBotSelectedNumbers] = useState<number[]>([]);
+    // const [botSelectedNumbers, setBotSelectedNumbers] = useState<number[]>([]);
+    const [botSelectedNumbers, setBotSelectedNumbers] = useState<{ idBoard: number, numbers: number[] }[]>([]);
+
+
 
     // TODO: ¿SE PODRIA OMITIR EL USO DE USEREF?
     const timeoutIdsRef = useRef<number[]>([]); // Referencia para almacenar IDs de temporizadores
 
 
     // Esto se realiza para que genere un nuevo tablero
+
+    const newBoards = Array.from({ length: boards }).map((_, index) => ({
+        // Se evita el id igual a 0
+        id: index + 1,
+        board: generateBoard()
+    }));
+
+
     useEffect(() => {
-        const newBotBoard = generateBoard();
+        // const newBoards = generateBoard();
         // console.log(dataLevel.bots)
-        setBotBoard(newBotBoard);
+        setBotBoard(newBoards);
     }, []);
+
+
+
 
     // Limpia temporizadores anteriores
     useEffect(() => {
@@ -52,77 +69,126 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
     // console.log(dataLevel.bots[0].interval)
     // READY: El bot debe ser capaz de identificar los números objetivo y marcarlos en el tablero de forma automática
+
+
+    // useEffect(() => {
+    //     if (targets && targets.length > 0) {
+    //         botBoard.forEach((board, index) => {
+    //             const arrayTargets = board.board.filter(n => targets.includes(n.number))
+    //             console.log(`Números objetivos en el tablero ${index + 1}: `);
+    //             console.log(arrayTargets);
+    //         });
+    //     }
+    // }, [targets]);
+
+
+    // TODO: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
     useEffect(() => {
-        const arrayTargets = botBoard.filter((n) => targets.includes(n.number));
-        // const interval = dataLevel.bots.map(b => b.interval)
-        // console.log(interval)
+        botBoard.forEach((board) => {
+            // const arrayTargets = board.board.filter(n => targets.includes(n.number))
+            const arrayTargets = board.board.filter((n) => targets.includes(n.number));
 
-        arrayTargets.forEach((target, index) => {
-            // const botInterval = dataLevel.bots[index]?.interval || 1000;
-            // Usa un valor predeterminado si no se encuentra el intervalo
+            const dynamicTime = dynamicInterval()
 
-            // console.log(index)
-            // setTimeout(() => {
-            //     handleTargetNumber(target.number, target.position);
-            //     // Temporizador dinamico, asigna por el bot
-            // }, dynamicInterval() * interval * (index + 1)); // Incrementa el tiempo de espera para cada número
-            const timeoutId = setTimeout(() => {
+            arrayTargets.forEach((target) => {
 
-                handleCheckNumber(target.number, target.position);
-            }, dynamicInterval() * interval * (index + 1));
+                const timeoutId = setTimeout(() => {
+                    // TODO: ¿PORQUE SE RESTA MENOS 1?
+                    handleCheckNumber(board.id - 1, target.number, target.position);
+                    console.log(`${name} ha marcado en el tablero ${board.id} el número ${target.number}`)
+                    console.log(`Se demoro ${(dynamicTime * interval).toFixed(2)} milisegundos`)
+                }, dynamicTime * interval);
 
-            timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
-
-            // Limpiar temporizadores si los objetivos cambian
-            return () => {
-                timeoutIdsRef.current.forEach((id) => clearTimeout(id));
-                timeoutIdsRef.current = [];
-            };
-
+                timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
+            });
         });
-    }, [dataLevel, targets, botBoard, interval]);
+
+        // Limpiar temporizadores si los objetivos cambian
+        return () => {
+            timeoutIdsRef.current.forEach((id) => clearTimeout(id));
+            timeoutIdsRef.current = [];
+        };
+    }, [currentLevel, targets, botBoard, interval]);
 
     // Imprimir en consola los numeros objetivos que se encuentran en el tablero
+    // useEffect(() => {
+    //     // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
+    //     if (targets && targets.length > 0) {
+    //         const arrayTargets = botBoard.filter(n => targets.includes(n.number));
+    //         // console.log("Numeros objetivos " + JSON.stringify(arrayTargets));
+    //         console.log(`Números objetivos: `)
+    //         console.log(arrayTargets)
+    //     }
+    // }, [targets])
+
+    // Imprimir en consola los numeros objetivos que se encuentran en el tablero
+
+    // READY: MODIFICAR ESTO PARA QUE IMPRIMA LOS NUMEROS QUE COINCIDAN EN CADA UNO DE LOS TABLEROS DE LOS BOTS
     useEffect(() => {
+
         // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
         if (targets && targets.length > 0) {
-            const arrayTargets = botBoard.filter(n => targets.includes(n.number));
-            // console.log("Numeros objetivos " + JSON.stringify(arrayTargets));
-            console.log(`Números objetivos: `)
-            console.log(arrayTargets)
+
+            botBoard.forEach((board, index) => {
+                // console.log(botBoard.find(b => b.id === index))
+
+
+                const arrayTargets = board.board.filter(n => targets.includes(n.number))
+                // const arrayTargets = board.position.filter(n => targets.includes(n.number));
+                console.log(`Números objetivos en el tablero ${index + 1}: `);
+                console.log(arrayTargets);
+            });
         }
-    }, [targets])
+    }, [targets]);
+
 
 
 
     // Función para marcar el numero de forma automatica
-    const handleCheckNumber = (number: number, position: { x: number, y: number }) => {
+    const handleCheckNumber = (idBoard: number, number: number, position: { x: number, y: number }) => {
 
-        // TODO: SOLAMENTE DEBERIA SELECCIONAR UN BOT PARA DESACTIVARLO
-        // SI ESTA ACTIVO EL SEGUNDO POWERUP, NO MARCA LOS NUMEROS
-        // if (turnedOff === false) {
 
-        setBotSelectedNumbers((prev) => {
-            if (!prev.includes(number)) {
-                return [...prev, number];
-            }
-            return prev;
-        });
+        setBotSelectedNumbers(prevState =>
+            prevState.map(board =>
+                board.idBoard === idBoard
+                    ? {
+                        ...board, numbers: [...board.numbers, number]
+                    }
+                    : board
+            )
+        );
+
+
 
         setBotSelectedPositions((prev) => {
-
-            // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
-
-            // if (!prev.includes(position)) {
-            //     return [...prev, position];
-            // }
-
-            if (!prev.some((pos: { x: number, y: number }) => pos.x === position.x && pos.y === position.y)) {
-                return [...prev, position];
-            }
-
-            return prev;
+            return prev.map(board =>
+                board.idBoard === idBoard
+                    ? {
+                        ...board,
+                        positions: board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+                            ? board.positions
+                            : [...board.positions, position]
+                    }
+                    : board
+            );
+            // return [...prev, position];
         })
+
+
+        // setBotSelectedPositions((prev) => {
+
+        //     // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+
+        //     // if (!prev.includes(position)) {
+        //     //     return [...prev, position];
+        //     // }
+
+        //     if (!prev.some((pos: { x: number, y: number }) => pos.x === position.x && pos.y === position.y)) {
+        //         return [...prev, position];
+        //     }
+
+        //     return prev;
+        // })
 
         // setBotSelectedPositions((prev: { x: number, y: number }) => {
         //     if (!prev.some(pos => pos.x === position.x && pos.y === position.y)) {
@@ -147,11 +213,15 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
     // }
 
-    // TODO: Esto se tiene que desactivar???
-    const handleSelectedPosition = (position: { x: number, y: number }) => {
+    // Esto se tiene que desactivar???
+
+    // MARCA LA POSICION SELECCIONADA
+
+    const handleSelectedPosition = (idBoard: number, position: { x: number, y: number }) => {
         // return botSelectedPositions.some()
 
-        if (botSelectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+        if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p.x === position.x && p.y === position.y))) {
+            //  === position.x && pos.y === position.y)) {
             return true;
         }
         return false;
@@ -165,12 +235,19 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     // ? "bg-blue-500 text-white"
     // : "bg-orange-500 text-black";
 
-    useEffect(() => {
-        if (botSelectedNumbers.length > 0) {
-            const lastNumber = botSelectedNumbers[botSelectedNumbers.length - 1];
-            console.log(`La casilla del número ${lastNumber} ha sido seleccionada`);
-        }
-    }, [botSelectedNumbers]);
+    // TODO: MODIFICAR ESTO PARA QUE IMPRIMA EL ULTIMO NUMERO QUE HA SIDO MARCADO
+    // useEffect(() => {
+    //     if (botSelectedNumbers.length > 0) {
+    //         const lastSelections = botSelectedNumbers.map(board => ({
+    //             idBoard: board.idBoard,
+    //             lastNumber: board.numbers[board.numbers.length - 1]
+    //         }));
+
+    //         lastSelections.forEach(selection => {
+    //             console.log(`En el tablero ${selection.idBoard + 1} del bot ${name}, el número ${selection.lastNumber} ha sido seleccionado`);
+    //         });
+    //     }
+    // }, [botSelectedNumbers]);
 
 
     // Usar una referencia para verificar si el jugador gana dentro de los 5 segundos
@@ -181,12 +258,13 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
     const handleCheckWinnerPatternBot = () => {
         // ANTES:
         // if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
-        if (patterns?.some(p => p.every(n => botSelectedPositions.some(pos => pos.x === n.x && pos.y === n.y)))) {
+        // TODO: Evalua cada tablero del bot, si uno de ellos tiene el patron ganador
+        if (patterns?.some(p => p.every(n => botSelectedPositions.some(board => board.positions.some(pos => pos.x === n.x && pos.y === n.y))))) {
 
 
             // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
 
-            console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero, tienes 5 segundos para intentar ganarle, nivel: " + dataLevel.level);
+            console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero, tienes 5 segundos para intentar ganarle, nivel: " + currentLevel.level);
 
 
             // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
@@ -236,17 +314,39 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
 
     // Si el jugador gana, se debe reiniciar el bot
     useEffect(() => {
-        setBotBoard(generateBoard());
-        setBotSelectedPositions([{ x: 2, y: 2 }]);
-        setBotSelectedNumbers([0]);
-    }, [dataLevel.level])
+        setBotBoard(newBoards);
+        // setBotSelectedPositions([{ x: 2, y: 2 }]);
+        // setBotSelectedNumbers([0]);
+        setBotSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            idBoard: index,
+            positions: [{ x: 2, y: 2 }]
+        })))
+        setBotSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            idBoard: index,
+            numbers: [0]
+        })))
+
+
+
+    }, [currentLevel.level])
 
     // Si el bot gana, debe reiniciar el bot
     useEffect(() => {
         if (defeat === false) {
-            setBotBoard(generateBoard());
-            setBotSelectedPositions([{ x: 2, y: 2 }]);
-            setBotSelectedNumbers([0]);
+            // setBotBoard(generateBoard());
+            setBotBoard(newBoards)
+            // setBotSelectedPositions([{ x: 2, y: 2 }]);
+            // setBotSelectedNumbers([0]);
+
+            setBotSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+                idBoard: index,
+                positions: [{ x: 2, y: 2 }]
+            })))
+            setBotSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+                idBoard: index,
+                numbers: [0]
+            })))
+
         }
     }, [defeat])
 
@@ -286,11 +386,26 @@ export default function Bots({ dataLevel, targets, interval, name, patterns, han
                     className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md"
                 >
                     <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
-                    <BotBoardNumbers
+
+                    <div className="flex flex-row gap-4">
+                        {
+                            Array.from({ length: boards }).map((_, index) => (
+                                <BotBoardNumbers key={index}
+                                    board={botBoard.find(b => b.id === index + 1)?.board || []}
+                                    idBoard={index}
+                                    handleSelectedPosition={handleSelectedPosition}
+                                />
+                            ))
+                        }
+
+
+                    </div>
+
+                    {/* <BotBoardNumbers
                         board={botBoard}
                         handleSelectedPosition={handleSelectedPosition}
-                    // showBotNumbers={showBotNumbers}
-                    />
+                    /> */}
+
 
                 </div>
 

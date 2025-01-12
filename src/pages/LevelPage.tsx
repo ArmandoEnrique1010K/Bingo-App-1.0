@@ -104,6 +104,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             idBoard: index,
             positions: [{ x: 2, y: 2 }]
         })))
+
         setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
             idBoard: index,
             numbers: [0]
@@ -576,7 +577,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     {
                         currentLevel.bots.map((bot) => (
 
-                            <Bot key={bot.name} dataLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
+                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} boards={bot.boards} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
 
                             />
                         ))

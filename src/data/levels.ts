@@ -56,7 +56,7 @@ import { Level } from "../types";
 export const levels: Level[] = [
     {
         level: 1,
-        targetQuantity: 3,
+        targetQuantity: 5,
         targetText: "Una columna o una fila de 5 números",
         boards: 2,
         patterns: [
@@ -78,6 +78,7 @@ export const levels: Level[] = [
                 name: "S-Bot",
                 // Tiempo de respuesta del bot en milisegundos
                 interval: 2200,
+                boards: 3
             }
         ]
 
@@ -122,8 +123,14 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "S-Bot",
+                name: "S-Bot-1",
                 interval: 1800,
+                boards: 2
+            },
+            {
+                name: "S-Bot-2",
+                interval: 1500,
+                boards: 2
             },
         ]
     },

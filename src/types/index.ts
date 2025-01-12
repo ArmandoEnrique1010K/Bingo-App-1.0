@@ -20,6 +20,7 @@ export type Pattern = {
 export type Bot = {
     name: string
     interval: number
+    boards: number
 }
 
 // Arreglo de numeros
