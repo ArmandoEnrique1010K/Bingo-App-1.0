@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone'
-import { MusicalNoteIcon } from '@heroicons/react/24/solid'
+import { MusicalNoteIcon, PlayIcon } from '@heroicons/react/24/solid'
 
 export default function Music() {
 
@@ -61,10 +61,17 @@ export default function Music() {
     };
 
     return (
-        <button onClick={isPlaying ? stopMusic : startMusic}>
-            {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-            <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
+        <>
+            <button onClick={isPlaying ? stopMusic : startMusic}>
+                {/* {isPlaying ? "Stop Music" : "Play Music"} */}
+                <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
+            </button>
+            <button onClick={isPlaying ? stopMusic : startMusic}>
+                {/* {isPlaying ? "Stop Music" : "Play Music"} */}
+                <PlayIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
+            </button>
 
-        </button>
+        </>
+
     );
 }
