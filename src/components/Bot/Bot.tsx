@@ -17,10 +17,11 @@ type BotsProps = {
     defeat: boolean,
     handleSetVictory: (boolean: boolean) => void,
     victory: boolean,
+    setTargets: React.Dispatch<React.SetStateAction<number[]>>
 
 }
 
-export default function Bots({ currentLevel, targets, interval, name, patterns, handleGameOver, handleSetDefeat, defeat, handleSetVictory, victory, boards }: BotsProps) {
+export default function Bots({ currentLevel, targets, interval, name, patterns, handleGameOver, handleSetDefeat, defeat, handleSetVictory, victory, boards, setTargets }: BotsProps) {
 
     // Tablero del bot
     // const [botBoard, setBotBoard] = useState<Board>([])
@@ -446,6 +447,10 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // };
 
     const handleCheckWinnerPatternBot = () => {
+
+        // TODO: ¿DETIENE LA EJECUCIÓN DE LA FUNCIÓN?
+        if (defeat === true) return;
+
         // Iterar sobre cada tablero del bot
         for (const board of botSelectedPositions) {
             // Verificar si este tablero tiene un patrón ganador
@@ -467,9 +472,10 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                         handleSetDefeat(false);
                     } else {
                         handleGameOver();
-                        handleSetDefeat(true);
                         handleSetVictory(false);
                         // TODO: MEJORAR ESTO, LOS DEMÁS BOTS NO DEBEN SEGUIR MARCANDO NUMEROS Y DEBEN DEJAR DE EVALUAR
+                        setTargets([]) // SE LIMPIAN LOS NUMEROS OBJETIVOS
+                        handleSetDefeat(true);
                         console.log("SE ACABO EL JUEGO: el bot ganó");
                     }
                 }, 5000);

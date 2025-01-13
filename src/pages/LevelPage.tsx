@@ -577,7 +577,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     {
                         currentLevel.bots.map((bot) => (
 
-                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} boards={bot.boards} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory}
+                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} boards={bot.boards} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory} setTargets={setTargets}
 
                             />
                         ))
