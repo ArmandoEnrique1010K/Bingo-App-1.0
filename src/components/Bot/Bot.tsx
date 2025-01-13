@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
 import { Level, Pattern, Position } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
@@ -37,7 +37,9 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
 
     // TODO: ¿SE PODRIA OMITIR EL USO DE USEREF?
-    const timeoutIdsRef = useRef<number[]>([]); // Referencia para almacenar IDs de temporizadores
+    // const timeoutIdsRef = useRef<number[]>([]); // Referencia para almacenar IDs de temporizadores
+    const [timeoutIds, setTimeoutIds] = useState<number[]>([]); // Array para almacenar IDs de temporizadores
+
 
 
     // Esto se realiza para que genere un nuevo tablero
@@ -59,12 +61,12 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
 
     // Limpia temporizadores anteriores
-    useEffect(() => {
-        return () => {
-            timeoutIdsRef.current.forEach((id) => clearTimeout(id));
-            timeoutIdsRef.current = [];
-        };
-    }, [botBoard, targets]);
+    // useEffect(() => {
+    //     return () => {
+    //         timeoutIdsRef.current.forEach((id) => clearTimeout(id));
+    //         timeoutIdsRef.current = [];
+    //     };
+    // }, [botBoard, targets]);
 
 
     // console.log(dataLevel.bots[0].interval)
@@ -81,34 +83,77 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     //     }
     // }, [targets]);
 
+    const [result, setResult] = useState<{ idBoard: number, targets: { position: Position, number: number }[] }[]>([])
 
     // TODO: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
     useEffect(() => {
-        botBoard.forEach((board) => {
+        if (!botBoard.length || !targets.length) return;
+
+        // Limpia los temporizadores previos
+        timeoutIds.forEach((id) => clearTimeout(id));
+        setTimeoutIds([]); // Reinicia el array
+
+        // UTILIZA EL STATE DE RESULT
+        // const arrayTargets = result
+        // const timeoutIds: NodeJS.Timeout[] = [];
+
+        let currentDelay = 0;
+        const newTimeoutIds: number[] = [];
+
+        result.forEach((res) => {
             // const arrayTargets = board.board.filter(n => targets.includes(n.number))
-            const arrayTargets = board.board.filter((n) => targets.includes(n.number));
+            // const arrayTargets = board.board.filter((n) => targets.includes(n.number));
 
-            const dynamicTime = dynamicInterval()
 
-            arrayTargets.forEach((target) => {
+
+            // RESULT TIENE LA FORMA:
+            // const result: {
+            //     idBoard: number;
+            //     targets: {
+            //         position: Position;
+            //         number: number;
+            //     }[];
+            // }[]
+            const randomInterval = dynamicInterval() * interval;
+
+            // const dynamicTime = dynamicInterval()
+
+            // arrayTargets.forEach((target) => {
+            res.targets.forEach((t) => {
+                currentDelay += randomInterval;
 
                 const timeoutId = setTimeout(() => {
-                    // TODO: ¿PORQUE SE RESTA MENOS 1?
-                    handleCheckNumber(board.id - 1, target.number, target.position);
-                    console.log(`${name} ha marcado en el tablero ${board.id} el número ${target.number}`)
-                    console.log(`Se demoro ${(dynamicTime * interval).toFixed(2)} milisegundos`)
-                }, dynamicTime * interval);
+                    // handleCheckNumber(board.id - 1, target.number, target.position);
+                    // console.log(`${name} ha marcado en el tablero ${board.id} el número ${target.number}`)
 
-                timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
+                    // Verificar los parámetros antes de llamar a handleCheckNumber
+                    console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
+                    // TODO: ¿PORQUE SE RESTA MENOS 1?
+                    handleCheckNumber(res.idBoard - 1, t.number, t.position);
+                    console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
+                    console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
+
+                    // timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
+
+                }, currentDelay);
+
+                // timeoutIds.current.push(timeoutId); // Almacenar el ID del temporizador
+                newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
+
             });
         });
+        setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
 
         // Limpiar temporizadores si los objetivos cambian
         return () => {
-            timeoutIdsRef.current.forEach((id) => clearTimeout(id));
-            timeoutIdsRef.current = [];
+            // timeoutIdsRef.current.forEach((id) => clearTimeout(id));
+            // timeoutIdsRef.current = [];
+
+            // Limpieza automática al desmontar el componente
+            newTimeoutIds.forEach((id) => clearTimeout(id));
+
         };
-    }, [currentLevel, targets, botBoard, interval]);
+    }, [currentLevel, targets, botBoard, interval, result, name]);
 
     // Imprimir en consola los numeros objetivos que se encuentran en el tablero
     // useEffect(() => {
@@ -123,26 +168,72 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // Imprimir en consola los numeros objetivos que se encuentran en el tablero
 
+
+
     // READY: MODIFICAR ESTO PARA QUE IMPRIMA LOS NUMEROS QUE COINCIDAN EN CADA UNO DE LOS TABLEROS DE LOS BOTS
     useEffect(() => {
 
         // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
         if (targets && targets.length > 0) {
 
+            // botBoard.forEach((board, index) => {
+            //     // console.log(botBoard.find(b => b.id === index))
+
+
+            //     const arrayTargets = board.board.filter(n => targets.includes(n.number))
+            //     // const arrayTargets = board.position.filter(n => targets.includes(n.number));
+            //     console.log(`Números objetivos en el tablero ${index + 1}: `);
+            //     console.log(arrayTargets);
+
+
+            // });
+
+            // let result: { idBoard: number, targets: { position: Position, number: number }[] }[] = []
             botBoard.forEach((board, index) => {
-                // console.log(botBoard.find(b => b.id === index))
+                const arrayTargets = board.board.filter(n => targets.includes(n.number));
+
+                // result = [
+                //     {
+                //         idBoard: index,
+                //         targets: arrayTargets
+                //     },
+                //     ...result
+                // ]
+
+                // setResult(prevResult => [
+                //     ...prevResult,
+                //     {
+                //         idBoard: index + 1,
+                //         targets: arrayTargets
+                //     }
+                // ]);
+
+                setResult(prevResult => [
+                    ...prevResult,
+                    {
+                        idBoard: index + 1,
+                        targets: arrayTargets
+                    }
+                ]);
+
+            })
 
 
-                const arrayTargets = board.board.filter(n => targets.includes(n.number))
-                // const arrayTargets = board.position.filter(n => targets.includes(n.number));
-                console.log(`Números objetivos en el tablero ${index + 1}: `);
-                console.log(arrayTargets);
-            });
+
+
         }
+
+        if (targets.length === 0) {
+            setResult([])
+        }
+
     }, [targets]);
 
 
-
+    useEffect(() => {
+        console.log(`Números objetivos por cada tablero: `)
+        console.log(result)
+    }, [result])
 
     // Función para marcar el numero de forma automatica
     const handleCheckNumber = (idBoard: number, number: number, position: { x: number, y: number }) => {
@@ -258,13 +349,24 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     const handleCheckWinnerPatternBot = () => {
         // ANTES:
         // if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
-        // TODO: Evalua cada tablero del bot, si uno de ellos tiene el patron ganador
-        if (patterns?.some(p => p.every(n => botSelectedPositions.some(board => board.positions.some(pos => pos.x === n.x && pos.y === n.y))))) {
 
+
+        // if (patterns?.some(p => p.every(n => botSelectedPositions.some(board => board.positions.some(pos => pos.x === n.x && pos.y === n.y))))) {
+
+        // TODO: Evalua cada tablero del bot, si uno de ellos tiene el patron ganador
+        if (patterns?.some(p => p.every(n => botSelectedPositions.some(board =>
+            board.positions.some(pos => pos.x === n.x && pos.y === n.y && board.idBoard === botBoard.find(b => b.board.some(bn => bn.position.x === n.x && bn.position.y === n.y))?.id)
+        )))) {
 
             // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
 
-            console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero, tienes 5 segundos para intentar ganarle, nivel: " + currentLevel.level);
+            const winningBoard = botSelectedPositions.find(board =>
+                patterns.some(p => p.every(n => board.positions.some(pos => pos.x === n.x && pos.y === n.y)))
+            );
+
+            if (winningBoard) {
+                console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero " + winningBoard.idBoard + 1 + ", tienes 5 segundos para intentar ganarle, nivel: " + currentLevel.level);
+            }
 
 
             // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
@@ -317,11 +419,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         setBotBoard(newBoards);
         // setBotSelectedPositions([{ x: 2, y: 2 }]);
         // setBotSelectedNumbers([0]);
-        setBotSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+        setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index,
             positions: [{ x: 2, y: 2 }]
         })))
-        setBotSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+        setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index,
             numbers: [0]
         })))
@@ -338,11 +440,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             // setBotSelectedPositions([{ x: 2, y: 2 }]);
             // setBotSelectedNumbers([0]);
 
-            setBotSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index,
                 positions: [{ x: 2, y: 2 }]
             })))
-            setBotSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index,
                 numbers: [0]
             })))
