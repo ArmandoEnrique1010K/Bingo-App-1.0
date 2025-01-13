@@ -23,7 +23,7 @@ export default function LeaveModal() {
 
     return (
         <>
-            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300' aria-hidden="true">Abandonar partida</button>
+            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300'>Abandonar partida</button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}

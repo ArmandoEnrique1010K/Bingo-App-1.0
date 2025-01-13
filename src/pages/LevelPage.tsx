@@ -544,23 +544,27 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
 
                     </div>
-                    <div className="flex flex-col">
-                        {
-                            // READY: CREAR UN ARREGLO, LA CANTIDAD DE ELEMENTOS ESTA DADO POR "currentLevel.boards", DEBE RENDERIZAR BOARDNUMBERS POR CADA ELEMENTO DEL ARREGLO
-                            Array.from({ length: currentLevel.boards }).map((_, index) => (
-                                <BoardNumbers
-                                    key={index}
-                                    idBoard={index}
-                                    board={board.find(b => b.id === index + 1)?.board || []}
-                                    handleSelectedNumber={handleSelectedNumber}
-                                    handleClickButton={handleClickButton}
-                                />
-                            ))
+                    {/* TODO: SE PUEDE AÑADIR UN BORDE REDONDEADO */}
+                    <div className="flex flex-col ">
+                        <div className="flex flex-row ">
+                            {
+                                // READY: CREAR UN ARREGLO, LA CANTIDAD DE ELEMENTOS ESTA DADO POR "currentLevel.boards", DEBE RENDERIZAR BOARDNUMBERS POR CADA ELEMENTO DEL ARREGLO
+                                Array.from({ length: currentLevel.boards }).map((_, index) => (
+                                    <BoardNumbers
+                                        key={index}
+                                        idBoard={index}
+                                        board={board.find(b => b.id === index + 1)?.board || []}
+                                        handleSelectedNumber={handleSelectedNumber}
+                                        handleClickButton={handleClickButton}
+                                    />
+                                ))
 
 
-                        }
+                            }
+
+                        </div>
                         {/* <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} /> */}
-                        <div className="bg-gray-700 flex flex-row gap-3 px-3 justify-center items-center rounded-b-xl py-4">
+                        <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-b-xl py-4">
                             <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
                             <LeaveModal />
                         </div>
