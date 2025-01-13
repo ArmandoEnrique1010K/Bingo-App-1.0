@@ -88,7 +88,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // READY: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
     useEffect(() => {
-        if (!botBoard.length || !targets.length) return;
+        if (!botBoard.length || !targets.length || defeat === true) return;
 
         // Limpia los temporizadores previos
         timeoutIds.forEach((id) => clearTimeout(id));
@@ -99,13 +99,24 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         // const timeoutIds: NodeJS.Timeout[] = [];
 
         let currentDelay = 0;
+        // TODO: DINAMIZAR ESTO, EL ORDEN DE LOS ELEMENTOS DEBE CAMBIAR CADA VEZ
         const newTimeoutIds: number[] = [];
+        const dynamicResult = [...result]; // Copia para evitar mutación accidental
 
-        result.forEach((res) => {
+        // Dinamizar el orden de los tableros y objetivos en cada llamada
+        dynamicResult.sort(() => Math.random() - 0.5);
+
+
+
+        // const newTimeoutIds: number[] = [];
+
+
+        dynamicResult.forEach((res) => {
             // const arrayTargets = board.board.filter(n => targets.includes(n.number))
             // const arrayTargets = board.board.filter((n) => targets.includes(n.number));
 
 
+            res.targets.sort(() => Math.random() - 0.5);
 
             // RESULT TIENE LA FORMA:
             // const result: {
@@ -115,12 +126,17 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             //         number: number;
             //     }[];
             // }[]
-            const randomInterval = dynamicInterval() * interval;
+            // const randomInterval = dynamicInterval() * interval;
 
             // const dynamicTime = dynamicInterval()
 
             // arrayTargets.forEach((target) => {
+            // TODO: ESTO PODRIA SER DINAMICO, PUES SIEMPRE MARCA LOS TABLEROS POR ORDEN NUMERICO
+
             res.targets.forEach((t) => {
+
+                const randomInterval = dynamicInterval() * interval;
+
                 currentDelay += randomInterval;
 
                 const timeoutId = setTimeout(() => {
@@ -128,7 +144,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                     // console.log(`${name} ha marcado en el tablero ${board.id} el número ${target.number}`)
 
                     // Verificar los parámetros antes de llamar a handleCheckNumber
-                    console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
+                    // console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
                     handleCheckNumber(res.idBoard, t.number, t.position);
                     console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
                     console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
@@ -136,13 +152,15 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                     // timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
 
                 }, currentDelay);
+                newTimeoutIds.push(timeoutId);
 
                 // timeoutIds.current.push(timeoutId); // Almacenar el ID del temporizador
                 // newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
-                setTimeoutIds([...newTimeoutIds, timeoutId])
+                // setTimeoutIds([...newTimeoutIds, timeoutId])
             });
         });
         //setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
+        setTimeoutIds(newTimeoutIds);
 
         // Limpiar temporizadores si los objetivos cambian
         return () => {
@@ -153,7 +171,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             newTimeoutIds.forEach((id) => clearTimeout(id));
 
         };
-    }, [currentLevel, targets, botBoard, interval, result, name]);
+    }, [currentLevel, targets, botBoard, interval, result, name, defeat]);
 
     // Imprimir en consola los numeros objetivos que se encuentran en el tablero
     // useEffect(() => {
@@ -449,41 +467,48 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     const handleCheckWinnerPatternBot = () => {
 
         // TODO: ¿DETIENE LA EJECUCIÓN DE LA FUNCIÓN?
-        if (defeat === true) return;
+        if (defeat === true) {
+            console.log("EL BOT SE DETIENE")
+            return
+        };
 
-        // Iterar sobre cada tablero del bot
-        for (const board of botSelectedPositions) {
-            // Verificar si este tablero tiene un patrón ganador
-            const hasWinningPattern = patterns?.some(pattern =>
-                pattern.every(position =>
-                    board.positions.some(pos => pos.x === position.x && pos.y === position.y)
-                )
-            );
-
-            if (hasWinningPattern) {
-                console.log(
-                    `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
+        if (defeat === false) {
+            // Iterar sobre cada tablero del bot
+            for (const board of botSelectedPositions) {
+                // Verificar si este tablero tiene un patrón ganador
+                const hasWinningPattern = patterns?.some(pattern =>
+                    pattern.every(position =>
+                        board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+                    )
                 );
 
-                // Marcar derrota después de 5 segundos si el jugador no gana
-                const timeoutId = setTimeout(() => {
-                    if (victory) {
-                        console.log("El jugador ganó antes de que el bot terminara");
-                        handleSetDefeat(false);
-                    } else {
-                        handleGameOver();
-                        handleSetVictory(false);
-                        // TODO: MEJORAR ESTO, LOS DEMÁS BOTS NO DEBEN SEGUIR MARCANDO NUMEROS Y DEBEN DEJAR DE EVALUAR
-                        setTargets([]) // SE LIMPIAN LOS NUMEROS OBJETIVOS
-                        handleSetDefeat(true);
-                        console.log("SE ACABO EL JUEGO: el bot ganó");
-                    }
-                }, 5000);
+                if (hasWinningPattern) {
+                    console.log(
+                        `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
+                    );
 
-                // Limpieza del timeout si es necesario
-                return () => clearTimeout(timeoutId);
+                    // Marcar derrota después de 5 segundos si el jugador no gana
+                    const timeoutId = setTimeout(() => {
+                        if (victory) {
+                            console.log("El jugador ganó antes de que el bot terminara");
+                            handleSetDefeat(false);
+                        } else {
+                            handleGameOver();
+                            handleSetVictory(false);
+                            // TODO: MEJORAR ESTO, LOS DEMÁS BOTS NO DEBEN SEGUIR MARCANDO NUMEROS Y DEBEN DEJAR DE EVALUAR
+                            setTargets([]) // SE LIMPIAN LOS NUMEROS OBJETIVOS
+                            handleSetDefeat(true);
+                            console.log("SE ACABO EL JUEGO: el bot ganó");
+                        }
+                    }, 5000);
+
+                    // Limpieza del timeout si es necesario
+                    return () => clearTimeout(timeoutId);
+                }
             }
+
         }
+
         // Si ningún tablero tiene un patrón ganador
         // console.log("El bot sigue intentando, no tiene un patrón ganador en ninguno de sus tableros");
     };

@@ -55,10 +55,15 @@ import { Level } from "../types";
 // Aqui se especifica los niveles, incluyendo los posibles patrones ganadores por cada nivel del juego
 export const levels: Level[] = [
     {
+        // Nivel
         level: 1,
-        targetQuantity: 5,
+        // Numero de bolitas o numeros objetivos
+        targetQuantity: 3,
+        // Texto descriptivo para el patron objetivo
         targetText: "Una columna o una fila de 5 números",
-        boards: 2,
+        // Numero de tableros del jugador
+        boards: 1,
+        // Patrones ganadores (dado por coordenadas)
         patterns: [
             [{ x: 0, y: 4 }, { x: 0, y: 3 }, { x: 0, y: 2 }, { x: 0, y: 1 }, { x: 0, y: 0 }],
             [{ x: 1, y: 4 }, { x: 1, y: 3 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 1, y: 0 }],
@@ -73,19 +78,22 @@ export const levels: Level[] = [
             [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }]
 
         ],
+        // Oponentes automatizados (Bots)
         bots: [
             {
+                // Nombre (debe ser único)
                 name: "S-Bot",
-                // Tiempo de respuesta del bot en milisegundos
-                interval: 1000,
-                boards: 4
+                // Tiempo de respuesta en milisegundos
+                interval: 2400,
+                // Número de tableros para el bot
+                boards: 1
             }
         ]
 
     },
     {
         level: 2,
-        targetQuantity: 5,
+        targetQuantity: 3,
         targetText: "Una cruz de 5 números",
         boards: 1,
         // Posiciones de los numeros en el tablero
@@ -123,39 +131,54 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "S-Bot-1",
-                interval: 100,
-                boards: 3
-            },
-            {
-                name: "S-Bot-2",
-                interval: 100,
-                boards: 2
+                name: "S-Bot",
+                interval: 1900,
+                boards: 1
             },
         ]
     },
     {
+        // Posiciones anteriores de los numeros en el tablero
+        /*
+        1   6   11  16  21
+        2   7   12  17  22
+        3   8   13  18  23
+        4   9   14  19  24
+        5   10  15  20  25
+        */
+
+        // Nueva posición (x,y )
+        /*
+        0,4     1,4     2,4     3,4     4,4
+        0,3     1,3     2,3     3,3     4,3
+        0,2     1,2     2,2     3,2     4,2
+        0,1     1,1     2,1     3,1     4,1
+        0,0     1,0     2,0     3,0     4,0
+        */
         level: 3,
         targetQuantity: 3,
         targetText: "Un rectangulo de 6 números",
+        boards: 1,
         patterns: [
-            [1, 2, 6, 7, 11, 12],
-            [2, 3, 7, 8, 12, 13],
-            [3, 4, 8, 9, 13, 14],
-            [4, 5, 9, 10, 14, 15],
-            [6, 7, 11, 12, 16, 17],
-            [7, 8, 12, 13, 17, 18],
-            [8, 9, 13, 14, 18, 19],
-            [9, 10, 14, 15, 19, 20],
-            [11, 12, 16, 17, 21, 22],
-            [12, 13, 17, 18, 22, 23],
-            [13, 14, 18, 19, 23, 24],
-            [14, 15, 19, 20, 24, 25],
+            [{ x: 0, y: 4 }, { x: 0, y: 3 }, { x: 1, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 3 }],
+            [{ x: 0, y: 3 }, { x: 0, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 2 }],
+            [{ x: 0, y: 2 }, { x: 0, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 1 }],
+            [{ x: 0, y: 1 }, { x: 0, y: 0 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 1 }, { x: 2, y: 0 }],
+            [{ x: 1, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 3, y: 3 }],
+            [{ x: 1, y: 3 }, { x: 1, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 2 }],
+            [{ x: 1, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 1 }],
+            [{ x: 1, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 1 }, { x: 2, y: 0 }, { x: 3, y: 1 }, { x: 3, y: 0 }],
+            [{ x: 2, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 4, y: 3 }],
+            [{ x: 2, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 2 }],
+            [{ x: 2, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 1 }, { x: 4, y: 2 }, { x: 4, y: 1 }],
+            [{ x: 2, y: 1 }, { x: 2, y: 0 }, { x: 3, y: 1 }, { x: 3, y: 0 }, { x: 4, y: 1 }, { x: 4, y: 0 }],
         ],
+
         bots: [
             {
                 name: "M-Bot",
                 interval: 1400,
+                boards: 1
             }
         ]
     },
