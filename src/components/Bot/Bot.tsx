@@ -129,7 +129,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                     // Verificar los parámetros antes de llamar a handleCheckNumber
                     console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
                     // TODO: ¿PORQUE SE RESTA MENOS 1?
-                    handleCheckNumber(res.idBoard - 1, t.number, t.position);
+                    handleCheckNumber(res.idBoard, t.number, t.position);
                     console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
                     console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
 
@@ -208,9 +208,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                 //     }
                 // ]);
 
+                // TODO: AQUI ESTA EL ERROR
                 setResult(prevResult => [
                     ...prevResult,
                     {
+                        // TODO: ??? + 2, DEBE SER 1
                         idBoard: index + 1,
                         targets: arrayTargets
                     }
@@ -344,69 +346,130 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // Usar una referencia para verificar si el jugador gana dentro de los 5 segundos
     // const victoryRef = useRef(victory);
 
+    // NO FUNCIONA ???
+    // useEffect(() => {
+    //     const winningBoard = botSelectedPositions.find(board =>
+    //         patterns.some(p => p.every(n => board.positions.some(pos => pos.x === n.x && pos.y === n.y)))
+    //     );
+    //     console.log(winningBoard)
+
+
+    // }, [botSelectedPositions, patterns])
+
+    // TODO: CREAR UNA FUNCIÓN PARA VERIFICAR ???
 
     // Función para verificar si el oponente ha ganado
+    // const handleCheckWinnerPatternBot = () => {
+    //     // ANTES:
+    //     // if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
+
+
+    //     // if (patterns?.some(p => p.every(n => botSelectedPositions.some(board => board.positions.some(pos => pos.x === n.x && pos.y === n.y))))) {
+
+    //     // TODO: Evalua cada tablero del bot, si uno de ellos tiene el patron ganador
+
+    //     // TODO: ALGO NO FUNCIONA BIEN AQUI
+    //     // if (patterns?.some(p => p.every(n => botSelectedPositions.some(board =>
+    //     //     board.positions.some(pos => pos.x === n.x && pos.y === n.y && board.idBoard === botBoard.find(b => b.board.some(bn => bn.position.x === n.x && bn.position.y === n.y))?.id)
+    //     // )))) {
+
+
+
+    //     if (patterns?.some(p => p.every(n => botSelectedPositions.some(board =>
+    //         board.positions.some(pos => pos.x === n.x && pos.y === n.y && board.idBoard === botBoard.find(b => b.board.some(bn => bn.position.x === n.x && bn.position.y === n.y))?.id)
+    //     )))) {
+
+
+    //         // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+
+    //         // const winningBoard = botSelectedPositions.find(board =>
+    //         //     patterns.some(p => p.every(n => board.positions.some(pos => pos.x === n.x && pos.y === n.y)))
+    //         // );
+
+    //         const winningBoard = botSelectedPositions.find(board =>
+    //             patterns.some(p => p.every(n =>
+    //                 board.positions.some(pos => pos.x === n.x && pos.y === n.y)
+    //             ))
+    //         );
+
+    //         if (winningBoard) {
+    //             console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero " + (winningBoard.idBoard) + ", tienes 5 segundos para intentar ganarle, nivel: " + currentLevel.level);
+    //         }
+
+
+    //         // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
+    //         // setTimeout(() => {
+    //         //     handleGameOver();
+    //         //     setDefeat(true)
+    //         //     console.log("SE ACABO EL JUEGO");
+    //         // }, 5000);
+
+
+    //         // TODO: SI EL BOT HA GANADO PRIMERO, ANTES DE LOS 5 SEGUNDOS QUE DEBEN TRASNCURRIRSE, EL JUGADOR GANO EN ESE TIEMPO, SE DEBE COLOCAR DEFEAT COMO FALSE
+    //         // if (victory === true) {
+    //         //     setDefeat(false);
+    //         // }
+
+    //         // Marcar derrota después de 5 segundos
+    //         const timeoutId = setTimeout(() => {
+    //             if (victory === true) {
+    //                 // Si el jugador ganó antes de que termine el tiempo, cancelar la derrota
+    //                 console.log("El jugador ganó antes de que el bot terminara");
+    //                 handleSetDefeat(false);
+    //             } else {
+    //                 // Si el jugador no ganó, marcar la derrota
+    //                 handleGameOver();
+    //                 handleSetDefeat(true);
+    //                 handleSetVictory(false);
+    //                 console.log("SE ACABO EL JUEGO: el bot ganó");
+    //             }
+    //         }, 5000);
+
+    //         // Opcional: Limpieza del timeout si es necesario
+    //         return () => clearTimeout(timeoutId);
+
+
+    //     }
+    //     // else {
+    //     //     console.log("Tu oponente sigue intentando");
+    //     // }
+    // };
+
     const handleCheckWinnerPatternBot = () => {
-        // ANTES:
-        // if (patterns?.some(p => p.every(n => botSelectedPositions.includes(n)))) {
-
-
-        // if (patterns?.some(p => p.every(n => botSelectedPositions.some(board => board.positions.some(pos => pos.x === n.x && pos.y === n.y))))) {
-
-        // TODO: Evalua cada tablero del bot, si uno de ellos tiene el patron ganador
-        if (patterns?.some(p => p.every(n => botSelectedPositions.some(board =>
-            board.positions.some(pos => pos.x === n.x && pos.y === n.y && board.idBoard === botBoard.find(b => b.board.some(bn => bn.position.x === n.x && bn.position.y === n.y))?.id)
-        )))) {
-
-            // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
-
-            const winningBoard = botSelectedPositions.find(board =>
-                patterns.some(p => p.every(n => board.positions.some(pos => pos.x === n.x && pos.y === n.y)))
+        // Iterar sobre cada tablero del bot
+        for (const board of botSelectedPositions) {
+            // Verificar si este tablero tiene un patrón ganador
+            const hasWinningPattern = patterns?.some(pattern =>
+                pattern.every(position =>
+                    board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+                )
             );
 
-            if (winningBoard) {
-                console.log("Tu oponente " + name + " tiene el patrón asignado en su tablero " + winningBoard.idBoard + 1 + ", tienes 5 segundos para intentar ganarle, nivel: " + currentLevel.level);
+            if (hasWinningPattern) {
+                console.log(
+                    `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
+                );
+
+                // Marcar derrota después de 5 segundos si el jugador no gana
+                const timeoutId = setTimeout(() => {
+                    if (victory) {
+                        console.log("El jugador ganó antes de que el bot terminara");
+                        handleSetDefeat(false);
+                    } else {
+                        handleGameOver();
+                        handleSetDefeat(true);
+                        handleSetVictory(false);
+                        console.log("SE ACABO EL JUEGO: el bot ganó");
+                    }
+                }, 5000);
+
+                // Limpieza del timeout si es necesario
+                return () => clearTimeout(timeoutId);
             }
-
-
-            // READY: Definir una función que solamente se ejecute una vez si el oponente ha ganado, de tal manera que espere 5 segundos para imprimir el mensaje de victoria
-            // setTimeout(() => {
-            //     handleGameOver();
-            //     setDefeat(true)
-            //     console.log("SE ACABO EL JUEGO");
-            // }, 5000);
-
-
-            // TODO: SI EL BOT HA GANADO PRIMERO, ANTES DE LOS 5 SEGUNDOS QUE DEBEN TRASNCURRIRSE, EL JUGADOR GANO EN ESE TIEMPO, SE DEBE COLOCAR DEFEAT COMO FALSE
-            // if (victory === true) {
-            //     setDefeat(false);
-            // }
-
-            // Marcar derrota después de 5 segundos
-            const timeoutId = setTimeout(() => {
-                if (victory === true) {
-                    // Si el jugador ganó antes de que termine el tiempo, cancelar la derrota
-                    console.log("El jugador ganó antes de que el bot terminara");
-                    handleSetDefeat(false);
-                } else {
-                    // Si el jugador no ganó, marcar la derrota
-                    handleGameOver();
-                    handleSetDefeat(true);
-                    handleSetVictory(false);
-                    console.log("SE ACABO EL JUEGO: el bot ganó");
-                }
-            }, 5000);
-
-            // Opcional: Limpieza del timeout si es necesario
-            return () => clearTimeout(timeoutId);
-
-
         }
-        // else {
-        //     console.log("Tu oponente sigue intentando");
-        // }
+        // Si ningún tablero tiene un patrón ganador
+        console.log("El bot sigue intentando, no tiene un patrón ganador en ninguno de sus tableros");
     };
-
 
     // Cada vez que se actualice la posición del objetivo, se verifica si el oponente ha ganado
     useEffect(() => {
@@ -420,11 +483,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         // setBotSelectedPositions([{ x: 2, y: 2 }]);
         // setBotSelectedNumbers([0]);
         setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
-            idBoard: index,
+            idBoard: index + 1,
             positions: [{ x: 2, y: 2 }]
         })))
         setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
-            idBoard: index,
+            idBoard: index + 1,
             numbers: [0]
         })))
 
@@ -441,17 +504,22 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             // setBotSelectedNumbers([0]);
 
             setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
-                idBoard: index,
+                idBoard: index + 1,
                 positions: [{ x: 2, y: 2 }]
             })))
             setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
-                idBoard: index,
+                idBoard: index + 1,
                 numbers: [0]
             })))
 
         }
     }, [defeat])
 
+
+    // REDUNDANTE PARA PRUEBAS
+    // useEffect(() => {
+    //     console.log("Estado actual de botSelectedPositions:", JSON.stringify(botSelectedPositions, null, 2));
+    // }, [botSelectedPositions]);
 
     // SEGUNDO POWERUPS
     // const handleSelectedBot = (name: string) => {
@@ -492,9 +560,9 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                     <div className="flex flex-row gap-4">
                         {
                             Array.from({ length: boards }).map((_, index) => (
-                                <BotBoardNumbers key={index}
+                                <BotBoardNumbers key={index + 1}
                                     board={botBoard.find(b => b.id === index + 1)?.board || []}
-                                    idBoard={index}
+                                    idBoard={index + 1}
                                     handleSelectedPosition={handleSelectedPosition}
                                 />
                             ))

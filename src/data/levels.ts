@@ -85,7 +85,7 @@ export const levels: Level[] = [
     },
     {
         level: 2,
-        targetQuantity: 3,
+        targetQuantity: 5,
         targetText: "Una cruz de 5 números",
         boards: 1,
         // Posiciones de los numeros en el tablero
@@ -125,7 +125,7 @@ export const levels: Level[] = [
             {
                 name: "S-Bot-1",
                 interval: 100,
-                boards: 2
+                boards: 3
             },
             {
                 name: "S-Bot-2",
