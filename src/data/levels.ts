@@ -77,7 +77,7 @@ export const levels: Level[] = [
             {
                 name: "S-Bot",
                 // Tiempo de respuesta del bot en milisegundos
-                interval: 100,
+                interval: 1000,
                 boards: 4
             }
         ]

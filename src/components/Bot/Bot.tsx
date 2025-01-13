@@ -36,7 +36,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
 
 
-    // TODO: ¿SE PODRIA OMITIR EL USO DE USEREF?
+    // READY: SE OMITIO EL USO DE USEREF
     // const timeoutIdsRef = useRef<number[]>([]); // Referencia para almacenar IDs de temporizadores
     const [timeoutIds, setTimeoutIds] = useState<number[]>([]); // Array para almacenar IDs de temporizadores
 
@@ -85,7 +85,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     const [result, setResult] = useState<{ idBoard: number, targets: { position: Position, number: number }[] }[]>([])
 
-    // TODO: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
+    // READY: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
     useEffect(() => {
         if (!botBoard.length || !targets.length) return;
 
@@ -128,7 +128,6 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
                     // Verificar los parámetros antes de llamar a handleCheckNumber
                     console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
-                    // TODO: ¿PORQUE SE RESTA MENOS 1?
                     handleCheckNumber(res.idBoard, t.number, t.position);
                     console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
                     console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
@@ -138,11 +137,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                 }, currentDelay);
 
                 // timeoutIds.current.push(timeoutId); // Almacenar el ID del temporizador
-                newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
-
+                // newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
+                setTimeoutIds([...newTimeoutIds, timeoutId])
             });
         });
-        setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
+        //setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
 
         // Limpiar temporizadores si los objetivos cambian
         return () => {
@@ -208,11 +207,10 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                 //     }
                 // ]);
 
-                // TODO: AQUI ESTA EL ERROR
                 setResult(prevResult => [
                     ...prevResult,
                     {
-                        // TODO: ??? + 2, DEBE SER 1
+                        // POR ALGUNA RAZON ES +1
                         idBoard: index + 1,
                         targets: arrayTargets
                     }
@@ -237,6 +235,16 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         console.log(result)
     }, [result])
 
+
+    // READY: CREAR UNA FUNCIÓN PARA VERIFICAR SI EL BOT YA TIENE MARCADO UN NUMERO Y SU POSICION EN EL TABLERO
+    const handleVerifyNumber = (idBoard: number, number: number) => {
+        if (botSelectedNumbers.some(board => board.idBoard === idBoard && board.numbers.includes(number))) {
+            return false;
+        }
+        return true;
+    }
+
+
     // Función para marcar el numero de forma automatica
     const handleCheckNumber = (idBoard: number, number: number, position: { x: number, y: number }) => {
 
@@ -245,52 +253,55 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             prevState.map(board =>
                 board.idBoard === idBoard
                     ? {
-                        ...board, numbers: [...board.numbers, number]
+                        // Agrega el elemento al arreglo si no se encuentra ahi, no se repite
+                        ...board, numbers: handleVerifyNumber(idBoard, number) ? [...board.numbers, number] : [...board.numbers]
                     }
                     : board
             )
         );
 
+        // positions: board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+        //     ? board.positions
+        //     : [...board.positions, position]
 
 
-        setBotSelectedPositions((prev) => {
-            return prev.map(board =>
+        setBotSelectedPositions(prevState =>
+            prevState.map(board =>
                 board.idBoard === idBoard
                     ? {
                         ...board,
-                        positions: board.positions.some(pos => pos.x === position.x && pos.y === position.y)
-                            ? board.positions
-                            : [...board.positions, position]
+                        positions: handleVerifyNumber(idBoard, number) ? [...board.positions, position] : [...board.positions]
+
                     }
                     : board
-            );
-            // return [...prev, position];
-        })
-
-
-        // setBotSelectedPositions((prev) => {
-
-        //     // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
-
-        //     // if (!prev.includes(position)) {
-        //     //     return [...prev, position];
-        //     // }
-
-        //     if (!prev.some((pos: { x: number, y: number }) => pos.x === position.x && pos.y === position.y)) {
-        //         return [...prev, position];
-        //     }
-
-        //     return prev;
-        // })
-
-        // setBotSelectedPositions((prev: { x: number, y: number }) => {
-        //     if (!prev.some(pos => pos.x === position.x && pos.y === position.y)) {
-        //         return [...prev, position];
-        //     }
-        //     return prev;
-        // })
-
+            ))
+        // return [...prev, position];
     }
+
+
+    // setBotSelectedPositions((prev) => {
+
+    //     // if (selectedPositions.some(pos => pos.x === position.x && pos.y === position.y)) {
+
+    //     // if (!prev.includes(position)) {
+    //     //     return [...prev, position];
+    //     // }
+
+    //     if (!prev.some((pos: { x: number, y: number }) => pos.x === position.x && pos.y === position.y)) {
+    //         return [...prev, position];
+    //     }
+
+    //     return prev;
+    // })
+
+    // setBotSelectedPositions((prev: { x: number, y: number }) => {
+    //     if (!prev.some(pos => pos.x === position.x && pos.y === position.y)) {
+    //         return [...prev, position];
+    //     }
+    //     return prev;
+    // })
+
+
 
     // Función para seleccionar un numero
     // Conviene usar un useEffect para evitar llamadas innecesarias (segun ChatGPT)
@@ -328,7 +339,6 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // ? "bg-blue-500 text-white"
     // : "bg-orange-500 text-black";
 
-    // TODO: MODIFICAR ESTO PARA QUE IMPRIMA EL ULTIMO NUMERO QUE HA SIDO MARCADO
     // useEffect(() => {
     //     if (botSelectedNumbers.length > 0) {
     //         const lastSelections = botSelectedNumbers.map(board => ({
@@ -356,7 +366,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // }, [botSelectedPositions, patterns])
 
-    // TODO: CREAR UNA FUNCIÓN PARA VERIFICAR ???
+
 
     // Función para verificar si el oponente ha ganado
     // const handleCheckWinnerPatternBot = () => {
@@ -459,6 +469,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                         handleGameOver();
                         handleSetDefeat(true);
                         handleSetVictory(false);
+                        // TODO: MEJORAR ESTO, LOS DEMÁS BOTS NO DEBEN SEGUIR MARCANDO NUMEROS Y DEBEN DEJAR DE EVALUAR
                         console.log("SE ACABO EL JUEGO: el bot ganó");
                     }
                 }, 5000);
@@ -468,7 +479,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             }
         }
         // Si ningún tablero tiene un patrón ganador
-        console.log("El bot sigue intentando, no tiene un patrón ganador en ninguno de sus tableros");
+        // console.log("El bot sigue intentando, no tiene un patrón ganador en ninguno de sus tableros");
     };
 
     // Cada vez que se actualice la posición del objetivo, se verifica si el oponente ha ganado
