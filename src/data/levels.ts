@@ -404,23 +404,6 @@ export const levels: Level[] = [
     },
 
 
-    // Posiciones anteriores de los numeros en el tablero
-    /*
-    1   6   11  16  21
-    2   7   12  17  22
-    3   8   13  18  23
-    4   9   14  19  24
-    5   10  15  20  25
-    */
-
-    // Nueva posición (x,y )
-    /*
-    0,4     1,4     2,4     3,4     4,4
-    0,3     1,3     2,3     3,3     4,3
-    0,2     1,2     2,2     3,2     4,2
-    0,1     1,1     2,1     3,1     4,1
-    0,0     1,0     2,0     3,0     4,0
-    */
 
     {
         level: 11,
@@ -950,15 +933,24 @@ export const levels: Level[] = [
 
 
 
-// Esto es un tablero de bingo de 5 * 5
-// 1   6  11  16  21
-// 2   7  12  17  22
-// 3   8  13  18  23
-// 4   9  14  19  24
-// 5  10  15  20  25
 
+// Posiciones anteriores de los numeros en el tablero
+/*
+1   6   11  16  21
+2   7   12  17  22
+3   8   13  18  23
+4   9   14  19  24
+5   10  15  20  25
+*/
 
-
+// Nueva posición (x,y )
+/*
+0,4     1,4     2,4     3,4     4,4
+0,3     1,3     2,3     3,3     4,3
+0,2     1,2     2,2     3,2     4,2
+0,1     1,1     2,1     3,1     4,1
+0,0     1,0     2,0     3,0     4,0
+*/
 
 
 
