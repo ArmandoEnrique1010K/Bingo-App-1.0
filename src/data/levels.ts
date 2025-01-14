@@ -204,10 +204,11 @@ export const levels: Level[] = [
             },
         ]
     },
-    // TODO: MODIFICAR ESTE NIVEL, ES MUY DIFICIL
+    // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
     {
         level: 7,
         targetQuantity: 4,
+        /* POSIBLEMENTE SE PUEDE LLAMAR LA LETRA 'L' */
         targetText: "La letra 'F'",
         boards: 1,
         patterns: [
@@ -595,7 +596,7 @@ export const levels: Level[] = [
         targetQuantity: 5,
         targetText: "Una piramide simetrica de 8 números",
         // Objetivo: Una piramide de 8 numeros
-        boards: 2,
+        boards: 1,
         patterns: [
             [
                 { x: 2, y: 2 },
@@ -624,18 +625,28 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "F-Bot 1",
-                interval: 800,
+                name: "M-Bot 1",
+                interval: 1200,
                 boards: 2
             },
-
+            {
+                name: "F-Bot",
+                interval: 800,
+                boards: 1
+            },
+            {
+                name: "M-Bot 2",
+                interval: 1500,
+                boards: 2
+            },
         ]
     },
+    // A partir de aqui todos los niveles son de 2 tableros para el jugador
     {
         level: 15,
         targetQuantity: 5,
         targetText: "Un aspa a la inversa",
-        boards: 1,
+        boards: 2,
         // Objetivo: Aspa Invertida
         patterns: [
             [
@@ -646,7 +657,28 @@ export const levels: Level[] = [
                 { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }
             ]
         ],
-        bots: [],
+        bots: [
+            {
+                name: "S-Bot",
+                interval: 2000,
+                boards: 1
+            },
+            {
+                name: "M-Bot 1",
+                interval: 1500,
+                boards: 2
+            },
+            {
+                name: "M-Bot 2",
+                interval: 1300,
+                boards: 2
+            },
+            {
+                name: "F-Bot",
+                interval: 800,
+                boards: 1
+            },
+        ],
     },
     {
         level: 16,
@@ -669,7 +701,16 @@ export const levels: Level[] = [
             ],
         ],
         bots: [
-
+            {
+                name: "M-Bot",
+                interval: 1500,
+                boards: 3
+            },
+            {
+                name: "M-Bot",
+                interval: 1300,
+                boards: 3
+            },
         ]
     },
     {
@@ -690,34 +731,34 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "Middle Bot 1",
+                name: "M-Bot 1",
                 interval: 1200,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Slow Bot",
+                name: "S-Bot",
                 interval: 1800,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Middle Bot 2",
+                name: "M-Bot 2",
                 interval: 1500,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Middle Bot 3",
+                name: "M-Bot 3",
                 interval: 1300,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Fast Bot 1",
+                name: "F-Bot 1",
                 interval: 700,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Fast Bot 2",
+                name: "F-Bot 2",
                 interval: 600,
-                boards: 0
+                boards: 1
             }
         ]
     },
@@ -761,10 +802,26 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "Bot1",
-                interval: 1800,
-                boards: 0
+                name: "M-Bot 1",
+                interval: 1500,
+                boards: 1
             },
+            {
+                name: "M-Bot 3",
+                interval: 1500,
+                boards: 3
+            },
+            {
+                name: "F-Bot",
+                interval: 900,
+                boards: 1
+            },
+            {
+                name: "M-Bot 2",
+                interval: 1300,
+                boards: 1
+            },
+
         ]
     },
     {
@@ -805,24 +862,24 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "Fast Bot 1",
+                name: "F-Bot 1",
                 interval: 900,
-                boards: 0
+                boards: 1
             },
             {
-                name: "Fast Bot 2",
-                interval: 700,
-                boards: 0
-            },
-            {
-                name: "Fast Bot 3",
-                interval: 600,
-                boards: 0
-            },
-            {
-                name: "Fast Bot 4",
+                name: "F-Bot 2",
                 interval: 800,
-                boards: 0
+                boards: 1
+            },
+            {
+                name: "M-Bot 1",
+                interval: 1400,
+                boards: 1
+            },
+            {
+                name: "M-Bot 2",
+                interval: 1300,
+                boards: 1
             },
         ]
     },
@@ -845,42 +902,42 @@ export const levels: Level[] = [
         bots: [
             // 8 BOTS
             {
-                name: "Middle Bot 1",
+                name: "M-Bot 1",
                 interval: 1200,
                 boards: 1
             },
             {
-                name: "Slow Bot 1",
+                name: "S-Bot 1",
                 interval: 1800,
-                boards: 2
+                boards: 1
             },
             {
-                name: "Fast Bot 1",
+                name: "F-Bot 1",
                 interval: 700,
                 boards: 1
             },
             {
-                name: "Middle Bot 2",
+                name: "M-Bot 2",
                 interval: 1500,
-                boards: 1
+                boards: 2
             },
             {
-                name: "Middle Bot 3",
+                name: "M-Bot 3",
                 interval: 1300,
                 boards: 1
             },
             {
-                name: "Fast Bot 2",
+                name: "F-Bot 2",
                 interval: 600,
-                boards: 1
+                boards: 2
             },
             {
-                name: "Slow Bot 2",
+                name: "S-Bot 2",
                 interval: 2000,
                 boards: 1
             },
             {
-                name: "Fast Bot 3",
+                name: "F-Bot 3",
                 interval: 800,
                 boards: 1
             },
