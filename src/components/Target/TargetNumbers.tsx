@@ -54,23 +54,16 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
 
 
     return (
-        <div className="bg-gray-700 rounded-xl p-3 shadow-lg
-        h-48
-        mb-4">
+        <div className="bg-gray-700 rounded-xl p-3 shadow-lg min-h-52 w-96 mb-4">
             {/* <div className="bg-gray-800 p-6 rounded-lg shadow-lg"> */}
             <h2 className=" text-cyan-400 text-xl font-semibold mb-2">Objetivos</h2>
 
-            <div className="flex flex-wrap justify-center gap-4 p-3">
+            <div className="flex flex-wrap justify-center gap-2 py-4">
                 {targets.map((n, index) => (
                     <div
                         key={index}
                         // Se define un ancho y altura para que tenga una forma circular con rounded-full
-                        className="
-                        w-12 h-12 flex items-center justify-center border-2 
-                            border-none bg-white 
-                            text-black font-semibold
-                            rounded-full text-lg
-                            "
+                        className="w-11 h-11 flex items-center justify-center border-2 border-none bg-white text-black font-semibold rounded-full text-lg my-auto shadow-md shadow-black "
                     >
                         {n}
                     </div>

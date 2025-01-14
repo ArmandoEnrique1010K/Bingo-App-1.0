@@ -503,7 +503,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
     return (
-        <div className="w-full min-h-screen bg-gray-800 text-white m-auto">
+        <div className="bg-gray-800 text-white m-auto">
             <div className="flex flex-col">
                 <div className="container mx-auto py-4 flex flex-row items-start gap-6 justify-center">
                     <div className="flex flex-col">

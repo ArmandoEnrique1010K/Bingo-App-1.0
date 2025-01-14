@@ -18,7 +18,7 @@ export default function BotSquareNumber({ handleSelectedPosition, number, idBoar
                 className={`text-sm w-6 h-6 text-center border-2 border-gray-600 text-white ${handleSelectedPosition(idBoard, number.position) === true ? "bg-cyan-500" : "bg-gray-500"
                     }`}
             >
-                {number.position.x === 2 && number.position.y === 2 ? 'F' : number.number}
+                {number.position.x === 2 && number.position.y === 2 ? 'F' : /*number.number*/ ''}
             </div>
 
 
