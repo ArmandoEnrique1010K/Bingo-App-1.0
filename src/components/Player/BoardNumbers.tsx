@@ -12,7 +12,7 @@ type BoardNumbersProps = {
 export default function BoardNumbers({ board, handleClickButton, handleSelectedNumber, idBoard }: BoardNumbersProps) {
     return (
         <>
-            <div className="flex flex-row gap-2 px-8 py-4 bg-gray-700 shadow-lg  justify-center items-center">
+            <div className="flex flex-row gap-2 p-4 bg-gray-700 justify-center items-center">
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} idBoard={idBoard}
                     max={0} />
                 <RowNumbers numberBoard={board} handleClickButton={handleClickButton} handleSelectedNumber={handleSelectedNumber} idBoard={idBoard}

@@ -544,9 +544,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
 
                     </div>
-                    {/* TODO: SE PUEDE AÑADIR UN BORDE REDONDEADO */}
-                    <div className="flex flex-col ">
-                        <div className="flex flex-row ">
+                    {/* PODRIA MEJORAR: AÑADIR UN BORDE REDONDEADO */}
+                    <div className="flex flex-col gap-4">
+                        <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl ">
                             {
                                 // READY: CREAR UN ARREGLO, LA CANTIDAD DE ELEMENTOS ESTA DADO POR "currentLevel.boards", DEBE RENDERIZAR BOARDNUMBERS POR CADA ELEMENTO DEL ARREGLO
                                 Array.from({ length: currentLevel.boards }).map((_, index) => (
@@ -564,12 +564,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                         </div>
                         {/* <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} /> */}
-                        <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-b-xl py-4">
+
+                        <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
                             <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
                             <LeaveModal />
                         </div>
-                    </div>
 
+                    </div>
 
                 </div>
 
