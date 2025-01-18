@@ -38,11 +38,10 @@ export type Board = {
 export type Position = {
     x: number,
     y: number
-}
 
 // POTENCIADOR
-export type PowerUp = {
-    id: number,
-    name: string,
-    status: boolean
-}
+// export type PowerUp = {
+//     id: number,
+//     name: string,
+//     status: boolean
+// }
