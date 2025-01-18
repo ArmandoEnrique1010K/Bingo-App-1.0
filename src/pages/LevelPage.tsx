@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { levels } from "../data/levels";
 import { generateTargets } from "../utils/generateTargets";
 import { generateBoard } from "../utils/generateBoard";
-import { Pattern, Position } from "../types";
+import { Pattern } from "../types";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
@@ -22,7 +22,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const currentLevel = levels.find(l => l.level === level) || levels[0];
 
     // Variables de estado
-    const [board, setBoard] = useState<{ id: number, board: { position: Position; number: number; }[] }[]>([]); // Tableros del jugador
+    const [board, setBoard] = useState<{ id: number, board: { position: number; number: number; }[] }[]>([]); // Tableros del jugador
     const [targets, setTargets] = useState<number[]>([]); // Numeros objetivos
     const [patterns, setPatterns] = useState<Pattern[]>([]); // Patrones ganadores
 
@@ -31,7 +31,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Posiciones de los numeros que ha seleccionado el usuario
     // const [selectedPositions, setSelectedPositions] = useState<{ x: number, y: number }[]>([]);
 
-    const [selectedPositions, setSelectedPositions] = useState<{ idBoard: number, positions: { x: number, y: number }[] }[]>([]);
+    const [selectedPositions, setSelectedPositions] = useState<{ idBoard: number, positions: number[] }[]>([]);
 
 
     // Estado para almacenar los números que ha seleccionado el usuario
@@ -101,8 +101,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         // setSelectedPositions([{ x: 2, y: 2 }]);
         // setSelectedNumbers([0]);
         setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            // idBoard: index,
+            // positions: [{ x: 2, y: 2 }]
             idBoard: index,
-            positions: [{ x: 2, y: 2 }]
+            positions: [13]
+
         })))
 
         setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
@@ -132,7 +135,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             // setSelectedNumbers([0]);
             setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
                 idBoard: index,
-                positions: [{ x: 2, y: 2 }]
+                positions: [13]
             })))
             setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
                 idBoard: index,
@@ -173,7 +176,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
     // Función para marcar un número seleccionado
-    const handleClickButton = (idBoard: number, number: number, position: { x: number, y: number }) => {
+    const handleClickButton = (idBoard: number, number: number, position: number) => {
         // Si uno de los números seleccionados es igual al número objetivo, se agrega la posición a los números seleccionados
         if (targets.includes(number)) {
             if (!handleVerifySelectedNumber(idBoard, number)) {
@@ -197,9 +200,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     }
 
     // Función para aplicar un estilo al número seleccionado según su posición
-    const handleSelectedNumber = (idBoard: number, position: { x: number, y: number }) => {
+    const handleSelectedNumber = (idBoard: number, position: number) => {
         // console.log("Posiciones seleccionadas: " + JSON.stringify(selectedPositions))
-        if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
+        // if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
+        if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos === position))) {
+
             return true;
         }
 
@@ -274,7 +279,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
 
         for (const board of selectedPositions) {
-            if (patterns?.some(p => p.every(n => board.positions.some(position => position.x === n.x && position.y === n.y)))) {
+            if (patterns?.some(p => p.every(n => board.positions.some(
+                // position => position.x === n.x && position.y === n.y
+                position => position === n
+            )))) {
                 console.log("El jugador ha ganado el nivel " + level);
                 setVictory(true);
                 setDefeat(false);
@@ -554,6 +562,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                         key={index}
                                         idBoard={index}
                                         board={board.find(b => b.id === index + 1)?.board || []}
+                                        // board={board.find(b => b.id === index + 1)?.board || []}
                                         handleSelectedNumber={handleSelectedNumber}
                                         handleClickButton={handleClickButton}
                                     />

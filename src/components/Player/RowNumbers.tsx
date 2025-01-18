@@ -3,24 +3,26 @@ import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
     numberBoard: Board,
-    handleSelectedNumber: (idBoard: number, position: { x: number, y: number }) => boolean,
-    handleClickButton: (idBoard: number, number: number, position: { x: number, y: number }) => void,
+    handleSelectedNumber: (idBoard: number, position: number) => boolean,
+    handleClickButton: (idBoard: number, number: number, position: number) => void,
+    min: number
     max: number,
     idBoard: number
 }
 
 
-export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, max, idBoard }: RowNumbersProps) {
+export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, max, min, idBoard }: RowNumbersProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
                 {
-                    numberBoard.filter(n => n.position.y >= 0 && n.position.y <= 4 && n.position.x === max).map((n) => (
+                    // numberBoard.filter(n => n.position.y >= 0 && n.position.y <= 4 && n.position.x === max).map((n) => (
+                    numberBoard.filter(n => n.position >= min && n.position <= max).map((n) => (
                         <ButtonNumber
-                            key={n.position.y}
+                            key={n.position}
                             handleSelectedNumber={handleSelectedNumber}
                             handleClickButton={handleClickButton}
-                            n={{ number: n.number, position: { x: n.position.x, y: n.position.y } }}
+                            n={{ number: n.number, position: n.position }}
                             idBoard={idBoard}
                         />
                     ))

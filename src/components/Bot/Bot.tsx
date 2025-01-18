@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
-import { Level, Pattern, Position } from "../../types";
+import { Level, Pattern } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
 
@@ -25,11 +25,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // Tablero del bot
     // const [botBoard, setBotBoard] = useState<Board>([])
-    const [botBoard, setBotBoard] = useState<{ id: number, board: { position: Position; number: number; }[] }[]>([]);
+    const [botBoard, setBotBoard] = useState<{ id: number, board: { position: number; number: number; }[] }[]>([]);
 
     // Estado para almacenar las posiciones de los números que ha seleccionado el bot
     // const [botSelectedPositions, setBotSelectedPositions] = useState<{ x: number, y: number }[]>([]);
-    const [botSelectedPositions, setBotSelectedPositions] = useState<{ idBoard: number, positions: { x: number, y: number }[] }[]>([]);
+    const [botSelectedPositions, setBotSelectedPositions] = useState<{ idBoard: number, positions: number[] }[]>([]);
 
     // Estado para almacenar los números que ha seleccionado el bot
     // const [botSelectedNumbers, setBotSelectedNumbers] = useState<number[]>([]);
@@ -84,7 +84,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     //     }
     // }, [targets]);
 
-    const [result, setResult] = useState<{ idBoard: number, targets: { position: Position, number: number }[] }[]>([])
+    const [result, setResult] = useState<{ idBoard: number, targets: { position: number, number: number }[] }[]>([])
 
     // READY: ESTO DEBERIA EVALUAR TABLERO POR TABLERO
     useEffect(() => {
@@ -265,7 +265,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
 
     // Función para marcar el numero de forma automatica
-    const handleCheckNumber = (idBoard: number, number: number, position: { x: number, y: number }) => {
+    const handleCheckNumber = (idBoard: number, number: number, position: number) => {
 
 
         setBotSelectedNumbers(prevState =>
@@ -340,10 +340,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // MARCA LA POSICION SELECCIONADA
 
-    const handleSelectedPosition = (idBoard: number, position: { x: number, y: number }) => {
+    const handleSelectedPosition = (idBoard: number, position: number) => {
         // return botSelectedPositions.some()
 
-        if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p.x === position.x && p.y === position.y))) {
+        // if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p.x === position.x && p.y === position.y))) {
+        if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p === position))) {
             //  === position.x && pos.y === position.y)) {
             return true;
         }
@@ -478,7 +479,9 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                 // Verificar si este tablero tiene un patrón ganador
                 const hasWinningPattern = patterns?.some(pattern =>
                     pattern.every(position =>
-                        board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+                        // board.positions.some(pos => pos.x === position.x && pos.y === position.y)
+                        board.positions.some(pos => pos === position)
+
                     )
                 );
 
@@ -526,7 +529,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         // setBotSelectedNumbers([0]);
         setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index + 1,
-            positions: [{ x: 2, y: 2 }]
+            positions: [13]
         })))
         setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index + 1,
@@ -547,7 +550,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
             setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index + 1,
-                positions: [{ x: 2, y: 2 }]
+                positions: [13]
             })))
             setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index + 1,

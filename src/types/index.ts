@@ -12,10 +12,7 @@ export type Level = {
     bots: Bot[]
 }
 
-export type Pattern = {
-    x: number,
-    y: number
-}[]
+export type Pattern = number[]
 
 export type Bot = {
     name: string
@@ -31,13 +28,13 @@ export type Numbers = {
 
 // Cada numero del tablero tiene una posicion y el numero
 export type Board = {
-    position: Position
+    position: number,
+    // x: number,
+    // y: number,
     number: number
 }[]
 
-export type Position = {
-    x: number,
-    y: number
+// export type BoardLevel = Omit<Board, 'x' | 'y'>
 
 // POTENCIADOR
 // export type PowerUp = {
