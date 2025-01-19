@@ -67,6 +67,8 @@ export default function Help() {
                                     <li className='list-disc list-inside'>Fast Bot</li>
                                 </ul>
 
+                                <p>Algunos niveles pueden tener 2 tableros tanto para el jugador como para el bot, el juego termina cuando el patrón ganador esta formado en uno de los tableros</p>
+
                                 <p>El juego termina cuando tú formas el patrón objetivo en el tablero y pulsas el botón "Comprobar patrón" para ganar la partida o si tu oponente forma el patrón objetivo y tu piedes, lo cual tendras que volver a intentar la partida.</p>
                             </div>
                             <div className="mt-10">
