@@ -1,101 +1,81 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
 
+// No olvidar definir los types para las propiedades recibidas
 type TargetNumbersProps = {
-    handleChangeTargets: () => void,
-    targets: number[]
-    round: number
-}
+    handleChangeTargets: () => void;
+    targets: number[];
+    round: number;
+};
 
 export default function TargetNumbers({ handleChangeTargets, targets, round }: TargetNumbersProps) {
 
-    /// TODO: Podria mejorar el renderizado del botón?
-
-    // Mostrar el boton
+    // Controla la visibilidad del botón
     const [showButton, setShowButton] = useState(true);
 
-
-    // const target = useMemo(() => {
-    //     if (targets) {
-    //         console.log("Se oculta el boton")
-    //         setShowButton(false)
-    //     }
-
-    //     if (targets && targets.length !== 0) {
-    //         {
-    //             // Luego de 1,5 segundos muestra el botón
-    //             setTimeout(() => {
-    //                 setShowButton(true)
-    //                 console.log("Muestra el botón")
-    //             }, 1500)
-    //         }
-    //     }
-
-    //     return targets;
-    // }, [targets]);
-
     useEffect(() => {
-        // if (targets || targets.length > 0) {
-
-        if (targets) {
-            console.log("Se oculta el boton")
-            setShowButton(false)
+        // Lógica para controlar la visibilidad del botón
+        if (targets.length > 0) {
+            // Retrasa la visibilidad del botón después de actualizar objetivos
+            const timer = setTimeout(() => setShowButton(true), 1500);
+            return () => clearTimeout(timer); // Limpia el temporizador
         }
 
-        if (targets && targets.length !== 0) {
-            {
-                // Luego de 1,5 segundos muestra el botón
-                setTimeout(() => {
-                    setShowButton(true)
-                    console.log("Muestra el botón")
-                }, 1500)
-            }
-        }
-    }, [targets])
+        // Oculta el botón si no hay objetivos
+        setShowButton(false);
+    }, [targets]);
 
+
+    // Función para obtener el texto dinámico del botón
+    const getButtonText = () => {
+        if (round === 0) return "Iniciar partida";
+        if (targets.length > 0) return "Siguiente ronda";
+        return ""; // Caso para evitar mostrar texto vacío innecesario
+    };
 
     return (
         <div className="bg-gray-700 rounded-xl p-3 shadow-lg min-h-52 w-96 mb-4">
-            {/* <div className="bg-gray-800 p-6 rounded-lg shadow-lg"> */}
-            <h2 className=" text-cyan-400 text-xl font-semibold mb-2">Objetivos</h2>
+            <h2 className="text-cyan-400 text-xl font-semibold mb-2">Objetivos</h2>
 
-            <div className="flex flex-wrap justify-center gap-2 py-4">
-                {targets.map((n, index) => (
-                    <div
-                        key={index}
-                        // Se define un ancho y altura para que tenga una forma circular con rounded-full
-                        className="w-11 h-11 flex items-center justify-center border-2 border-none bg-white text-black font-semibold rounded-full text-lg my-auto shadow-md shadow-black "
-                    >
-                        {n}
-                    </div>
-                ))}
+            {/* Renderiza los numeros objetivos si hay elementos en targets */}
+            {targets.length > 0 && (
+                <div className="flex flex-wrap justify-center gap-2 py-4">
+                    {targets.map((n, index) => (
+                        // Itera sobra cada número y le aplica un estilo
+                        <div
+                            key={index}
+                            className="w-11 h-11 flex items-center justify-center border-2 
+                            border-none bg-white text-black font-semibold rounded-full 
+                            text-lg shadow-md shadow-black"
+                        >
+                            {n}
+                        </div>
+                    ))}
+                </div>
+            )}
 
-            </div>
-            {
-                showButton === true || round === 0 ? (
-                    <div className="text-center mt-2">
+            {/* TODO: MEJORAR LA LOGICA DEL BOTÓN AL MOMENTO DE RENDERIZARLO */}
+
+            {/* Renderiza el botón solamente si es necesario */}
+            <div className="text-center mt-2">
+                {
+                    // Este es un operador ternario simplificado:
+                    // (condición) ? resultado_si_verdadero : resultado_si_falso
+                    // En este caso, usamos el operador AND (&&) para condicionalmente
+                    // renderizar el botón solo si 'showButton' es verdadero o 'round' es 0.
+                    (showButton || round === 0) && (
                         <button
                             className="bg-cyan-500 text-white font-semibold px-6 py-3 
-                            rounded-lg shadow-black shadow-md 
-                            hover:bg-cyan-600 active:bg-cyan-700
-                            transition duration-300
-                            mb-4"
-                            onClick={() => handleChangeTargets()}>{
-                                // No olvides cambiar el texto del botón dependiendo de si hay objetivos o no
-                                targets.length === 0 ? "Iniciar partida" : "Siguiente ronda"
-
-                                // round === 0 ? "Iniciar partida" : targets.length !== 0 && showButton === true && "Siguiente ronda"
-                            }</button>
-
-                    </div>
-
-                ) : ""
-            }
-
-
-
-            {/* </div> */}
-
-
+                            rounded-lg shadow-black shadow-md hover:bg-cyan-600 
+                            active:bg-cyan-700 transition duration-300 mb-4"
+                            // Llama a la función que actualiza los objetivos al hacer clic
+                            onClick={handleChangeTargets}
+                        >
+                            {/* Muestra el texto del botón según lo definido en getButtonText */}
+                            {getButtonText()}
+                        </button>
+                    )
+                }
+            </div>
         </div>
-    )
+    );
 }

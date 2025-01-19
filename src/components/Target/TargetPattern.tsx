@@ -1,9 +1,9 @@
 type TargetPatternProps = {
     level: number,
     text: string
-    handleCheckWinnerPattern: () => boolean
 }
 
+// Componente para mostrar el patrón objetivo
 export default function TargetPattern({ level, text }: TargetPatternProps) {
 
     return (
@@ -13,20 +13,18 @@ export default function TargetPattern({ level, text }: TargetPatternProps) {
             </div>
 
             <div className="flex flex-row gap-2 justify-center">
-                {/* Imagen del patrón */}
                 <div className="flex justify-center">
+                    {/* Imagen del patrón, se especifica la clase min-w-20, ancho minimo */}
                     <img
                         src={`/images/patterns/level_${level}.svg`}
                         alt={`Patrón del nivel ${level}`}
                         className="min-w-20 w-36 shadow-lg"
                     />
                 </div>
-                {/* El texto debe tener un elipsis */}
+
                 <div className="text-lg text-gray-300 text-center my-auto w-40">
                     {text}
                 </div>
-
-
             </div>
         </div>
     )

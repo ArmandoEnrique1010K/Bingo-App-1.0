@@ -2,6 +2,7 @@ import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
 import { useState } from 'react';
 
+// Ventana modal que muestra las instrucciones del juego
 export default function Help() {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -34,8 +35,6 @@ export default function Help() {
                                 Instrucciones
                             </DialogTitle>
                             <div className="space-y-3 text-lg text-gray-700">
-
-
                                 <p>
                                     Bienvenido a BingoApp. Tu objetivo es derrotar a los bots en un juego de Bingo, se el primero en formar el patrón ganador.
                                 </p>
@@ -83,10 +82,7 @@ export default function Help() {
                     </div>
                 </div>
             </Dialog>
-
         </>
-
-
     )
 }
 

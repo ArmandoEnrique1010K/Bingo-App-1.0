@@ -1,29 +1,28 @@
 type ButtonNumberProps = {
     handleClickButton: (idBoard: number, number: number, position: number) => void,
-    handleSelectedNumber: (idBoard: number, position: number) => boolean,
-    n: {
+    handleIsSelectedNumber: (idBoard: number, position: number) => boolean,
+    value: {
         number: number,
         position: number
     },
     idBoard: number
 }
 
-export default function ButtonNumber({ handleClickButton, handleSelectedNumber, n, idBoard }: ButtonNumberProps) {
+export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber, value, idBoard }: ButtonNumberProps) {
     return (
         <>
             <button
-                // className="p-2 border-solid border-red-950 border-2 bg-red-300" 
-                // className={`text-xl p-4 border-solid border-red-950 border-2 ${handleSelectedNumber(n.number, n.position)}`}
+                // Recuerda handleIsSelectedNumber retorna un valor booleano, se especifica un estilo de acuerdo a la 
+                // condición ternaria
                 className={`text-2xl font-bold w-16 h-16 border-none rounded-lg text-white hover:bg-cyan-700 active:bg-cyan-600 transition duration-300 
-                    ${handleSelectedNumber(idBoard, n.position) === true ? "bg-cyan-500" : "bg-gray-500"}`}
+                    ${handleIsSelectedNumber(idBoard, value.position) === true ? "bg-cyan-500" : "bg-gray-500"}`}
 
-                onClick={() => handleClickButton(idBoard, n.number, n.position)}>
-                {/* {n.position} --- */}
-                {/* {n.position.y === 2 && n.position.x === 2 ? 'Free' : n.number} */}
-                {n.position === 13 ? 'Free' : n.number}
-                {/* {n.number} */}
+                // Al hacer clic, marca el numero llamando a handleClickButton
+                onClick={() => handleClickButton(idBoard, value.number, value.position)}>
+
+                {/* El numero del centro es 0, pero se muestra el texto 'Free' */}
+                {value.position === 13 ? 'Free' : value.number}
             </button>
-
         </>
     )
 }

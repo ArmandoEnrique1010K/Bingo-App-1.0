@@ -1,9 +1,9 @@
 import { useState } from "react";
-// Importa un icono de hero icons, se utiliza el siguiente formato, existe una variedad de iconos
+// Importa un icono de hero icons, utiliza el siguiente formato para importar un icono
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
-// Este componente es una página que muestra la información del autor que desarrollo esta aplicación
+// Este componente es una ventana modal que muestra la información del autor que desarrollo esta aplicación
 export default function Credits() {
 
     const [isOpen, setIsOpen] = useState(false);
@@ -16,13 +16,13 @@ export default function Credits() {
         setIsOpen(false)
     }
 
-
     // READY Convertir este componente en una ventana modal que se pueda abrir desde el menú principal
     return (
         <>
-            {/* Aplicale estilos al icono para que se muestre */}
+            {/* El botón contiene un icono de HeroIcons */}
             <button onClick={open}><InformationCircleIcon className='h-8 w-8 text-cyan-500 hover:text-cyan-600 active:text-cyan-700' aria-hidden="true" /></button>
 
+            {/* Recuerda que puedes hacer clic en cualquier parte de la pantalla para cerrar la ventana modal */}
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-800 bg-opacity-50">
@@ -54,19 +54,14 @@ export default function Credits() {
                                     <span className="font-bold">Librerias utilizadas:</span> ToneJS, HeadlessUI & HeroIcons.
                                 </p>
                                 <p>
-                                    <span className="font-bold">Música:</span><br />
-                                    Tap Out (instrumental) - The Strokes (2013)
-                                    {/* <br />
-                                    Give Life Back to Music - Daft Punk
-                                    <br />
-                                    Ready to Start - Arcade Fire
-                                    <br />
-                                    Dayglow - Can I Call You Tonight? (2013)
-                                    <br />
-                                    End of Beginning (instrumental) */}
+                                    <span className="font-bold">Música:</span> Tap Out (instrumental) - The Strokes (2013)
+                                </p>
+                                <p>
+                                    <span className="font-bold">Favicon: </span>Icono de <a target="_blank" href="https://icons8.com/icon/58439/bingo">Bingo</a> proporcionado por <a target="_blank" href="https://icons8.com">Icons8</a>
                                 </p>
                             </div>
                             <div className="mt-10">
+                                {/* Botón para cerrar la ventana modal */}
                                 <Button
                                     onClick={close}
                                     className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
@@ -78,28 +73,7 @@ export default function Credits() {
                     </div>
                 </div>
             </Dialog>
-
-            {/* {
-                showCredits === true && (
-                    <>
-                        <h2>Development</h2>
-                        <p>Enrique1010k</p>
-
-                        <h2>Icons</h2>
-                        <p>HeroIcons</p>
-
-                        <h2>Tecnologies</h2>
-                        <p>HTML, TailwindCSS, TypeScript, ReactJS & ToneJS</p>
-
-                        <h2>Music</h2>
-                        <p>Tap Out - Strokes(2013) instrumental</p>
-
-
-                    </>
-                )
-            } */}
         </>
-
     )
 }
 

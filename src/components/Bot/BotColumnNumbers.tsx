@@ -9,7 +9,7 @@ type BotRowNumbersProps = {
     idBoard: number
 }
 
-export default function BotRowNumbers({ board, handleSelectedPosition, max, min, idBoard }: BotRowNumbersProps) {
+export default function BotColumnNumbers({ board, handleSelectedPosition, max, min, idBoard }: BotRowNumbersProps) {
     return (
         <>
             <div className="flex flex-col">

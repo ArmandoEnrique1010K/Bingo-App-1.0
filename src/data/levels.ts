@@ -8,8 +8,8 @@ import { Level } from "../types";
 // 5. Dos cuadrados en diagonales
 
 // 6. Cuatro al cuadrado
-// 7. OJO
-// 8. La letra F
+// 7. El ojo
+// 8. La letra 'L'
 // 9. Los 8 numeros más alejados del tablero y el centro del tablero
 // 10. Una gran aspa de 9 numeros y una cruz de 5 numeros que comience desde el centro
 
@@ -26,14 +26,6 @@ import { Level } from "../types";
 // 20. Todo el tablero debe estar marcado
 
 
-// Posiciones de los numeros en el tablero (x, y)
-/*
-0,4     1,4     2,4     3,4     4,4
-0,3     1,3     2,3     3,3     4,3
-0,2     1,2     2,2     3,2     4,2
-0,1     1,1     2,1     3,1     4,1
-0,0     1,0     2,0     3,0     4,0
-*/
 // Posiciones de los numeros en el tablero
 /*
 1   6   11  16  21
@@ -42,6 +34,10 @@ import { Level } from "../types";
 4   9   14  19  24
 5   10  15  20  25
 */
+
+// S - Bot: 2200 - 1600
+// M - Bot: 1500 - 1000
+// F - Bot: 900 - 500
 
 // Aqui se especifica los niveles, incluyendo los posibles patrones ganadores por cada nivel del juego
 export const levels: Level[] = [
@@ -66,19 +62,6 @@ export const levels: Level[] = [
             [3, 8, 13, 18, 23],
             [4, 9, 14, 19, 24],
             [5, 10, 15, 20, 25],
-
-            // [{ x: 0, y: 4 }, { x: 0, y: 3 }, { x: 0, y: 2 }, { x: 0, y: 1 }, { x: 0, y: 0 }],
-            // [{ x: 1, y: 4 }, { x: 1, y: 3 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 1, y: 0 }],
-            // [{ x: 2, y: 4 }, { x: 2, y: 3 }, { x: 2, y: 2 }, { x: 2, y: 1 }, { x: 2, y: 0 }],
-            // [{ x: 3, y: 4 }, { x: 3, y: 3 }, { x: 3, y: 2 }, { x: 3, y: 1 }, { x: 3, y: 0 }],
-            // [{ x: 4, y: 4 }, { x: 4, y: 3 }, { x: 4, y: 2 }, { x: 4, y: 1 }, { x: 4, y: 0 }],
-
-            // [{ x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 }],
-            // [{ x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }],
-            // [{ x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }],
-            // [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }],
-            // [{ x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }]
-
         ],
         // Oponentes automatizados (Bots)
         bots: [
@@ -98,8 +81,6 @@ export const levels: Level[] = [
         targetText: "Una cruz de 5 números",
         boards: 1,
         patterns: [
-
-
             [6, 2, 7, 12, 8],
             [11, 7, 12, 17, 13],
             [16, 12, 17, 22, 18],
@@ -111,19 +92,6 @@ export const levels: Level[] = [
             [8, 4, 9, 14, 10],
             [13, 9, 14, 19, 15],
             [18, 14, 19, 24, 20],
-
-            // [{ x: 1, y: 4 }, { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 1, y: 2 }],
-            // [{ x: 2, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 2, y: 2 }],
-            // [{ x: 3, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 }, { x: 3, y: 2 }],
-
-            // [{ x: 1, y: 3 }, { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 1, y: 1 }],
-            // [{ x: 2, y: 3 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 2, y: 1 }],
-            // [{ x: 3, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 }, { x: 3, y: 1 }],
-
-            // [{ x: 1, y: 2 }, { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 1, y: 0 }],
-            // [{ x: 2, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 2, y: 0 }],
-            // [{ x: 3, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 }, { x: 3, y: 0 }],
-
         ],
         bots: [
             {
@@ -139,33 +107,21 @@ export const levels: Level[] = [
         targetText: "Un rectangulo de 6 números",
         boards: 1,
         patterns: [
-            // [{ x: 0, y: 4 }, { x: 0, y: 3 }, { x: 1, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 3 }],
-            // [{ x: 0, y: 3 }, { x: 0, y: 2 }, { x: 1, y: 3 }, { x: 1, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 2 }],
-            // [{ x: 0, y: 2 }, { x: 0, y: 1 }, { x: 1, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 1 }],
-            // [{ x: 0, y: 1 }, { x: 0, y: 0 }, { x: 1, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 1 }, { x: 2, y: 0 }],
-            // [{ x: 1, y: 4 }, { x: 1, y: 3 }, { x: 2, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 3, y: 3 }],
-            // [{ x: 1, y: 3 }, { x: 1, y: 2 }, { x: 2, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 2 }],
-            // [{ x: 1, y: 2 }, { x: 1, y: 1 }, { x: 2, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 1 }],
-            // [{ x: 1, y: 1 }, { x: 1, y: 0 }, { x: 2, y: 1 }, { x: 2, y: 0 }, { x: 3, y: 1 }, { x: 3, y: 0 }],
-            // [{ x: 2, y: 4 }, { x: 2, y: 3 }, { x: 3, y: 4 }, { x: 3, y: 3 }, { x: 4, y: 4 }, { x: 4, y: 3 }],
-            // [{ x: 2, y: 3 }, { x: 2, y: 2 }, { x: 3, y: 3 }, { x: 3, y: 2 }, { x: 4, y: 3 }, { x: 4, y: 2 }],
-            // [{ x: 2, y: 2 }, { x: 2, y: 1 }, { x: 3, y: 2 }, { x: 3, y: 1 }, { x: 4, y: 2 }, { x: 4, y: 1 }],
-            // [{ x: 2, y: 1 }, { x: 2, y: 0 }, { x: 3, y: 1 }, { x: 3, y: 0 }, { x: 4, y: 1 }, { x: 4, y: 0 }],
             [1, 2, 6, 7, 11, 12],
             [2, 3, 7, 8, 12, 13],
             [3, 4, 8, 9, 13, 14],
             [4, 5, 9, 10, 14, 15],
+
             [6, 7, 11, 12, 16, 17],
             [7, 8, 12, 13, 17, 18],
             [8, 9, 13, 14, 18, 19],
             [9, 10, 14, 15, 19, 20],
+
             [11, 12, 16, 17, 21, 22],
             [12, 13, 17, 18, 22, 23],
             [13, 14, 18, 19, 23, 24],
             [14, 15, 19, 20, 24, 25],
-
         ],
-
         bots: [
             {
                 name: "M-Bot",
@@ -180,15 +136,6 @@ export const levels: Level[] = [
         targetText: "Un aspa de 5 números",
         boards: 1,
         patterns: [
-            // [{ x: 0, y: 4 }, { x: 2, y: 4 }, { x: 1, y: 3 }, { x: 0, y: 2 }, { x: 2, y: 2 }],
-            // [{ x: 1, y: 4 }, { x: 3, y: 4 }, { x: 2, y: 3 }, { x: 1, y: 2 }, { x: 3, y: 2 }],
-            // [{ x: 2, y: 4 }, { x: 4, y: 4 }, { x: 3, y: 3 }, { x: 2, y: 2 }, { x: 4, y: 2 }],
-            // [{ x: 0, y: 3 }, { x: 2, y: 3 }, { x: 1, y: 2 }, { x: 0, y: 1 }, { x: 2, y: 1 }],
-            // [{ x: 1, y: 3 }, { x: 3, y: 3 }, { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 3, y: 1 }],
-            // [{ x: 2, y: 3 }, { x: 4, y: 3 }, { x: 3, y: 2 }, { x: 2, y: 1 }, { x: 4, y: 1 }],
-            // [{ x: 0, y: 2 }, { x: 2, y: 2 }, { x: 1, y: 1 }, { x: 0, y: 0 }, { x: 2, y: 0 }],
-            // [{ x: 1, y: 2 }, { x: 3, y: 2 }, { x: 2, y: 1 }, { x: 1, y: 0 }, { x: 3, y: 0 }],
-            // [{ x: 2, y: 2 }, { x: 4, y: 2 }, { x: 3, y: 1 }, { x: 2, y: 0 }, { x: 4, y: 0 }],
             [1, 11, 7, 3, 13],
             [6, 16, 12, 8, 18],
             [11, 21, 17, 13, 23],
@@ -219,8 +166,6 @@ export const levels: Level[] = [
         targetText: "2 cuadrados de 4 números en 2 diagonales",
         boards: 2,
         patterns: [
-            // [{ x: 0, y: 4 }, { x: 1, y: 4 }, { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 3, y: 1 }, { x: 3, y: 0 }, { x: 4, y: 1 }, { x: 4, y: 0 }],
-            // [{ x: 0, y: 1 }, { x: 1, y: 1 }, { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 3, y: 4 }, { x: 4, y: 4 }, { x: 3, y: 3 }, { x: 4, y: 3 }],
             [1, 6, 2, 7, 19, 24, 20, 25],
             [4, 9, 5, 10, 16, 21, 17, 22],
         ],
@@ -239,13 +184,6 @@ export const levels: Level[] = [
         targetText: "El ojo",
         boards: 1,
         patterns: [
-            // [
-            //     { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 },
-            //     { x: 0, y: 3 }, { x: 4, y: 3 },
-            //     { x: 0, y: 2 }, { x: 2, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 1 }, { x: 4, y: 1 },
-            //     { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
-            // ]
             [
                 6, 11, 16,
                 2, 22,
@@ -271,39 +209,9 @@ export const levels: Level[] = [
     {
         level: 7,
         targetQuantity: 4,
-        /* POSIBLEMENTE SE PUEDE LLAMAR LA LETRA 'L' */
-        targetText: "La letra 'F'",
+        targetText: "Primera o ultima fila y columna",
         boards: 1,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 0, y: 1 },
-            //     { x: 0, y: 0 },
-            // ],
-
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 4, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 2, y: 3 }, { x: 4, y: 2 },
-            //     { x: 4, y: 1 },
-            //     { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 4, y: 4 },
-            //     { x: 4, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 },
-            //     { x: 0, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 0, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ]
             [
                 1, 6, 11, 16, 21,
                 2,
@@ -332,7 +240,6 @@ export const levels: Level[] = [
                 4,
                 5, 10, 15, 20, 25
             ]
-
         ],
         bots: [
             // Tu oponente es un bot de alta velocidad
@@ -353,18 +260,10 @@ export const levels: Level[] = [
         targetQuantity: 4,
         targetText: "Ocho cuartos",
         boards: 1,
-        // Objetivo: Los 8 numeros más alejados del tablero
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 2, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 2 }, { x: 2, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 0 }, { x: 2, y: 0 }, { x: 4, y: 0 },
-            // ]
             [
                 1, 11, 21,
-
                 3, 13, 23,
-
                 5, 15, 25
             ]
         ],
@@ -398,34 +297,14 @@ export const levels: Level[] = [
         targetText: "Un cuadrado de 16 números",
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            // ],
-            // [
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
-            // ],
-            // [
-            //     { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            // ],
-            // [
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-            [1, 6, 11, 16, 2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19],
-            [2, 7, 12, 17, 3, 8, 13, 18, 4, 9, 14, 19, 5, 10, 15, 20],
-            [6, 11, 16, 21, 7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24],
-            [7, 12, 17, 22, 8, 13, 18, 23, 9, 14, 19, 24, 10, 15, 20, 25],
+            [1, 6, 11, 16, 2, 7, 12, 17,
+                3, 8, 13, 18, 4, 9, 14, 19],
+            [2, 7, 12, 17, 3, 8, 13, 18,
+                4, 9, 14, 19, 5, 10, 15, 20],
+            [6, 11, 16, 21, 7, 12, 17, 22,
+                8, 13, 18, 23, 9, 14, 19, 24],
+            [7, 12, 17, 22, 8, 13, 18, 23,
+                9, 14, 19, 24, 10, 15, 20, 25],
         ],
         bots: [
             {
@@ -440,44 +319,13 @@ export const levels: Level[] = [
             }
         ],
     },
-
-
     {
         // Nivel con 2 objetivos en el tablero
         level: 10,
         targetQuantity: 4,
-        targetText: "Un aspa de 9 números y una cruz de 5 números que empiece del centro",
-        // Objetivo: Una gran aspa de 9 numeros y una cruz de 5 numeros que comience desde el centro
+        targetText: "Un aspa de 9 números y una cruz de 5 números que comience del centro",
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 3, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 1, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 3, y: 3 },
-            //     { x: 2, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 2, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 3, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 1, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 2, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 2, y: 2 },
-            //     { x: 1, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 4, y: 0 },
-            // ],
             [
                 1, 21,
                 7, 17,
@@ -507,9 +355,6 @@ export const levels: Level[] = [
                 5, 25,
             ],
         ],
-        // S - Bot: 2200 - 1600
-        // M - Bot: 1500 - 1000
-        // F - Bot: 900 - 500
         bots: [
             {
                 name: "M-Bot 1",
@@ -541,48 +386,7 @@ export const levels: Level[] = [
         targetQuantity: 4,
         targetText: "El número 1",
         boards: 1,
-        // Objetivo: El numero 1
         patterns: [
-            // [
-            //     { x: 2, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 },
-            //     { x: 2, y: 2 },
-            //     { x: 2, y: 1 },
-            //     { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }
-            // ],
-            // [
-            //     { x: 1, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 },
-            //     { x: 1, y: 2 },
-            //     { x: 1, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }
-            // ],
-            // [
-            //     { x: 3, y: 4 },
-            //     { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 3, y: 2 },
-            //     { x: 3, y: 1 },
-            //     { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 }
-            // ],
-
-
-            // Posiciones de los numeros en el tablero (x, y)
-            /*
-            0,4     1,4     2,4     3,4     4,4
-            0,3     1,3     2,3     3,3     4,3
-            0,2     1,2     2,2     3,2     4,2
-            0,1     1,1     2,1     3,1     4,1
-            0,0     1,0     2,0     3,0     4,0
-            */
-            // Posiciones de los numeros en el tablero
-            /*
-            1   6   11  16  21
-            2   7   12  17  22
-            3   8   13  18  23
-            4   9   14  19  24
-            5   10  15  20  25
-            */
-
             [6, 2, 7, 8, 9, 5, 10, 15],
             [11, 7, 12, 13, 14, 10, 15, 20],
             [16, 12, 17, 18, 19, 15, 20, 25]
@@ -610,16 +414,8 @@ export const levels: Level[] = [
         level: 12,
         targetQuantity: 4,
         targetText: "Las letras 'H' e 'I'",
-        // Objetivo: Letra 'H' y letra 'I'
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 2, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 }, { x: 2, y: 3 }, { x: 4, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 1 }, { x: 2, y: 1 }, { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 2, y: 0 }, { x: 4, y: 0 },
-            // ]
             [
                 1, 11, 21,
                 2, 12, 22,
@@ -657,56 +453,8 @@ export const levels: Level[] = [
         // A partir de este nivel son 5 números objetivos
         targetQuantity: 5,
         targetText: "Un cuadrado de 9 números",
-        // Objetivo: Cuadrado de 9 numeros
         boards: 1,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            // ],
-            // [
-            //     { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            // ],
-            // [
-            //     { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            // ],
-            // [
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 },
-            // ],
-            // [
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            // ],
-            // [
-            //     { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            // ],
-            // [
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 },
-            // ],
-            // [
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 },
-            // ],
-            // [
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-
-
             [
                 1, 6, 11,
                 2, 7, 12,
@@ -752,7 +500,6 @@ export const levels: Level[] = [
                 14, 19, 24,
                 15, 20, 25,
             ],
-
         ],
         // 5 BOTS
         bots: [
@@ -788,33 +535,8 @@ export const levels: Level[] = [
         level: 14,
         targetQuantity: 5,
         targetText: "Una piramide simetrica de 8 números",
-        // Objetivo: Una piramide de 8 numeros
         boards: 1,
         patterns: [
-            // [
-            //     { x: 2, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 2, y: 2 },
-            // ],
-            // [
-            //     { x: 0, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 },
-            //     { x: 0, y: 0 },
-            // ],
-            // [
-            //     { x: 4, y: 4 },
-            //     { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 4, y: 0 },
-            // ],
             [
                 13,
                 9, 14, 19,
@@ -864,15 +586,7 @@ export const levels: Level[] = [
         targetQuantity: 5,
         targetText: "Un aspa a la inversa",
         boards: 2,
-        // Objetivo: Aspa Invertida
         patterns: [
-            // [
-            //     { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 },
-            //     { x: 0, y: 3 }, { x: 2, y: 3 }, { x: 4, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 1 }, { x: 2, y: 1 }, { x: 4, y: 1 },
-            //     { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }
-            // ]
             [
                 6, 11, 16,
                 2, 12, 22,
@@ -909,21 +623,8 @@ export const levels: Level[] = [
         level: 16,
         targetQuantity: 5,
         targetText: "3 filas o 3 columnas separadas",
-        // Objetivo: 3 Filas o 3 columnas separadas
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 2, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 }, { x: 2, y: 3 }, { x: 4, y: 3 },
-            //     { x: 0, y: 2 }, { x: 2, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 1 }, { x: 2, y: 1 }, { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 2, y: 0 }, { x: 4, y: 0 },
-            // ],
             [
                 1, 6, 11, 16, 21,
                 3, 8, 13, 18, 23,
@@ -939,32 +640,23 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "M-Bot",
+                name: "M-Bot-1",
                 interval: 1500,
                 boards: 3
             },
             {
-                name: "M-Bot",
+                name: "M-Bot-2",
                 interval: 1300,
                 boards: 3
             },
         ]
     },
     {
-        // Nivel Final
         level: 17,
         targetQuantity: 5,
         targetText: "Un diamante a la inversa",
-        // Objetivo: Un diamante invertido
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 }, { x: 2, y: 3 }, { x: 4, y: 3 },
-            //     { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 },
-            //     { x: 0, y: 1 }, { x: 2, y: 1 }, { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ]
             [
                 1, 6, 16, 21,
                 2, 12, 22,
@@ -1007,42 +699,11 @@ export const levels: Level[] = [
         ]
     },
     {
-        // Nivel con 2 objetivos en el tablero
         level: 18,
         targetQuantity: 5,
-        targetText: "Una cruz de 9 números y un aspa de 5 números que comience del centro",
-        // Objetivo: Una gran cruz de 9 numeros y una letra 'X' de 5 numeros que comience desde el centro
-        // Nota: Existe 4 combinaciones
+        targetText: "Una cruz de 9 números y un aspa de 5 números que empiece del centro",
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 2, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 2, y: 1 },
-            //     { x: 2, y: 0 },
-            // ],
-            // [
-            //     { x: 2, y: 4 }, { x: 4, y: 4 },
-            //     { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 2, y: 1 },
-            //     { x: 2, y: 0 },
-            // ],
-            // [
-            //     { x: 2, y: 4 },
-            //     { x: 2, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 2, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 2, y: 4 },
-            //     { x: 2, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 },
-            //     { x: 0, y: 0 }, { x: 2, y: 0 },
-            // ],
             [
                 1, 11,
                 7, 12,
@@ -1071,7 +732,6 @@ export const levels: Level[] = [
                 9, 14,
                 5, 15,
             ],
-
         ],
         bots: [
             {
@@ -1094,44 +754,14 @@ export const levels: Level[] = [
                 interval: 1300,
                 boards: 1
             },
-
         ]
     },
     {
         level: 19,
         targetQuantity: 5,
         targetText: "Una escalera de 15 números",
-        // Objetivo: Escalera de 15 numeros
         boards: 2,
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 },
-            //     { x: 0, y: 0 },
-            // ],
-            // [
-            //     { x: 4, y: 4 },
-            //     { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 4, y: 0 },
-            // ],
-            // [
-            //     { x: 0, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ],
             [
                 1, 6, 11, 16, 21,
                 2, 7, 12, 17,
@@ -1190,15 +820,7 @@ export const levels: Level[] = [
         targetQuantity: 7,
         targetText: "Marca todo el tablero",
         boards: 2,
-        // Objetivo: Todo el tablero debe estar marcado
         patterns: [
-            // [
-            //     { x: 0, y: 4 }, { x: 1, y: 4 }, { x: 2, y: 4 }, { x: 3, y: 4 }, { x: 4, y: 4 },
-            //     { x: 0, y: 3 }, { x: 1, y: 3 }, { x: 2, y: 3 }, { x: 3, y: 3 }, { x: 4, y: 3 },
-            //     { x: 0, y: 2 }, { x: 1, y: 2 }, { x: 2, y: 2 }, { x: 3, y: 2 }, { x: 4, y: 2 },
-            //     { x: 0, y: 1 }, { x: 1, y: 1 }, { x: 2, y: 1 }, { x: 3, y: 1 }, { x: 4, y: 1 },
-            //     { x: 0, y: 0 }, { x: 1, y: 0 }, { x: 2, y: 0 }, { x: 3, y: 0 }, { x: 4, y: 0 },
-            // ]
             [
                 1, 6, 11, 16, 21,
                 2, 7, 12, 17, 22,
@@ -1253,13 +875,7 @@ export const levels: Level[] = [
     },
 ]
 
-
-
-
-
-
-
-// Posiciones anteriores de los numeros en el tablero
+// Posiciones de los numeros en el tablero
 /*
 1   6   11  16  21
 2   7   12  17  22
@@ -1268,7 +884,7 @@ export const levels: Level[] = [
 5   10  15  20  25
 */
 
-// Nueva posición (x,y )
+// El patrón de coordenadas {x: 0, y: 0} (no recomendado)
 /*
 0,4     1,4     2,4     3,4     4,4
 0,3     1,3     2,3     3,3     4,3
@@ -1277,21 +893,12 @@ export const levels: Level[] = [
 0,0     1,0     2,0     3,0     4,0
 */
 
-
-
 // NUEVAS IDEAS PARA NIVELES
 // Niveles con hasta 4 bots a la vez
 // Bots con un tiempo de respuesta minimo de 0.5 segundos (más rapido)
 // Patrones unicos (solamente 1 combincación o patrón)
 // Aumentar el numero de objetivos de 3 a 4 o 5 (maximo)
 // ¿Nivel final es marcar todos los numeros del tablero?
-
-
-
-
-
-
-
 
 // https://stackoverflow.com/questions/35435042/how-can-i-define-an-array-of-objects
 // https://stackoverflow.com/questions/23161486/create-strongly-typed-array-of-arrays-in-typescript

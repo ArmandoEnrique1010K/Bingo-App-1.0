@@ -1,40 +1,33 @@
 import { useEffect, useState } from 'react';
 import * as Tone from 'tone'
 import { MusicalNoteIcon } from '@heroicons/react/24/solid'
-// import { MusicalNoteIcon, PlayIcon } from '@heroicons/react/24/solid'
 
+// Este componente es un botón para reproducir la musica de fondo
 export default function Music() {
 
     const [isPlaying, setIsPlaying] = useState(false);
-    // const [currentTrack, setCurrentTrack] = useState(0);
-    const [player, setPlayer] = useState<Tone.Player | null>(null);
 
-    // Lista de canciones
-    // const trackList = [
-    //     "/music/track1.mp3",
-    //     "/music/track2.mp3",
-    //     "/music/track3.mp3",
-    // ];
+    // Estado para el reproductor de audio
+    // Se utiliza un constructor como valor por defecto.
+    const [player, setPlayer] = useState<Tone.Player>(new Tone.Player());
 
-
+    // Efecto secundario que se monta al cargar el componente
     useEffect(() => {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
-            // TODO: Agregar más archivos de audio
             url: "/music/background.mp3", // Nombre del archivo de audio
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
             volume: -15, // Reduce el volumen
-            // background hard: -8 / normal: -15
         }).toDestination(); // Conecta el audio a la salida principal
 
+        // Actualiza el estado de player
         setPlayer(audioPlayer);
 
         // Cargar los buffers
-        Tone.loaded().then(() => {
-            console.log("Todos los archivos de audio están listos.");
-        });
-
+        // Tone.loaded().then(() => {
+        //     console.log("Todos los archivos de audio están listos.");
+        // });
 
         // Limpieza al desmontar el componente
         return () => {
@@ -43,19 +36,28 @@ export default function Music() {
         };
     }, []);
 
-    // Función para iniciar la música
+    // Función para iniciar la música de fondo
     const startMusic = async () => {
-        await Tone.start();
-        if (player && player.loaded) {
-            player.start();
-            setIsPlaying(true);
-            console.log('El audio está en reproducción');
-        } else {
-            console.error('Audio buffer is not loaded yet');
+        // Utiliza un try-catch en funciones asincronas
+        try {
+            // Espera a que llame
+            await Tone.start();
+
+            // Reproduce el audio si el estado de player esta listo
+            if (player && player.loaded) {
+                player.start(); // Reproduce el audio
+                setIsPlaying(true); // Actualiza el state de isPlaying
+                // console.log('El audio está en reproducción');
+            }
+
+        } catch (error) {
+            // Muestra un mensaje de error
+            // console.error('Audio buffer is not loaded yet' + error);
+            console.error('No se pudo cargar el archivo de audio' + error);
         }
     };
 
-    // Función para detener la música
+    // Función para detener la música de fondo
     const stopMusic = () => {
         player?.stop(); // Detiene la reproducción
         setIsPlaying(false);
@@ -63,17 +65,17 @@ export default function Music() {
 
     return (
         <>
+            {/* Este botón se mostrara al renderizar este componente */}
+            {/* Si isPlaying es true, detiene la canción, de lo contrario lo reproduce */}
             <button onClick={isPlaying ? stopMusic : startMusic}>
-                {/* {isPlaying ? "Stop Music" : "Play Music"} */}
-                <MusicalNoteIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
+                {/* Aplica un estilo dependiendo de la reproducción del audio */}
+                <MusicalNoteIcon className={`h-7 w-7 
+                    ${isPlaying
+                        ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700"
+                        : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `}
+                // aria-hidden="true"
+                />
             </button>
-
-            {/* TODO: AÑADIR NUEVAS CANCIONES DE FONDO */}
-            {/* <button onClick={isPlaying ? stopMusic : startMusic}>
-                <PlayIcon className={`h-7 w-7 ${isPlaying ? "text-cyan-500 hover:text-cyan-600 active:text-cyan-700" : "text-cyan-800 hover:text-cyan-600 active:text-cyan-700"} `} aria-hidden="true" />
-            </button> */}
-
         </>
-
     );
 }

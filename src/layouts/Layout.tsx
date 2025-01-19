@@ -16,7 +16,7 @@ export default function Layout() {
                 <Credits />
             </div>
 
-            {/* APLICALE UN COLOR DE FONDO PARA QUE LO APLIQUE A TODA LA PANTALLA */}
+            {/* Aplica un color de fondo a todo el contenido */}
             <main className="bg-gray-800 flex-grow">
                 {/* Outlet se utiliza para representar las rutas anidadas. Es un marcador de posición que se llena con el contenido de las rutas secundarias. */}
                 <Outlet />

@@ -7,8 +7,6 @@ createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
   </StrictMode>
-  // <App />
-
 )
 
 // https://platzi.com/clases/3578-npm/52462-eliminacion-de-dependencias-y-package-lock/

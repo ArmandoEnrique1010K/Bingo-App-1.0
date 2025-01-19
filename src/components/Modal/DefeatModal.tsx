@@ -7,7 +7,10 @@ type DefeatModalProps = {
     handleSetDefeat: (boolean: boolean) => void
 }
 
+// Ventana modal para mostrar en el caso de que el jugador haya perdido el nivel (derrotado por un bot)
 export default function DefeatModal({ level, handleSetDefeat }: DefeatModalProps) {
+
+    const navigate = useNavigate()
 
     const [isOpen, setIsOpen] = useState(true);
 
@@ -19,21 +22,13 @@ export default function DefeatModal({ level, handleSetDefeat }: DefeatModalProps
         setIsOpen(false)
     }
 
-    const navigate = useNavigate()
-
+    // Función para salir del juego
     function exit() {
         navigate('/')
         handleSetDefeat(false)
-        // close()
     }
 
-    // Siguiente nivel
-    // function nextLevel() {
-    //     navigate(`/level_${level + 1}`)
-    //     setIsOpen(false)
-    // }
-
-    // Volver a intentarlo
+    // Función para volver a intentar el mismo nivel
     function tryAgain() {
         navigate(`/level_${level}`)
         handleSetDefeat(false)
@@ -41,16 +36,11 @@ export default function DefeatModal({ level, handleSetDefeat }: DefeatModalProps
     }
 
 
-    // Recordar que useEffect dispara el efecto cuando cambia type
-    // useEffect(() => {
-    //     if (type === "defeat") {
-    //         setIsOpen(true)
-    //     }
-    // }, [type])
-
     return (
         <>
-            {/* Esta ventana modal no se va a cerrar una vez que se abra */}
+
+            {/* En este caso, no hay un botón para abrir la ventana modal, pues esta ventana modal solamente se mostrara si se renderiza */}
+            {/* Esta ventana modal no se va a cerrar una vez que se abra, porque en la propiedad onClose tiene la función open */}
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={open}>
                 <div className="fixed inset-0 z-10 w-screen overflow-y-auto bg-gray-800 bg-opacity-50">
                     <div className="flex min-h-full items-center justify-center p-4">
@@ -62,18 +52,20 @@ export default function DefeatModal({ level, handleSetDefeat }: DefeatModalProps
                             data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
                             <DialogTitle as="h2" className="text-4xl font-semibold text-center text-gray-900 mb-10">
-                                Mejor suerte para la proxima
+                                Mejor suerte para la proxima ⛔
                             </DialogTitle>
                             <div className="space-y-3 text-lg text-gray-700">
                                 <p className='text-center'>
-
                                     Uno de los bots te ha ganado. ¿Desea volver a intentar este nivel?
-
                                 </p>
                             </div>
+
+                            {/* Botones para reintentar el nivel y para ir a la pagina de inicio */}
                             <div className="mt-10 flex flex-row gap-4">
                                 <Button
                                     onClick={tryAgain}
+                                    // Recuerda las pseudoclases de tailwind: hover (el cursor esta 
+                                    // sobre el elemento) y active (al hacer clic en el botón)
                                     className="w-full py-2 px-4 font-semibold bg-cyan-500 text-white rounded-lg text-lg hover:bg-cyan-600 active:bg-cyan-700 focus:outline-none transition-all duration-300"
                                 >
                                     Volver a intentarlo

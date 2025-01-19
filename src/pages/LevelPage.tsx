@@ -1,8 +1,8 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { levels } from "../data/levels";
 import { generateTargets } from "../utils/generateTargets";
 import { generateBoard } from "../utils/generateBoard";
-import { Pattern } from "../types";
+import { BoardID, Pattern, SelectedNumbers, SelectedPositions } from "../types";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
@@ -15,97 +15,91 @@ type LevelPageProps = {
     level: number
     unlockLevel: (number: number) => void
 }
+
 export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // Obtiene los datos del nivel actual usando el metodo find.
-    // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi nula de que suceda eso)
+    // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi 
+    // nula de que suceda eso)
     const currentLevel = levels.find(l => l.level === level) || levels[0];
 
     // Variables de estado
-    const [board, setBoard] = useState<{ id: number, board: { position: number; number: number; }[] }[]>([]); // Tableros del jugador
-    const [targets, setTargets] = useState<number[]>([]); // Numeros objetivos
-    const [patterns, setPatterns] = useState<Pattern[]>([]); // Patrones ganadores
 
-    // POR CADA TABLERO
+    // Tableros del jugador
+    // Recuerda que el type Board es:
+    // type Board = {
+    //     position: number;
+    //     number: number;
+    // }[]
+    const [board, setBoard] = useState<BoardID>([]);
 
-    // Posiciones de los numeros que ha seleccionado el usuario
-    // const [selectedPositions, setSelectedPositions] = useState<{ x: number, y: number }[]>([]);
+    // Numeros objetivos
+    const [targets, setTargets] = useState<number[]>([]);
 
-    const [selectedPositions, setSelectedPositions] = useState<{ idBoard: number, positions: number[] }[]>([]);
-
-
-    // Estado para almacenar los números que ha seleccionado el usuario
-    // const [selectedNumbers, setSelectedNumbers] = useState<number[]>([]);
-    const [selectedNumbers, setSelectedNumbers] = useState<{ idBoard: number, numbers: number[] }[]>([]);
+    // Patrones ganadores
+    const [patterns, setPatterns] = useState<Pattern[]>([]);
 
 
-    // Estado para el fin del juego si el jugador gano
+    // Posiciones de los numeros seleccionados (se utiliza el type SelectedPositions)
+    // Coloca el cursor sobre el type para ver el tipo de dato que espera
+    const [selectedPositions, setSelectedPositions] = useState<SelectedPositions>([]);
+
+    // Números seleccionados
+    const [selectedNumbers, setSelectedNumbers] = useState<SelectedNumbers>([]);
+
+    // Fin del juego si el jugador gano
     const [victory, setVictory] = useState(false)
 
-    // Estado para el fin del juego si el bot gana
+    // Fin del juego si el bot gana
     const [defeat, setDefeat] = useState(false);
 
-    // Estado para reiniciar el nivel
-    // const [reboot, setReboot] = useState(false)
-
-    // Estado para el turno o ronda
+    // Turno o ronda
     const [round, setRound] = useState(0)
 
-    // Efecto para cargar los posibles patrones
+
+    // Efecto para cargar los posibles patrones y almacenarlo en el state de patterns
     useEffect(() => {
         const patterns = currentLevel.patterns;
         setPatterns(patterns);
     }, [currentLevel])
 
 
-    // Efecto para cargar el tablero
-    // useEffect(() => {
-    //     const board = generateBoard();
-    //     setBoard(board);
-    // }, [])
+    // Usar useMemo de esta manera asegura que newBoards se recalculará solo cuando currentLevel.boards 
+    // cambie, lo cual es una buena práctica para evitar renders innecesarios y mejorar el rendimiento.
 
-    // Se debera limpiar todos los numeros marcados del tablero cuando pase de nivel o pierda el nivel
-    // useEffect(() => {
-    //     if (victory === false || defeat === false) {
-    //         setTargets([])
-    //         // No funciona cuando paso de nivel
-    //         setBoard(generateBoard());
-    //         setSelectedPositions([])
-    //         setSelectedNumbers([])
-    //         setRound(0)
-    //     }
-    // }, [victory, defeat])
+    // Genera los tableros de acuerdo a la cantidad asignada en la propiedad boards del nivel actual
+    const newBoards = useMemo(() => {
+        // Array sirve para crear un nuevo arreglo y from especifica la cantidad de elementos del arreglo
+        // El metodo map, el primer argumento "_", representa cada elemento, el segundo "index" es el orden
+        // del elemento
+        return Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            // Se evita el id igual a 0
+            id: index + 1,
+            board: generateBoard()
+        }));
+    }, [currentLevel.boards])
 
 
-    // GENERA NUEVOS TABLEROS DE ACUERDO A LA CANTIDAD ASIGNADA EN EL NIVEL
-    const newBoards = Array.from({ length: currentLevel.boards }).map((_, index) => ({
-        // Se evita el id igual a 0
-        id: index + 1,
-        board: generateBoard()
-    }));
+    // Previamente se ha utilizado el siguiente codigo
+    // const newBoards = Array.from({ length: currentLevel.boards }).map((_, index) => ({
+    //     // Se evita el id igual a 0
+    //     id: index + 1,
+    //     board: generateBoard()
+    // }));
 
     // console.log((newBoards))
 
-    useEffect(() => {
-        // setBoard(generateBoard());
-
-        // TODO: Debe llamar a generateBoard por cada tablero para generar uno nuevo
-
-
+    // Función para establecer los valores iniciales al empezar o reiniciar el nivel
+    const resetLevel = () => {
+        // Genera los tableros y los números objetivos se establecen en 0
         setBoard(newBoards)
-
         setTargets([]);
-        // setSelectedPositions([13]);
 
-        // ASIGNA EN TODOS LOS TABLEROS
-        // setSelectedPositions([{ x: 2, y: 2 }]);
-        // setSelectedNumbers([0]);
+        // Por defecto se asigna el número del centro del tablero como un número seleccionado
+        // tanto para las posiciones y los numeros seleccionados de cada uno de los tableros
         setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
-            // idBoard: index,
-            // positions: [{ x: 2, y: 2 }]
             idBoard: index,
             positions: [13]
-
         })))
 
         setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
@@ -113,181 +107,116 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             numbers: [0]
         })))
 
-
+        // Ronda 0
         setRound(0);
+        // Aun no hay victoria ni derrota
         setVictory(false);
         setDefeat(false)
+    }
+
+    // Efecto secundario para cargar el nivel
+    useEffect(() => {
+        resetLevel()
     }, [level]);
 
-
-
-    // READY: los bots tambien se deben reiniciar
-    // TODO: ¿Que pasaria si el jugador pierde?
-
-    // MUESTRA LA VENTANA MODAL Y LUEGO SI EL JUGADOR HACE CLIC EN EMPEZAR DE NUEVO, SE DEBE LIMPIAR LOS DATOS
+    // Cuando el jugador pierde, se tiene que volver a reiniciar el nivel
+    // Nota: El state de defeat debe volver a ser false
     useEffect(() => {
         if (defeat === false) {
-            setBoard(newBoards);
-            setTargets([]);
-
-
-            // setSelectedPositions([{ x: 2, y: 2 }]);
-            // setSelectedNumbers([0]);
-            setSelectedPositions(Array.from({ length: currentLevel.boards }).map((_, index) => ({
-                idBoard: index,
-                positions: [13]
-            })))
-            setSelectedNumbers(Array.from({ length: currentLevel.boards }).map((_, index) => ({
-                idBoard: index,
-                numbers: [0]
-            })))
-
-            setRound(0);
-            setVictory(false)
+            resetLevel()
         }
     }, [defeat]);
 
-
-
-
     // Función para cambiar los numeros objetivos
     const handleChangeTargets = () => {
-        setTargets([]);
-        setRound(round + 1)
+        setRound(round + 1) // Incrementa la ronda en 1
+        setTargets([]); // Limpia los numeros objetivos
+
+        // Espera 1 seg. para generar los numeros objetivos
+        // Recordar que la función generateTargets necesita la cantidad de números que se generaran
         setTimeout(() => {
             setTargets(generateTargets(currentLevel.targetQuantity));
         }, 1000)
     }
 
-    // Función para establecer el fin del juego (si el oponente gano)
-    const handleDefeat = () => {
-        setDefeat(true);
-    }
+    // Función para verificar que el numero ya se encuentre marcado en el tablero (devuelve un valor booleano)
+    const isSelectedNumber = (idBoard: number, number: number): boolean => {
+        // La diferencia entre el metodo some e includes
 
+        // El método some() verifica si al menos un elemento en el array cumple con una condición proporcionada 
+        // por una función.Retorna true si encuentra un elemento que cumple con la condición, y false si no 
+        // encuentra ninguno.
 
-    // Verifica que el numero ya se encuentre marcado en el tablero
-    const handleVerifySelectedNumber = (idBoard: number, number: number): boolean => {
+        // El método includes() verifica si un array contiene un valor específico. Retorna true si el array 
+        // contiene el valor y false si no lo contiene.
+
+        // Si en el state de selectedNumbers, algun elemento, segun el id recibido del tablero y si en 
+        // el arreglo numbers se encuentra el número recibido
         if (selectedNumbers.some(board => board.idBoard === idBoard && board.numbers.includes(number))) {
-            console.log("Este número ya ha sido seleccionado")
+            // console.log("Este número ya ha sido seleccionado")
             return true;
         }
         return false;
     }
 
-
-    // Función para marcar un número seleccionado
+    // Función para marcar un número seleccionado en el tablero, requiere el id, number y position
     const handleClickButton = (idBoard: number, number: number, position: number) => {
-        // Si uno de los números seleccionados es igual al número objetivo, se agrega la posición a los números seleccionados
-        if (targets.includes(number)) {
-            if (!handleVerifySelectedNumber(idBoard, number)) {
-                setSelectedPositions(prevState =>
-                    prevState.map(board =>
-                        board.idBoard === idBoard
-                            ? { ...board, positions: [...board.positions, position] }
-                            : board
-                    )
-                );
-                setSelectedNumbers(prevState =>
-                    prevState.map(board =>
-                        board.idBoard === idBoard
-                            ? { ...board, numbers: [...board.numbers, number] }
-                            : board
-                    )
-                );
-                console.log("El usuario selecciono el numero: " + number)
-            }
+        // Si uno de los números seleccionados es igual al número objetivo, y si ese numero 
+        // no se encuentra marcado en el tablero
+        if (targets.includes(number) && !isSelectedNumber(idBoard, number)) {
+            // Se agrega la posición y el numero en los state de selectedPositions y selectedNumbers
+            // Para aquello es necesario crear una copia superficial del estado para agregar el nuevo
+            // elemento, se itera sobre los tableros, se busca el tablero por su id y se añade al state
+            setSelectedPositions(prevState =>
+                prevState.map(board =>
+                    board.idBoard === idBoard
+                        ? { ...board, positions: [...board.positions, position] }
+                        : board
+                )
+            );
+            setSelectedNumbers(prevState =>
+                prevState.map(board =>
+                    board.idBoard === idBoard
+                        ? { ...board, numbers: [...board.numbers, number] }
+                        : board
+                )
+            );
+            // console.log("El usuario selecciono el numero: " + number + "en el tablero " + idBoard)
         }
     }
 
-    // Función para aplicar un estilo al número seleccionado según su posición
-    const handleSelectedNumber = (idBoard: number, position: number) => {
-        // console.log("Posiciones seleccionadas: " + JSON.stringify(selectedPositions))
-        // if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
+    // Función para verificar si es un número seleccionado según el tablero y su posición del número
+    const handleIsSelectedNumber = (idBoard: number, position: number) => {
+        // Si en algun tablero por el id recibido y si en algunas de las posiciones, se encuentra la posición recibida
         if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos === position))) {
-
+            // Devuelve true
             return true;
         }
-
-        // Ejemplo: [{x: 2, y:2}, {x:1, y:1}]
-
-        // if (selectedPositions.includes(position)) {
-        // }
-
-        // if (selectedPositions.some(board => board.positions.some(pos => pos.x === position.x && pos.y === position.y))) {
-        //     return true;
-        //     // return "bg-blue-500 text-white"
-        // }
-
-        // console.log("La casilla del numero " + number + " ha sido seleccionada")
-        // console.log("La casilla de la posición " + position + " ha sido seleccionada")
-
-        // Por defecto
+        // De lo contrario, false
         return false;
-        // return "bg-orange-500 text-black"
     }
-
-    // Los powerups se desbloquean al completar los niveles:
-    // const powerUpLevels = [3, 6, 9, 12, 15, 18];
-
-    // const unlockPowerUpsByLevel = (level: number) => {
-    //     const index = powerUpLevels.indexOf(level);
-    //     if (index !== -1) {
-    //         unlockPowerUp(index + 1); // Desbloquea el power-up correspondiente
-    //     }
-    // };
 
     // Función para verificar si el usuario ha completado un patrón ganador
     const handleCheckWinnerPattern = () => {
-        // Verifica si los numeros que se encuentra en positionTarget, coinciden con los numeros (todos los numeros) de un arreglo que se encuentra en patterWinner
-        // if (patterns?.some(p => p.every(n => selectedPositions.includes(n)))) {
 
-        // TODO: DIFERENCIA ENTRE EVERY, SOME E INCLUDES
-
-        // TODO: EN UNO DE LOS TABLEROS, SI EXISTE EL PATRON OBJETIVO, DEBE TERMINAR LA PARTIDA
-
-        // ERROR: AL PARECER REALIZA UNA COMPARACIÓN UNIENDO TODOS TABLEROS???
-        // if (patterns?.some(p => p.every(n => selectedPositions.some(pos => pos.positions.some(position => position.x === n.x && position.y === n.y))))) {
-
-        //     console.log("El jugador ha ganado el nivel " + level)
-        //     setVictory(true);
-        //     setDefeat(false)
-
-        //     // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
-        //     setTargets([])
-
-
-        //     // Desbloquea el siguiente nivel
-        //     // 20 es el nivel final
-        //     if (level !== 20) {
-        //         unlockLevel(level + 1);
-        //     }
-        //     // showModalVictory(true)
-
-        //     // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
-        //     // if (level === 3){
-        //     //     unlockPowerUp(1)
-        //     // }
-
-        //     // Trata de desbloquear un powerup
-        //     // unlockPowerUpsByLevel(level)
-
-        //     return true;
-        // } else {
-        //     console.log("Sigue intentando")
-        //     return false;
-        // }
-
-
+        // Itera sobre las posiciones seleccionadas de cada uno de los tableros
         for (const board of selectedPositions) {
+            // Verifica si al menos uno de los elementos en patterns cumple la condición especificada en la función flecha.
+            // Dentro de some, se utiliza every para verificar si todos los elementos en el array p cumplen la condición 
+            // especificada en la función flecha.
+            // Dentro de la función de every se utiliza some para verificar si al menos uno de los elementos en 
+            // board.positions es igual a n.
             if (patterns?.some(p => p.every(n => board.positions.some(
-                // position => position.x === n.x && position.y === n.y
                 position => position === n
             )))) {
-                console.log("El jugador ha ganado el nivel " + level);
+
+                // Se establece victory en true
                 setVictory(true);
                 setDefeat(false);
 
-                // LIMPIA LOS OBJETIVOS PARA EVITAR QUE EL BOT SIGA MARCANDO
+                // console.log("El jugador ha ganado el nivel " + level);
+
+                // Es necesario limpiar los numeros objetivos para evitar que el bot siga marcando
                 setTargets([]);
 
                 // Desbloquea el siguiente nivel
@@ -295,209 +224,18 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 if (level !== 20) {
                     unlockLevel(level + 1);
                 }
-                // showModalVictory(true)
 
-                // DESBLOQUEAR POWERUP POR CADA 3 NIVELES
-                // if (level === 3){
-                //     unlockPowerUp(1)
-                // }
-
-                // Trata de desbloquear un powerup
-                // unlockPowerUpsByLevel(level)
-
+                // Retorna un true para confirmar el patrón ganador
                 return true;
             }
         }
 
-        console.log("Sigue intentando");
+        // De lo contrario false
+        // console.log("Sigue intentando");
         return false;
     };
 
-
-
-
-    // POWERUPS
-
-    // // Estado para visualizar los numeros de los bots
-    // const [showBotNumbers, setShowBotNumbers] = useState(false)
-    // const [showBotNumbersRoundsLeft, setShowBotNumbersRoundsLeft] = useState(0);
-
-
-    // // Muestra los numeros de los bots por 5 rondas
-    // const handleshowBotNumbers = () => {
-
-    //     setShowBotNumbers(true);
-    //     setShowBotNumbersRoundsLeft(5); // Dura 5 rondas
-
-    // }
-
-    // useEffect(() => {
-    //     if (showBotNumbersRoundsLeft > 0) {
-    //         setShowBotNumbersRoundsLeft(showBotNumbersRoundsLeft - 1);
-
-    //         if (showBotNumbersRoundsLeft === 1) {
-    //             // Última ronda: desactiva el power-up
-    //             setShowBotNumbers(false);
-    //         }
-    //     }
-    // }, [round]); // Ejecuta cada vez que `round` cambia
-
-
-    // TODO: INVESTIGAR SOBRE EL USO DE POWERUPS
-
-    // Se pueden desbloquear al completar el nivel: 3, 6, 9, 12, 15, 18
-
-    // Ralentizar a todos los bots (ralentiza el tiempo de demora) por 3 rondas
-    // Un bot pierde 5 rondas
-    // Forzar un numero deseado (selecciona el número que será sorteado en la siguiente ronda)
-    // Desmarcar 1 número (afecta a todos los bots, recordar que el numero puede volver a aparecer en la lista de numeros objetivos) 
-    // Marcar números vecinos (si n es el numero seleccionado, debe marcar los numeros: n-2, n-1, n+1 y n+2)
-    // Clarividencia (tu puedes ver los números de los bots por 5 rondas)
-
-
-    //console.log(unlockedPowerUps)
-    // [1, 2]
-
-    // Buscar powerups desbloqueado por cada elemento de unlockedPowerUps
-    //console.log(powerUps)
-
-    // console.log(unlockedPowerUps)
-    // const unlockedPowerUpsList = powerUps.filter(p => unlockedPowerUps.includes(p.id));
-    // unlockedPowerUpsList.forEach(p => {
-    //     console.log(`Power-Up Desbloqueado: ${p.name}`);
-    // });
-
-    // const statusPowerUps = powerUps.map(p => p.status)
-    // const [powerUpsStatus, setPowerUpsStatus] = useState<boolean[]>(statusPowerUps);
-
-    // // PRIMER POTENCIADOR
-    // const [delayedSlowBot, setDelayedSlowBot] = useState(1);
-    // const [slowBotNumbersRoundsLeft, setSlowBotNumbersRoundsLeft] = useState(0);
-
-    // // SEGUNDO POTENCIADOR
-    // const [turnOffBotRoundsLeft, setTurnOffBotRoundsLeft] = useState<{ [key: string]: number }>({});
-    // //  const [activateTurnOffBot, setActivateTrunOffBot] = useState(false) // Activado el potenciador
-    // const [selectedBot, setSelectedBot] = useState('') // Bot seleccionado
-
-    // // const [turnedOff, setTurnedOff] = useState(false); // Apagado del bot
-    // const [activateTurnOffBot, setActivateTurnOffBot] = useState<boolean>(false);
-
-    // const handleActivatePowerUp = (powerUpId: number) => {
-    //     // SLOW BOTS
-    //     if (powerUpId === 1) {
-    //         // Tiempo de retraso (triplica el tiempo de demora del bot)
-    //         setDelayedSlowBot(3);
-    //         setSlowBotNumbersRoundsLeft(5);
-    //         // Slice requiere 2 argumentos, la posición inicial y la posición final
-    //         const newArray = [
-    //             ...powerUpsStatus.slice(0, powerUpId - 1),
-    //             false,
-    //             ...powerUpsStatus.slice(powerUpId)
-    //         ]
-
-    //         setPowerUpsStatus(newArray);
-    //         console.log('ID DEL POTENCIADOR: ' + powerUpId)
-    //         console.log(newArray)
-    //         console.log(newArray[powerUpId - 1])
-    //         console.log('Todos los bots van a ser lentos durante 5 turnos')
-    //     }
-
-    //     // TURN OFF BOT
-    //     if (powerUpId === 2) {
-    //         // ACTIVA EL POTENCIADOR PARA SELECCIONAR UN BOT
-    //         setActivateTurnOffBot(true)
-
-
-    //         setTurnOffBotRoundsLeft(5)
-    //         const newArray = [
-    //             ...powerUpsStatus.slice(0, powerUpId - 1),
-    //             false,
-    //             ...powerUpsStatus.slice(powerUpId)
-    //         ]
-
-    //         setPowerUpsStatus(newArray);
-
-
-
-    //         console.log('Un bot se va a desactivar, seleccione un bot')
-    //     }
-    // }
-
-    // const handleSelectedBot = (botId: string) => {
-    //     setSelectedBot(botId);
-    //     setTurnOffBotRoundsLeft(prev => ({ ...prev, [botId]: 5 }));
-    //     setActivateTurnOffBot(false);
-    //     console.log(`El bot ${botId} se ha desactivado por 5 turnos`);
-    // };
-
-    // // EFECTO PARA RALENTIZAR BOTS
-    // useEffect(() => {
-    //     if (slowBotNumbersRoundsLeft > 0) {
-    //         setSlowBotNumbersRoundsLeft(slowBotNumbersRoundsLeft - 1);
-
-    //         if (slowBotNumbersRoundsLeft === 1) {
-    //             // Última ronda: desactiva el power-up
-    //             setDelayedSlowBot(1)
-    //             console.log('SE ACABO EL EFECTO DE SLOW BOT')
-    //         }
-    //     }
-    // }, [round]); // Ejecuta cada vez que `round` cambia
-
-
-    // FUNCIONA, SELECCIONA EL BOT Y LO DESACTIVA
-    // useEffect(() => {
-    //     if (selectedBot !== "") {
-    //         setActivateTrunOffBot(false)
-    //         // Apaga el bot
-    //         setTurnedOff(true)
-    //         console.log("EL BOT " + selectedBot + " SE DESACTIVO POR 5 TURNOS")
-    //     }
-
-    //     if (turnOffBotRoundsLeft > 0) {
-    //         setTurnOffBotRoundsLeft(turnOffBotRoundsLeft - 1);
-
-    //         if (turnOffBotRoundsLeft === 1) {
-    //             // Última ronda: desactiva el power-up
-    //             setTurnedOff(false)
-    //             setSelectedBot("")
-    //             console.log('SE ACABO EL EFECTO DE TURN OFF BOT')
-    //         }
-    //     }
-
-    // }, [selectedBot, round])
-
-    // useEffect(() => {
-    //     const updatedRoundsLeft = { ...turnOffBotRoundsLeft };
-    //     Object.keys(turnOffBotRoundsLeft).forEach(botId => {
-    //         if (turnOffBotRoundsLeft[botId] > 0) {
-    //             updatedRoundsLeft[botId] -= 1;
-
-    //             if (turnOffBotRoundsLeft[botId] === 1) {
-    //                 delete updatedRoundsLeft[botId];
-    //                 console.log(`Se acabó el efecto de TURN OFF BOT para el bot ${botId}`);
-    //             }
-    //         }
-    //     });
-    //     setTurnOffBotRoundsLeft(updatedRoundsLeft);
-    // }, [round]);
-
-
-    // const unlocked = powerUps.filter(p => p.id);
-    // unlocked.forEach(p => {
-    //     console.log(`Power-Up Desbloqueado: ${p.name}`);
-    // });
-
-
-
-    // // Powerup para marcar numeros aleatorios
-
-    // // Powerup para ralentizar bots
-
-    // // Powerup para impedir que un bot gane
-
-    // // Powe
-
-
+    // Funciones para establecer los states de defeat y victory
     const handleSetDefeat = (boolean: boolean) => {
         setDefeat(boolean)
     }
@@ -507,73 +245,46 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     }
 
 
-
+    // Contenido HTML devuelto por el componente
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
+
     return (
-        <div className="bg-gray-800 text-white m-auto">
+        <div className="text-white m-auto">
             <div className="flex flex-col">
                 <div className="container mx-auto py-4 flex flex-row items-start gap-6 justify-center">
                     <div className="flex flex-col">
-                        {/* TODO: ESTO PODRIA SER UN NUEVO COMPONENTE??? */}
                         <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
                             <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
                             <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
                         </div>
-
 
                         {/* Componente de los numeros objetivos */}
                         {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
                         <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
 
                         {/* Componente del patrón ganador */}
-                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-
-                        {/* Este boton es para comprobar el patron ganador */}
-                        {/* <button
-                        className="flex bg-cyan-400 p-2"
-                        onClick={() => handleCheckWinnerPattern()
-                        }
-                    >
-                        Comprobar el patron ganador
-                    </button> */}
-
-
-
-                        {/* Botón para abandonar partida */}
-                        {/* <button onClick={exitLevel} className="bg-red-600">
-                        Abandonar partida
-                    </button> */}
-                        {/* <LeaveModal /> */}
-
-                        {
-                            /* POWERUPS DE PRUEBA */
-                        }
-                        {/* <button onClick={handleshowBotNumbers}>Mostrar numeros de los oponentes</button> */}
+                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
 
                     </div>
-                    {/* PODRIA MEJORAR: AÑADIR UN BORDE REDONDEADO */}
                     <div className="flex flex-col gap-4">
-                        <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl ">
+                        <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
                             {
-                                // READY: CREAR UN ARREGLO, LA CANTIDAD DE ELEMENTOS ESTA DADO POR "currentLevel.boards", DEBE RENDERIZAR BOARDNUMBERS POR CADA ELEMENTO DEL ARREGLO
+                                // Renderiza BoardNumbers por la cantidad de boards en currentLevel
                                 Array.from({ length: currentLevel.boards }).map((_, index) => (
                                     <BoardNumbers
                                         key={index}
                                         idBoard={index}
+                                        // Busca el tablero por su id y lo pasa como propiedad
                                         board={board.find(b => b.id === index + 1)?.board || []}
-                                        // board={board.find(b => b.id === index + 1)?.board || []}
-                                        handleSelectedNumber={handleSelectedNumber}
+                                        handleIsSelectedNumber={handleIsSelectedNumber}
                                         handleClickButton={handleClickButton}
                                     />
                                 ))
-
-
                             }
-
                         </div>
-                        {/* <BoardNumbers board={board} handleSelectedNumber={handleSelectedNumber} handleClickButton={handleClickButton} /> */}
 
+                        {/* Botones para comprobar el patron ganador y salir del juego */}
                         <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
                             <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
                             <LeaveModal />
@@ -583,30 +294,28 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                 </div>
 
-                {/* SECCION PARA AGRUPAR TODOS LOS BOTS */}
-                {/* grid grid-cols-4 grid-rows-2 */}
+                {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
 
                 {/* TODO: AUN NO ES RESPONSIVO */}
                 <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
                     {
+                        // SECCION PARA AGRUPAR TODOS LOS BOTS
                         currentLevel.bots.map((bot) => (
-
-                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name} patterns={patterns} boards={bot.boards} handleGameOver={handleDefeat} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory} handleSetVictory={handleSetVictory} setTargets={setTargets}
-
+                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
+                                patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                                handleSetVictory={handleSetVictory} setTargets={setTargets}
                             />
                         ))
                     }
                 </div>
-
-
             </div>
 
-            {/* READY???: Al hacer clic en el botón End Game se debe limpiar los datos */}
             {
-                defeat === true ? (
-                    // Esto es una ventana modal que se muestra automaticamente
+                // Si el jugador ha perdido
+                defeat === true && (
+                    // Muestra la ventana modal que se muestra automaticamente
                     <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
-                ) : ""
+                )
             }
         </div>
     )

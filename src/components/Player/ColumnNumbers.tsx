@@ -3,7 +3,7 @@ import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
     numberBoard: Board,
-    handleSelectedNumber: (idBoard: number, position: number) => boolean,
+    handleIsSelectedNumber: (idBoard: number, position: number) => boolean,
     handleClickButton: (idBoard: number, number: number, position: number) => void,
     min: number
     max: number,
@@ -11,18 +11,20 @@ type RowNumbersProps = {
 }
 
 
-export default function RowNumbers({ numberBoard, handleSelectedNumber, handleClickButton, max, min, idBoard }: RowNumbersProps) {
+export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, handleClickButton, max, min, idBoard }: RowNumbersProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
                 {
-                    // numberBoard.filter(n => n.position.y >= 0 && n.position.y <= 4 && n.position.x === max).map((n) => (
+                    // Utiliza un filter para ordenar los numeros por cada columna del tablero
+                    // numberBoard contiene un arreglo con 25 numeros, debe seleccionar los numeros
+                    // por su posicion y mostrarlo en un botón
                     numberBoard.filter(n => n.position >= min && n.position <= max).map((n) => (
                         <ButtonNumber
                             key={n.position}
-                            handleSelectedNumber={handleSelectedNumber}
+                            handleIsSelectedNumber={handleIsSelectedNumber}
                             handleClickButton={handleClickButton}
-                            n={{ number: n.number, position: n.position }}
+                            value={{ number: n.number, position: n.position }}
                             idBoard={idBoard}
                         />
                     ))

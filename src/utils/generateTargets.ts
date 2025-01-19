@@ -3,28 +3,30 @@ import { numbers } from "../data/numbers";
 // Función para generar los números objetivos
 export function generateTargets(quantity: number) {
 
-    // FlatMap es una función que nos permite recorrer un arreglo de arreglos y obtener un solo arreglo con todos los elementos
+    // FlatMap nos permite aplanar un arreglo de arreglos en un solo arreglo con todos los elementos.
+    // Aquí, obtenemos todos los números posibles de bingo (1 al 75) a partir del arreglo `numbers`.
     const allNumbers = numbers.flatMap(n => n.values);
 
-    // Arreglo para guardar los números aleatorios
-    const randomNumbers: number[] = []
+    // Inicializamos un arreglo vacío para almacenar los números aleatorios seleccionados.
+    let randomNumbers: number[] = [];
 
-    // Selecciona números aleatorios de acuerdo a quantity
+    // Mientras no se haya alcanzado la cantidad deseada de números objetivos (quantity), seguimos generando.
     while (randomNumbers.length < quantity) {
 
-        // Selecciona un número aleatorio
+        // Selecciona un índice aleatorio basado en el tamaño actual del arreglo `allNumbers`.
         const index = Math.floor(Math.random() * allNumbers.length);
 
-        // Los numeros aleatorios no se pueden repetir en el arreglo
+        // Verifica si el número seleccionado ya está en el arreglo de números aleatorios.
         if (!randomNumbers.includes(allNumbers[index])) {
-            randomNumbers.push(allNumbers[index]);
+            // Si no está incluido, se agrega al arreglo `randomNumbers`.
+            randomNumbers = [...randomNumbers, allNumbers[index]];
         }
 
-        // Elimina el número seleccionado para no repetirlo
-
-        // Splice es una función que nos permite eliminar elementos de un arreglo, recibe la posición del elemento a eliminar y la cantidad de elementos a eliminar
+        // Elimina el número seleccionado de `allNumbers` para evitar repeticiones futuras.
+        // Usamos splice, que modifica el arreglo eliminando el número en la posición `index`.
         allNumbers.splice(index, 1);
     }
 
+    // Devuelve el arreglo de números aleatorios generados.
     return randomNumbers;
 }
