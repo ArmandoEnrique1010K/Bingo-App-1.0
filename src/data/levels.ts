@@ -427,22 +427,22 @@ export const levels: Level[] = [
 
         bots: [
             {
-                name: "S-Bot-1",
+                name: "S-Bot 1",
                 interval: 1900,
                 boards: 2
             },
             {
-                name: "M-Bot-2",
+                name: "M-Bot 2",
                 interval: 1200,
                 boards: 1
             },
             {
-                name: "M-Bot-1",
+                name: "M-Bot 1",
                 interval: 1400,
                 boards: 1
             },
             {
-                name: "S-Bot-2",
+                name: "S-Bot 2",
                 interval: 1700,
                 boards: 2
             },
@@ -640,12 +640,12 @@ export const levels: Level[] = [
         ],
         bots: [
             {
-                name: "M-Bot-1",
+                name: "M-Bot 1",
                 interval: 1500,
                 boards: 3
             },
             {
-                name: "M-Bot-2",
+                name: "M-Bot 2",
                 interval: 1300,
                 boards: 3
             },

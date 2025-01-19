@@ -14,15 +14,12 @@ export default function BotColumnNumbers({ board, handleSelectedPosition, max, m
         <>
             <div className="flex flex-col">
                 {
-                    // board.filter(n => n.position.y >= 0 && n.position.y <= 4 && n.position.x === max).map((number) => (
-                    //     <BotSquareNumber key={number.position.y} idBoard={idBoard} handleSelectedPosition={handleSelectedPosition} number={{ number: number.number, position: { x: number.position.x, y: number.position.y } }}
-                    //     />
-                    // ))
-                    board.filter(n => n.position >= min && n.position <= max).map((number) => (
-                        <BotSquareNumber key={number.position} idBoard={idBoard} handleSelectedPosition={handleSelectedPosition} number={{ number: number.number, position: number.position }}
+                    // Itera sobre board seleccionando unos 5 numeros con filter para asignarlos a BotSquareNumber
+                    board.filter(n => n.position >= min && n.position <= max).map((n) => (
+                        <BotSquareNumber key={n.position} idBoard={idBoard} handleSelectedPosition={handleSelectedPosition}
+                            value={{ number: n.number, position: n.position }}
                         />
                     ))
-
                 }
             </div>
         </>

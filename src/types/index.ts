@@ -56,3 +56,12 @@ export type SelectedPositions = {
     idBoard: number,
     positions: number[]
 }[]
+
+// Resultado de los numeros encontrados por los bots
+export type ResultNumberBoardsBot = {
+    idBoard: number,
+    targets: {
+        position: number,
+        number: number
+    }[]
+}[]

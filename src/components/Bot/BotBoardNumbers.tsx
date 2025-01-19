@@ -8,7 +8,7 @@ type BotBoardNumbersProps = {
 }
 
 
-export default function BotBoardNumbers({ board, handleSelectedPosition /*, showBotNumbers*/, idBoard }: BotBoardNumbersProps) {
+export default function BotBoardNumbers({ board, handleSelectedPosition, idBoard }: BotBoardNumbersProps) {
     return (
         <div className="grid grid-cols-5">
             <BotColumnNumbers idBoard={idBoard} board={board} handleSelectedPosition={handleSelectedPosition} min={1} max={5} />

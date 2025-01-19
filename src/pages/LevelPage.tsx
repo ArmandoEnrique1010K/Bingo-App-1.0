@@ -244,6 +244,10 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setVictory(boolean)
     }
 
+    // Función para limpiar los numeros objetivos
+    const handleCleanTargets = () => {
+        setTargets([])
+    }
 
     // Contenido HTML devuelto por el componente
     // Efecto de gradiente en tailwindcss
@@ -303,7 +307,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         currentLevel.bots.map((bot) => (
                             <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
                                 patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                                handleSetVictory={handleSetVictory} setTargets={setTargets}
+                                handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
                             />
                         ))
                     }

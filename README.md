@@ -13,7 +13,7 @@ Historial de versiones:
 - El jugador y cada uno de los bots solamente podrian tener 1 solo tablero
 - Tiene más de 5 niveles
 
-1.1: 18/01/2025
+1.1: 19/01/2025
 
 - Puedes desbloquear hasta 20 niveles
 - Algunos niveles tiene 2 tableros para el jugador
@@ -21,4 +21,6 @@ Historial de versiones:
 
 Versión de prueba: [Haga clic aqui para jugar](https://stately-hummingbird-3bc0f1.netlify.app/)
 
-Fecha limite: 30/01/2025
+## Captura de pantalla
+
+![](assets/2025-01-19-16-19-52-image.png)

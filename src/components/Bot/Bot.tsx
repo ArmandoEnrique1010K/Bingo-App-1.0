@@ -1,6 +1,6 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
-import { Level, Pattern } from "../../types";
+import { BoardID, Level, Pattern, ResultNumberBoardsBot, SelectedNumbers, SelectedPositions } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
 
@@ -15,349 +15,228 @@ type BotsProps = {
     defeat: boolean,
     handleSetVictory: (boolean: boolean) => void,
     victory: boolean,
-    setTargets: React.Dispatch<React.SetStateAction<number[]>>
-
+    handleCleanTargets: () => void
 }
 
-export default function Bots({ currentLevel, targets, interval, name, patterns, handleSetDefeat, defeat, handleSetVictory, victory, boards, setTargets }: BotsProps) {
+export default function Bots({ currentLevel, targets, interval, name, patterns, handleSetDefeat, defeat, handleSetVictory,
+    victory, boards, handleCleanTargets }: BotsProps) {
+
+    // Variables de estado
 
     // Tablero del bot
-    const [botBoard, setBotBoard] = useState<{ id: number, board: { position: number; number: number; }[] }[]>([]);
+    const [botBoard, setBotBoard] = useState<BoardID>([]);
 
-    // Estado para almacenar las posiciones de los números que ha seleccionado el bot
-    const [botSelectedPositions, setBotSelectedPositions] = useState<{ idBoard: number, positions: number[] }[]>([]);
+    // Posiciones de los números que ha seleccionado el bot
+    const [botSelectedPositions, setBotSelectedPositions] = useState<SelectedPositions>([]);
 
-    // Estado para almacenar los números que ha seleccionado el bot
-    const [botSelectedNumbers, setBotSelectedNumbers] = useState<{ idBoard: number, numbers: number[] }[]>([]);
+    // Números que ha seleccionado el bot
+    const [botSelectedNumbers, setBotSelectedNumbers] = useState<SelectedNumbers>([]);
 
-    const [timeoutIds, setTimeoutIds] = useState<number[]>([]); // Array para almacenar IDs de temporizadores
+    // IDs de los temporizadores activos
+    const [timeoutIds, setTimeoutIds] = useState<number[]>([]);
 
+    // Resultados encontrados para los numeros que se van a marcar
+    const [result, setResult] = useState<ResultNumberBoardsBot>([])
 
-    const newBoards = Array.from({ length: boards }).map((_, index) => ({
-        // Se evita el id igual a 0
-        id: index + 1,
-        board: generateBoard()
-    }));
+    // Genera los tableros al inicio o cuando cambia el número de tableros
+    // Conviene usar useMemo para generar los tableros
+    const newBoards = useMemo(() => {
+        return Array.from({ length: currentLevel.boards }).map((_, index) => ({
+            id: index + 1, // ID del tablero, evita el valor 0
+            board: generateBoard() // Genera un tablero aleatorio
+        }));
+    }, [currentLevel.boards])
 
 
     // TODO : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
+
+    // Efecto para inicializar los tableros al montar el componente
     useEffect(() => {
         setBotBoard(newBoards);
     }, []);
 
-    const [result, setResult] = useState<{ idBoard: number, targets: { position: number, number: number }[] }[]>([])
 
-    // EVALUA TABLERO POR TABLERO
+    // Efecto principal: evalúa los números objetivos y los marca automáticamente
     useEffect(() => {
-        if (!botBoard.length || !targets.length || defeat === true) return;
+        if (!botBoard.length || !targets.length || defeat) return; // Si no hay tableros, objetivos o el juego terminó, no ejecuta
 
         // Limpia los temporizadores previos
         timeoutIds.forEach((id) => clearTimeout(id));
-        setTimeoutIds([]); // Reinicia el array
+        setTimeoutIds([]); // Reinicia el array de IDs
 
-        // UTILIZA EL STATE DE RESULT
-        // const arrayTargets = result
-        // const timeoutIds: NodeJS.Timeout[] = [];
+        // TODO: DINAMIZAR ESTO, EL ORDEN DE LOS ELEMENTOS DEBE CAMBIAR CADA VEZ
 
         let currentDelay = 0;
-        // TODO: DINAMIZAR ESTO, EL ORDEN DE LOS ELEMENTOS DEBE CAMBIAR CADA VEZ
         const newTimeoutIds: number[] = [];
-        const dynamicResult = [...result]; // Copia para evitar mutación accidental
+        const dynamicResult = [...result]; // Copia de resultados para evitar mutaciones
 
-        // Dinamizar el orden de los tableros y objetivos en cada llamada
+        // Mezcla el orden de los tableros y objetivos dinámicamente
         dynamicResult.sort(() => Math.random() - 0.5);
 
         dynamicResult.forEach((res) => {
-
             res.targets.sort(() => Math.random() - 0.5);
 
-            // RESULT TIENE LA FORMA:
-            // const result: {
-            //     idBoard: number;
-            //     targets: {
-            //         position: Position;
-            //         number: number;
-            //     }[];
-            // }[]
-            // const randomInterval = dynamicInterval() * interval;
-
-            // const dynamicTime = dynamicInterval()
-
-            // arrayTargets.forEach((target) => {
-
-            // TODO: ESTO PODRIA SER DINAMICO, PUES SIEMPRE MARCA LOS TABLEROS POR ORDEN NUMERICO
-
             res.targets.forEach((t) => {
-
-                const randomInterval = dynamicInterval() * interval;
-
+                const randomInterval = dynamicInterval() * interval; // Calcula un intervalo dinámico
                 currentDelay += randomInterval;
 
                 const timeoutId = setTimeout(() => {
-                    // handleCheckNumber(board.id - 1, target.number, target.position);
-                    // console.log(`${name} ha marcado en el tablero ${board.id} el número ${target.number}`)
-
-                    // Verificar los parámetros antes de llamar a handleCheckNumber
-                    // console.log(`Marcando número en el tablero ${res.idBoard}:`, t);
-                    handleCheckNumber(res.idBoard, t.number, t.position);
+                    handleCheckNumber(res.idBoard, t.number, t.position); // Marca el número
                     console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
                     console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
-
-                    // timeoutIdsRef.current.push(timeoutId); // Almacenar el ID del temporizador
-
                 }, currentDelay);
-                newTimeoutIds.push(timeoutId);
 
-                // timeoutIds.current.push(timeoutId); // Almacenar el ID del temporizador
-                // newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
-                // setTimeoutIds([...newTimeoutIds, timeoutId])
+                newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
             });
         });
-        //setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
-        setTimeoutIds(newTimeoutIds);
+        setTimeoutIds(newTimeoutIds); // Actualiza el estado con los nuevos IDs de temporizadores
 
-        // Limpiar temporizadores si los objetivos cambian
+        // Limpia los temporizadores al desmontar el componente o cambiar objetivos
         return () => {
-            // timeoutIdsRef.current.forEach((id) => clearTimeout(id));
-            // timeoutIdsRef.current = [];
-
-            // Limpieza automática al desmontar el componente
             newTimeoutIds.forEach((id) => clearTimeout(id));
-
         };
     }, [currentLevel, targets, botBoard, interval, result, name, defeat]);
 
-    // Imprimir en consola los numeros objetivos que se encuentran en el tablero
-    // useEffect(() => {
-    //     // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
-    //     if (targets && targets.length > 0) {
-    //         const arrayTargets = botBoard.filter(n => targets.includes(n.number));
-    //         // console.log("Numeros objetivos " + JSON.stringify(arrayTargets));
-    //         console.log(`Números objetivos: `)
-    //         console.log(arrayTargets)
-    //     }
-    // }, [targets])
 
-    // Imprimir en consola los numeros objetivos que se encuentran en el tablero
-
-
-
-    // READY: MODIFICAR ESTO PARA QUE IMPRIMA LOS NUMEROS QUE COINCIDAN EN CADA UNO DE LOS TABLEROS DE LOS BOTS
+    // Efecto: Encuentra los números objetivos en los tableros
     useEffect(() => {
-
-        // Siempre debe haber minimo 1 elemento en targets (1 numero objetivo, por defecto 3)
         if (targets && targets.length > 0) {
-
-            // botBoard.forEach((board, index) => {
-            //     // console.log(botBoard.find(b => b.id === index))
-
-
-            //     const arrayTargets = board.board.filter(n => targets.includes(n.number))
-            //     // const arrayTargets = board.position.filter(n => targets.includes(n.number));
-            //     console.log(`Números objetivos en el tablero ${index + 1}: `);
-            //     console.log(arrayTargets);
-
-
-            // });
-
-            // let result: { idBoard: number, targets: { position: Position, number: number }[] }[] = []
             botBoard.forEach((board, index) => {
                 const arrayTargets = board.board.filter(n => targets.includes(n.number));
-
-                // result = [
-                //     {
-                //         idBoard: index,
-                //         targets: arrayTargets
-                //     },
-                //     ...result
-                // ]
-
-                // setResult(prevResult => [
-                //     ...prevResult,
-                //     {
-                //         idBoard: index + 1,
-                //         targets: arrayTargets
-                //     }
-                // ]);
 
                 setResult(prevResult => [
                     ...prevResult,
                     {
-                        // POR ALGUNA RAZON ES +1
-                        idBoard: index + 1,
+                        idBoard: index + 1, // ID del tablero
                         targets: arrayTargets
                     }
                 ]);
-
-            })
-
-
-
-
+            });
         }
 
         if (targets.length === 0) {
-            setResult([])
+            setResult([]); // Limpia los resultados si no hay objetivos
         }
-
     }, [targets]);
 
+    // Prueba para imprimir los numeros objetivos encontrados por parte del bot
+    // useEffect(() => {
+    //     console.log(`Números objetivos por cada tablero: `)
+    //     console.log(result)
+    // }, [result])
 
-    useEffect(() => {
-        console.log(`Números objetivos por cada tablero: `)
-        console.log(result)
-    }, [result])
-
-
-    // READY: CREAR UNA FUNCIÓN PARA VERIFICAR SI EL BOT YA TIENE MARCADO UN NUMERO Y SU POSICION EN EL TABLERO
+    // Verifica si un número ya está marcado por el bot
     const handleVerifyNumber = (idBoard: number, number: number) => {
-        if (botSelectedNumbers.some(board => board.idBoard === idBoard && board.numbers.includes(number))) {
-            return false;
-        }
-        return true;
-    }
+        return !botSelectedNumbers.some(board => board.idBoard === idBoard && board.numbers.includes(number));
+    };
 
-
-    // Función para marcar el numero de forma automatica
+    // Marca un número automáticamente
     const handleCheckNumber = (idBoard: number, number: number, position: number) => {
-
-
         setBotSelectedNumbers(prevState =>
             prevState.map(board =>
                 board.idBoard === idBoard
                     ? {
-                        // Agrega el elemento al arreglo si no se encuentra ahi, no se repite
-                        ...board, numbers: handleVerifyNumber(idBoard, number) ? [...board.numbers, number] : [...board.numbers]
+                        ...board,
+                        numbers: handleVerifyNumber(idBoard, number) ? [...board.numbers, number] : board.numbers
                     }
                     : board
             )
         );
-
-        // positions: board.positions.some(pos => pos.x === position.x && pos.y === position.y)
-        //     ? board.positions
-        //     : [...board.positions, position]
-
 
         setBotSelectedPositions(prevState =>
             prevState.map(board =>
                 board.idBoard === idBoard
                     ? {
                         ...board,
-                        positions: handleVerifyNumber(idBoard, number) ? [...board.positions, position] : [...board.positions]
-
+                        positions: handleVerifyNumber(idBoard, number) ? [...board.positions, position] : board.positions
                     }
                     : board
-            ))
-        // return [...prev, position];
-    }
+            )
+        );
+    };
 
-    // MARCA LA POSICION SELECCIONADA
+    // TODO: MARCA LA POSICION SELECCIONADA
 
+    // Verifica que el numero recibido se encuentre en botSelectedPositions por el id del tablero recibido 
+    // y la posición del tablero
     const handleSelectedPosition = (idBoard: number, position: number) => {
-        // return botSelectedPositions.some()
-
-        // if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p.x === position.x && p.y === position.y))) {
         if (botSelectedPositions.some(pos => pos.idBoard === idBoard && pos.positions.some(p => p === position))) {
-            //  === position.x && pos.y === position.y)) {
+            // Retorna true
             return true;
         }
         return false;
     };
 
+    // Verifica si un patrón ganador está presente en los tableros del bot
     const handleCheckWinnerPatternBot = () => {
+        if (defeat) return; // Si el juego terminó, no evalúa
 
-        // TODO: ¿DETIENE LA EJECUCIÓN DE LA FUNCIÓN?
-        if (defeat === true) {
-            console.log("EL BOT SE DETIENE")
-            return
-        };
+        // Itera por cada tablero del bot
+        for (const board of botSelectedPositions) {
 
-        if (defeat === false) {
-            // Iterar sobre cada tablero del bot
-            for (const board of botSelectedPositions) {
-                // Verificar si este tablero tiene un patrón ganador
-                const hasWinningPattern = patterns?.some(pattern =>
-                    pattern.every(position =>
-                        // board.positions.some(pos => pos.x === position.x && pos.y === position.y)
-                        board.positions.some(pos => pos === position)
+            // Si tiene el patrón ganador en 
+            const hasWinningPattern = patterns?.some(pattern =>
+                pattern.every(position =>
+                    board.positions.some(pos => pos === position)
+                )
+            );
 
-                    )
-                );
+            // Si es true hasWinningPattern
+            if (hasWinningPattern) {
+                // console.log(
+                //     `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
+                // );
 
-                if (hasWinningPattern) {
-                    console.log(
-                        `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
-                    );
+                const timeoutId = setTimeout(() => {
+                    if (victory) {
+                        // console.log("El jugador ganó antes de que el bot terminara");
+                        handleSetDefeat(false);
+                    } else {
+                        handleSetDefeat(true);
+                        handleSetVictory(false);
+                        handleCleanTargets(); // Limpia los números objetivos
+                        // console.log("SE ACABO EL JUEGO: el bot ganó");
+                    }
+                }, 5000);
 
-                    // Marcar derrota después de 5 segundos si el jugador no gana
-                    const timeoutId = setTimeout(() => {
-                        if (victory) {
-                            console.log("El jugador ganó antes de que el bot terminara");
-                            handleSetDefeat(false);
-                        } else {
-                            handleSetDefeat(true);
-                            handleSetVictory(false);
-                            // TODO: MEJORAR ESTO, LOS DEMÁS BOTS NO DEBEN SEGUIR MARCANDO NUMEROS Y DEBEN DEJAR DE EVALUAR
-                            setTargets([]) // SE LIMPIAN LOS NUMEROS OBJETIVOS
-                            handleSetDefeat(true);
-                            console.log("SE ACABO EL JUEGO: el bot ganó");
-                        }
-                    }, 5000);
-
-                    // Limpieza del timeout si es necesario
-                    return () => clearTimeout(timeoutId);
-                }
+                // Limpia los temporizadores
+                return () => clearTimeout(timeoutId);
             }
-
         }
-
-        // Si ningún tablero tiene un patrón ganador
-        // console.log("El bot sigue intentando, no tiene un patrón ganador en ninguno de sus tableros");
     };
 
-    // Cada vez que se actualice la posición del objetivo, se verifica si el oponente ha ganado
+    // Evalúa si hay un patrón ganador cada vez que cambian las posiciones marcadas
     useEffect(() => {
         handleCheckWinnerPatternBot();
     }, [botSelectedNumbers]);
 
-
-    // Si el jugador gana, se debe reiniciar el bot
+    // Reinicia el bot si el jugador gana
     useEffect(() => {
         setBotBoard(newBoards);
-        // setBotSelectedPositions([{ x: 2, y: 2 }]);
-        // setBotSelectedNumbers([0]);
         setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index + 1,
-            positions: [13]
-        })))
+            positions: [13] // Inicializa con una posición genérica
+        })));
         setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
             idBoard: index + 1,
-            numbers: [0]
-        })))
+            numbers: [0] // Inicializa con un número genérico
+        })));
+    }, [currentLevel.level]);
 
-
-
-    }, [currentLevel.level])
-
-    // Si el bot gana, debe reiniciar el bot
+    // Reinicia el bot si el bot gana
     useEffect(() => {
-        if (defeat === false) {
-            // setBotBoard(generateBoard());
-            setBotBoard(newBoards)
-            // setBotSelectedPositions([{ x: 2, y: 2 }]);
-            // setBotSelectedNumbers([0]);
-
+        if (!defeat) {
+            setBotBoard(newBoards);
             setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index + 1,
                 positions: [13]
-            })))
+            })));
             setBotSelectedNumbers(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index + 1,
                 numbers: [0]
-            })))
-
+            })));
         }
-    }, [defeat])
+    }, [defeat]);
 
 
     return (
