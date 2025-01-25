@@ -253,65 +253,69 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
 
+    // TODO: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
+    // TODO: SEPARAR LOS BOTS EN OTRO COMPONENTE PARA QUE EL USUARIO PUEDA VER EL TABLERO Y LOS BOTS POR SEPARADO EN UN DISPOSITIVO MOVIL
     return (
         <div className="text-white m-auto">
-            <div className="flex flex-col">
-                <div className="container mx-auto py-4 flex flex-row items-start gap-6 justify-center">
-                    <div className="flex flex-col">
+            <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start gap-6 justify-center">
+                <div className="flex flex-row sm:flex-col bg-red-600 sm:w-96 justify-center  sm:m-0 sm:gap-0 gap-3 mx-auto">
+                    <div className="flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-max w-1/2">
                         <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
-                            <h1 className="text-2xl font-bold mb-2">Nivel {level}</h1>
-                            <p className="text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                            <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
+                            <p className="sm:text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
                         </div>
 
                         {/* Componente de los numeros objetivos */}
                         {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
                         <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
-
-                        {/* Componente del patrón ganador */}
-                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
-
                     </div>
-                    <div className="flex flex-col gap-4">
-                        <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
-                            {
-                                // Renderiza BoardNumbers por la cantidad de boards en currentLevel
-                                Array.from({ length: currentLevel.boards }).map((_, index) => (
-                                    <BoardNumbers
-                                        key={index}
-                                        idBoard={index}
-                                        // Busca el tablero por su id y lo pasa como propiedad
-                                        board={board.find(b => b.id === index + 1)?.board || []}
-                                        handleIsSelectedNumber={handleIsSelectedNumber}
-                                        handleClickButton={handleClickButton}
-                                    />
-                                ))
-                            }
-                        </div>
 
-                        {/* Botones para comprobar el patron ganador y salir del juego */}
-                        <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
-                            <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                            <LeaveModal />
-                        </div>
+                    {/* Componente del patrón ganador */}
+                    <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
 
+                </div>
+
+                {/* Botones para comprobar el patron ganador y salir del juego */}
+
+                <div className="flex flex-col gap-4 bg-blue-600">
+                    <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
+                        {
+                            // Renderiza BoardNumbers por la cantidad de boards en currentLevel
+                            Array.from({ length: currentLevel.boards }).map((_, index) => (
+                                <BoardNumbers
+                                    key={index}
+                                    idBoard={index}
+                                    // Busca el tablero por su id y lo pasa como propiedad
+                                    board={board.find(b => b.id === index + 1)?.board || []}
+                                    handleIsSelectedNumber={handleIsSelectedNumber}
+                                    handleClickButton={handleClickButton}
+                                />
+                            ))
+                        }
+                    </div>
+
+                    <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
+                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                        <LeaveModal />
                     </div>
 
                 </div>
 
-                {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
+            </div>
 
-                {/* TODO: AUN NO ES RESPONSIVO */}
-                <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
-                    {
-                        // SECCION PARA AGRUPAR TODOS LOS BOTS
-                        currentLevel.bots.map((bot) => (
-                            <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
-                                patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                                handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
-                            />
-                        ))
-                    }
-                </div>
+            {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
+
+            {/* TODO: AUN NO ES RESPONSIVO */}
+            <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
+                {
+                    // SECCION PARA AGRUPAR TODOS LOS BOTS
+                    currentLevel.bots.map((bot) => (
+                        <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
+                            patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                            handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
+                        />
+                    ))
+                }
             </div>
 
             {

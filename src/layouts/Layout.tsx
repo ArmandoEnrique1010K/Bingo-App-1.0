@@ -10,7 +10,7 @@ export default function Layout() {
 
         // Usa un contenedor general de altura completa (h-screen) y asigna dinámicamente el espacio restante al contenedor <main> con flex-grow.
         <div className="flex flex-col min-w-full h-screen">
-            <div className="flex flex-row items-center justify-start py-5 px-12 gap-5 bg-gray-900 text-white shadow-lg">
+            <div className="flex flex-row items-center justify-start sm:py-0 py-0 px-8 bg-gray-900 text-white shadow-lg">
                 <Help />
                 <Music />
                 <Credits />
