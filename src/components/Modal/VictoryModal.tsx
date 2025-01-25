@@ -39,8 +39,8 @@ export default function VictoryModal({ level, handleCheckWinnerPattern }: Victor
     return (
         <>
             {/* Botón para comprobar el patrón ganador (al hacer clic en el llama a la función check)  */}
-            <button onClick={check} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black shadow-md 
-                hover:bg-cyan-600 active:bg-cyan-700 transition duration-300'>Comprobar patrón</button>
+            <button onClick={check} className='bg-cyan-500 text-white font-semibold px-6 sm:py-3 py-2 rounded-lg shadow-black shadow-md 
+                hover:bg-cyan-600 active:bg-cyan-700 transition duration-300 sm:text-base text-sm'>Comprobar patrón</button>
 
             {/* En la propieda onClose se define la función para abrir la ventana modal, pues el usuario no podra cerrarla 
             si hace clic en alguna parte de la pantalla */}

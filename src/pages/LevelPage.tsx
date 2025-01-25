@@ -249,20 +249,49 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setTargets([])
     }
 
+    // READY: ESTADO PARA MOSTRAR SOLAMENTE UN TABLERO
+    // const actualBoard = newBoards.find(b => b.id === 1)?.id || 5;
+
+    const [currentBoard, setCurrentBoard] = useState(() =>
+        newBoards.find(b => b.id === 1)?.id || 5
+    );
+
+    const verifyExistBoard = (id: number) => newBoards.some(b => b.id === id);
+
+    const handleChangeBoard = (direction: "prev" | "next") => {
+        const newBoardId = direction === "prev" ? currentBoard - 1 : currentBoard + 1;
+        if (verifyExistBoard(newBoardId)) {
+            setCurrentBoard(newBoardId);
+            console.log("Se muestra el tablero " + newBoardId)
+        } else {
+            console.log("No existe otro tablero");
+        }
+    };
+
+    const isAtFirstBoard = currentBoard === Math.min(...newBoards.map(b => b.id));
+    const isAtLastBoard = currentBoard === Math.max(...newBoards.map(b => b.id));
     // Contenido HTML devuelto por el componente
     // Efecto de gradiente en tailwindcss
     // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
 
-    // TODO: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
+    // TODO: ESTADO PARA MOSTRAR EL TABLERO O LOS TABLEROS DE LOS BOTS (SOLAMENTE EN DISEÑO RESPONSIVE)
+
+    const [viewPlayerBoard, setViewPlayerBoard] = useState(true);
+
+    useEffect(() => {
+
+    }, [viewPlayerBoard])
+
+    // READY: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
     // TODO: SEPARAR LOS BOTS EN OTRO COMPONENTE PARA QUE EL USUARIO PUEDA VER EL TABLERO Y LOS BOTS POR SEPARADO EN UN DISPOSITIVO MOVIL
     return (
         <div className="text-white m-auto">
-            <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start gap-6 justify-center">
-                <div className="flex flex-row sm:flex-col bg-red-600 sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
+            <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start sm:gap-6 gap-4 justify-center">
+                <div className="flex flex-row sm:flex-col sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
                     <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
                         <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
                             <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
-                            <p className="sm:text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                            <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
                         </div>
 
                         {/* Componente de los numeros objetivos */}
@@ -277,46 +306,97 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                 {/* Botones para comprobar el patron ganador y salir del juego */}
 
-                <div className="flex flex-col gap-4 bg-blue-600">
+                <div className="flex flex-col gap-4 bg-blue-600 sm:mx-0 mx-auto">
                     <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
                         {
                             // Renderiza BoardNumbers por la cantidad de boards en currentLevel
                             Array.from({ length: currentLevel.boards }).map((_, index) => (
-                                <BoardNumbers
-                                    key={index}
-                                    idBoard={index}
-                                    // Busca el tablero por su id y lo pasa como propiedad
-                                    board={board.find(b => b.id === index + 1)?.board || []}
-                                    handleIsSelectedNumber={handleIsSelectedNumber}
-                                    handleClickButton={handleClickButton}
-                                />
+                                <>
+                                    {
+                                        // TODO: BUSCAR EL TABLERO POR EL INDEX
+                                        // index + 1 <-- obtiene el id
+
+
+                                        currentBoard === index + 1 && (
+                                            <BoardNumbers
+                                                key={index}
+                                                idBoard={index}
+                                                // Busca el tablero por su id y lo pasa como propiedad
+                                                board={board.find(b => b.id === index + 1)?.board || []}
+                                                handleIsSelectedNumber={handleIsSelectedNumber}
+                                                handleClickButton={handleClickButton}
+                                            />
+
+                                        )
+                                    }
+                                </>
                             ))
                         }
                     </div>
+                    <div className="bg-gray-700 flex flex-col px-3  gap-3 rounded-xl py-4">
+                        <div className="flex flex-row justify-center gap-4">
+                            <button
+                                className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300  w-full sm:text-base text-sm
+            ${isAtFirstBoard ? "bg-gray-400 text-gray-800 cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+                                onClick={() => handleChangeBoard("prev")}
+                                disabled={isAtFirstBoard}
+                            >
+                                Anterior
+                            </button>
 
-                    <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
-                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                        <LeaveModal />
+                            <button
+                                className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300 w-full sm:text-base text-sm
+            ${isAtLastBoard ? "bg-gray-400 text-gray-800 cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+                                onClick={() => handleChangeBoard("next")}
+                                disabled={isAtLastBoard}
+                            >
+                                Siguiente
+                            </button>
+
+                        </div>
+                        <div className="flex flex-row justify-center gap-4">
+                            <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                            <LeaveModal />
+
+                        </div>
                     </div>
 
+                    {/* <div className="flex flex-row justify-center gap-4">
+                    </div> */}
+                    {/* <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
+
+
+
+                    </div>
+ */}
                 </div>
 
             </div>
 
+            {/* Boton para alternar entre la vista del tablero del jugador y los bots */}
+            <div className="absolute bottom-0 right-0 sm:hidden">
+                <button>{viewPlayerBoard === true ? "Bots" : "Jugador"}</button>
+            </div>
             {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
 
             {/* TODO: AUN NO ES RESPONSIVO */}
-            <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
-                {
-                    // SECCION PARA AGRUPAR TODOS LOS BOTS
-                    currentLevel.bots.map((bot) => (
-                        <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
-                            patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                            handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
-                        />
-                    ))
-                }
-            </div>
+            {
+                viewPlayerBoard === false && (
+                    <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
+                        {
+                            // SECCION PARA AGRUPAR TODOS LOS BOTS
+                            currentLevel.bots.map((bot) => (
+                                <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
+                                    patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                                    handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
+                                />
+                            ))
+                        }
+                    </div>
+                )
+            }
 
             {
                 // Si el jugador ha perdido

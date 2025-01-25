@@ -37,13 +37,13 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
     };
 
     return (
-        <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 min-h-48 sm:mb-4">
+        <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 min-h-44 sm:mb-4">
             <h2 className="text-cyan-400 sm:text-xl font-semibold sm:mb-2">Objetivos</h2>
 
 
             {/* Renderiza los numeros objetivos si hay elementos en targets */}
             {targets.length > 0 && (
-                // TODO: APLICAR DISEÑO RESPONSIVE
+                // TODO: APLICAR DISEÑO RESPONSIVE CUANDO EL TAMAÑO DE PANTALLA SEA MD
                 <div className="flex flex-wrap justify-center sm:gap-2 gap-1 sm:py-4 py-2">
                     {targets.map((n, index) => (
                         // Itera sobra cada número y le aplica un estilo

@@ -11,7 +11,7 @@ type BoardNumbersProps = {
 export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard }: BoardNumbersProps) {
     return (
         <>
-            <div className="flex flex-row gap-2 p-4 bg-gray-700 justify-center items-center">
+            <div className="flex flex-row gap-2 sm:p-4 p-2 bg-gray-700 justify-center items-center">
 
                 {/* Conviene usar un arreglo para generar dinamicamente las columnas del tablero */}
                 {

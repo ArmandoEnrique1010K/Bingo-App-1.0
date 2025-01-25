@@ -14,7 +14,7 @@ export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber
             <button
                 // Recuerda handleIsSelectedNumber retorna un valor booleano, se especifica un estilo de acuerdo a la 
                 // condición ternaria
-                className={`text-2xl font-bold w-16 h-16 border-none rounded-lg text-white hover:bg-cyan-700 active:bg-cyan-600 transition duration-300 
+                className={`sm:text-2xl text-xl font-bold sm:w-16 sm:h-16 w-12 h-12 border-none rounded-lg text-white hover:bg-cyan-700 active:bg-cyan-600 transition duration-300 
                     ${handleIsSelectedNumber(idBoard, value.position) === true ? "bg-cyan-500" : "bg-gray-500"}`}
 
                 // Al hacer clic, marca el numero llamando a handleClickButton

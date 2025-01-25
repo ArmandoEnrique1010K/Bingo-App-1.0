@@ -32,8 +32,8 @@ export default function LeaveModal() {
             {/* Al hacer clic en el botón, se mostrara la ventana modal */}
 
             {/* Por un tema de accesibilidad, se elimina el atributo aria-hidden="true" que viene por defecto */}
-            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 py-3 rounded-lg shadow-black 
-            shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300'>Abandonar partida</button>
+            <button onClick={open} className='bg-cyan-500 text-white font-semibold px-6 sm:py-3 py-2 rounded-lg shadow-black 
+            shadow-md hover:bg-cyan-600 active:bg-cyan-700 transition duration-300 sm:text-base text-sm'>Abandonar partida</button>
 
             {/* El codigo para definir una ventana modal de HeadlessUI se obtiene de la documentación */}
             {/* https://headlessui.com/ */}
