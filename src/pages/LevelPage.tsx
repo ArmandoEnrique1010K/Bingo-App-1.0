@@ -258,8 +258,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     return (
         <div className="text-white m-auto">
             <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start gap-6 justify-center">
-                <div className="flex flex-row sm:flex-col bg-red-600 sm:w-96 justify-center  sm:m-0 sm:gap-0 gap-3 mx-auto">
-                    <div className="flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-max w-1/2">
+                <div className="flex flex-row sm:flex-col bg-red-600 sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
+                    <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
                         <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
                             <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
                             <p className="sm:text-lg">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>

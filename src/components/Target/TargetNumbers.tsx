@@ -32,26 +32,26 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
 
     // Función para obtener el texto dinámico del botón
     const getButtonText = () => {
-        if (round === 0) return "Iniciar partida";
-        return "Siguiente ronda";
+        if (round === 0) return "Iniciar";
+        return "Siguiente";
     };
 
     return (
-        <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 max-h-52 sm:mb-4">
+        <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 min-h-48 sm:mb-4">
             <h2 className="text-cyan-400 sm:text-xl font-semibold sm:mb-2">Objetivos</h2>
 
 
             {/* Renderiza los numeros objetivos si hay elementos en targets */}
             {targets.length > 0 && (
                 // TODO: APLICAR DISEÑO RESPONSIVE
-                <div className="flex flex-wrap justify-center gap-2 py-4">
+                <div className="flex flex-wrap justify-center sm:gap-2 gap-1 sm:py-4 py-2">
                     {targets.map((n, index) => (
                         // Itera sobra cada número y le aplica un estilo
                         <div
                             key={index}
-                            className="sm:w-11 sm:h-11 w-8 h-8 flex items-center justify-center border-2 
+                            className="sm:w-11 sm:h-11 w-7 h-7 flex items-center justify-center border-2 
                             border-none bg-white text-black font-semibold rounded-full 
-                            sm:text-lg shadow-md shadow-black"
+                            sm:text-lg text-sm shadow-md shadow-black"
                         >
                             {n}
                         </div>
@@ -64,9 +64,9 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
             {/* Renderiza el botón solamente si es necesario */}
             <div className="text-center mt-2">
                 <button
-                    className={`bg-cyan-500 text-white font-semibold px-6 py-3 text-sm sm:text-base
+                    className={`bg-cyan-500 text-white font-semibold sm:px-6 px-4 sm:py-3 py-2 text-sm sm:text-base
                         rounded-lg shadow-black shadow-md hover:bg-cyan-600 
-                        active:bg-cyan-700 transition duration-300 mb-4 ${isButtonDisabled ? "bg-gray-300 hover:bg-gray-500 opacity-50 cursor-not-allowed" : ""
+                        active:bg-cyan-700 transition duration-300 sm:mb-4 ${isButtonDisabled ? "bg-gray-300 hover:bg-gray-500 opacity-50 cursor-not-allowed" : ""
                         }`}
                     disabled={isButtonDisabled}
                     onClick={handleChangeTargets}
