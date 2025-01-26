@@ -18,11 +18,11 @@ export default function TargetPattern({ level, text }: TargetPatternProps) {
                     <img
                         src={`/images/patterns/level_${level}.svg`}
                         alt={`Patrón del nivel ${level}`}
-                        className="w-28 sm:w-56 md:w-56 shadow-lg"
+                        className="w-28 sm:w-56 md:w-36 shadow-lg"
                     />
                 </div>
 
-                <div className="sm:text-base md:text-lg text-white text-center my-auto ">
+                <div className="sm:text-lg  text-sm text-white text-center my-auto ">
                     {text}
                 </div>
             </div>

@@ -57,7 +57,7 @@ export default function Credits() {
                                     <span className="font-bold">Música:</span> Tap Out (instrumental) - The Strokes (2013)
                                 </p>
                                 <p>
-                                    <span className="font-bold">Favicon: </span>Icono de <a target="_blank" href="https://icons8.com/icon/58439/bingo">Bingo</a> proporcionado por <a target="_blank" href="https://icons8.com">Icons8</a>
+                                    <span className="font-bold">Favicon: </span>Icono de <a target="_blank" href="https://icons8.com/icon/58439/bingo">Bingo</a> proporcionado por <a target="_blank" href="https://icons8.com">Icons8</a> y svgRepo
                                 </p>
                             </div>
                             <div className="mt-10">

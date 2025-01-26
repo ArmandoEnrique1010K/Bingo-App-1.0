@@ -12,14 +12,14 @@ export default function BotSquareNumber({ handleSelectedPosition, value, idBoard
         <>
             <div
                 // Aplica un estilo de acuerdo a la condición ternaria
-                className={`text-sm w-6 h-6 text-center border-2 border-gray-600 text-white 
+                className={`text-xs sm:text-sm size-4 text-center sm:border-2 border-0 border-gray-600 text-white 
                     ${handleSelectedPosition(idBoard, value.position) === true
                         ? "bg-cyan-500"
                         : "bg-gray-500"}`
                 }
             >
                 {/* El bot no muestra los numeros de su tablero */}
-                {value.position === 13 ? 'F' : /* value.number */ ''}
+                {value.position === 13 ? 'F' : "" /*value.number*/}
             </div>
         </>
     )

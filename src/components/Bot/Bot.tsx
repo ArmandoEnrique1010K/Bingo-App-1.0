@@ -48,14 +48,19 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     }, [currentLevel.boards])
 
 
-    // TODO : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
+    // READY??? : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
 
+    // TODO: EVITAR QUE LOS TABLEROS DE LOS BOTS SE RENDERICEN NUEVAMENTE
     // Efecto para inicializar los tableros al montar el componente
     useEffect(() => {
-        setBotBoard(newBoards);
+        setBoardsBot()
+        console.log("LLAMANDO")
     }, []);
 
 
+    const setBoardsBot = () => {
+        setBotBoard(newBoards);
+    }
     // Efecto principal: evalúa los números objetivos y los marca automáticamente
     useEffect(() => {
         if (!botBoard.length || !targets.length || defeat) return; // Si no hay tableros, objetivos o el juego terminó, no ejecuta

@@ -45,7 +45,7 @@ export const levels: Level[] = [
         // Nivel
         level: 1,
         // Numero de bolitas o numeros objetivos
-        targetQuantity: 7,
+        targetQuantity: 3,
         // Texto descriptivo para el patron objetivo
         targetText: "Una columna o una fila de 5 números",
         // Numero de tableros del jugador
@@ -71,7 +71,7 @@ export const levels: Level[] = [
                 // Tiempo de respuesta en milisegundos
                 interval: 2400,
                 // Número de tableros para el bot
-                boards: 1
+                boards: 3
             }
         ]
     },

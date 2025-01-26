@@ -279,132 +279,155 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     const [viewPlayerBoard, setViewPlayerBoard] = useState(true);
 
     useEffect(() => {
-
+        if (viewPlayerBoard === false) {
+            console.log("Mostrando los tableros de los bots")
+        } else {
+            console.log("Mostrando el tablero del jugador")
+        }
     }, [viewPlayerBoard])
+
+    const handleChangeViewPlayerBoard = () => {
+        setViewPlayerBoard(!viewPlayerBoard)
+    }
 
     // READY: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
     // TODO: SEPARAR LOS BOTS EN OTRO COMPONENTE PARA QUE EL USUARIO PUEDA VER EL TABLERO Y LOS BOTS POR SEPARADO EN UN DISPOSITIVO MOVIL
     return (
-        <div className="text-white m-auto">
-            <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start sm:gap-6 gap-4 justify-center">
-                <div className="flex flex-row sm:flex-col sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
-                    <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
-                        <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
-                            <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
-                            <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+        <>
+            <div className="text-white m-auto">
+                <div className="container mx-auto py-4 flex sm:flex-row flex-col items-start sm:gap-6 gap-4 justify-center">
+                    <div className="flex flex-row sm:flex-col sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
+                        <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
+                            <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
+                                <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
+                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                            </div>
+
+                            {/* Componente de los numeros objetivos */}
+                            {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
+                            <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
                         </div>
 
-                        {/* Componente de los numeros objetivos */}
-                        {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
-                        <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                        {/* Componente del patrón ganador */}
+                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
+
                     </div>
 
-                    {/* Componente del patrón ganador */}
-                    <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
+                    {/* Botones para comprobar el patron ganador y salir del juego */}
 
-                </div>
-
-                {/* Botones para comprobar el patron ganador y salir del juego */}
-
-                <div className="flex flex-col gap-4 bg-blue-600 sm:mx-0 mx-auto">
-                    <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
-                        {
-                            // Renderiza BoardNumbers por la cantidad de boards en currentLevel
-                            Array.from({ length: currentLevel.boards }).map((_, index) => (
-                                <>
+                    {
+                        viewPlayerBoard === true && (
+                            <div className="flex flex-col gap-4 sm:mx-0 mx-auto">
+                                <div className="flex flex-row mx-auto border-4 border-gray-700 rounded-xl">
                                     {
-                                        // TODO: BUSCAR EL TABLERO POR EL INDEX
-                                        // index + 1 <-- obtiene el id
+                                        // Renderiza BoardNumbers por la cantidad de boards en currentLevel
+                                        Array.from({ length: currentLevel.boards }).map((_, index) => (
+
+                                            // TODO: BUSCAR EL TABLERO POR EL INDEX
+                                            // index + 1 <-- obtiene el id
 
 
-                                        currentBoard === index + 1 && (
-                                            <BoardNumbers
-                                                key={index}
-                                                idBoard={index}
-                                                // Busca el tablero por su id y lo pasa como propiedad
-                                                board={board.find(b => b.id === index + 1)?.board || []}
-                                                handleIsSelectedNumber={handleIsSelectedNumber}
-                                                handleClickButton={handleClickButton}
-                                            />
+                                            currentBoard === index + 1 && (
+                                                <BoardNumbers
+                                                    key={index}
+                                                    idBoard={index}
+                                                    // Busca el tablero por su id y lo pasa como propiedad
+                                                    board={board.find(b => b.id === index + 1)?.board || []}
+                                                    handleIsSelectedNumber={handleIsSelectedNumber}
+                                                    handleClickButton={handleClickButton}
+                                                />
 
-                                        )
+                                            )
+
+                                        ))
                                     }
-                                </>
-                            ))
-                        }
-                    </div>
-                    <div className="bg-gray-700 flex flex-col px-3  gap-3 rounded-xl py-4">
-                        <div className="flex flex-row justify-center gap-4">
-                            <button
-                                className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
-            transition duration-300  w-full sm:text-base text-sm
-            ${isAtFirstBoard ? "bg-gray-400 text-gray-800 cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
-                                onClick={() => handleChangeBoard("prev")}
-                                disabled={isAtFirstBoard}
-                            >
-                                Anterior
-                            </button>
+                                </div>
+                                <div className="bg-gray-700 flex flex-col px-3 sm:mx-0 mx-3 gap-3 rounded-xl py-4">
+                                    <div className="flex flex-row justify-center gap-4">
+                                        <button
+                                            className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300  w-full sm:text-base text-sm shadow-black 
+            ${isAtFirstBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+                                            onClick={() => handleChangeBoard("prev")}
+                                            disabled={isAtFirstBoard}
+                                        >
+                                            Anterior
+                                        </button>
 
-                            <button
-                                className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
-            transition duration-300 w-full sm:text-base text-sm
-            ${isAtLastBoard ? "bg-gray-400 text-gray-800 cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
-                                onClick={() => handleChangeBoard("next")}
-                                disabled={isAtLastBoard}
-                            >
-                                Siguiente
-                            </button>
+                                        <button
+                                            className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300 w-full sm:text-base text-sm shadow-black 
+            ${isAtLastBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+                                            onClick={() => handleChangeBoard("next")}
+                                            disabled={isAtLastBoard}
+                                        >
+                                            Siguiente
+                                        </button>
 
-                        </div>
-                        <div className="flex flex-row justify-center gap-4">
-                            <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                            <LeaveModal />
+                                    </div>
+                                    <div className="flex flex-row justify-center gap-4">
+                                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                                        <LeaveModal />
 
-                        </div>
-                    </div>
+                                    </div>
+                                </div>
 
-                    {/* <div className="flex flex-row justify-center gap-4">
+                                {/* <div className="flex flex-row justify-center gap-4">
                     </div> */}
-                    {/* <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
+                                {/* <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
 
 
 
                     </div>
  */}
+                            </div>
+
+                        )
+                    }
+
+
                 </div>
 
+                {/* Boton para alternar entre la vista del tablero del jugador y los bots */}
+                {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
+
+                {/* TODO: UTILIZAR LA CLASE hidden PODRIA SER UNA OPCION VIABLE??? */}
+                {
+                    (
+                        <div className={`sm:flex sm:flex-row grid grid-cols-2 items-center justify-center sm:mx-auto sm:mt-4 mt-0 mx-2 gap-3 mb-4 ${viewPlayerBoard === false ? "" : "hidden"}`}>
+                            {
+                                // SECCION PARA AGRUPAR TODOS LOS BOTS
+                                currentLevel.bots.map((bot) => (
+                                    <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
+                                        patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                                        handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
+                                    />
+                                ))
+                            }
+                        </div>
+                    )
+                }
+
+                {
+                    // Si el jugador ha perdido
+                    defeat === true && (
+                        // Muestra la ventana modal que se muestra automaticamente
+                        <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
+                    )
+                }
+
             </div>
+            {
+                // TODO: ESTE BOTON DEBE ESTAR ABAJO DE LA PANTALLA
+            }
+            <div className="sticky bottom-2 text-right sm:hidden">
+                <button className="bg-cyan-500 p-2 hover:bg-cyan-600 active:bg-cyan-700" onClick={handleChangeViewPlayerBoard}>{viewPlayerBoard === true ? (
+                    <img src="images/bot.svg" alt="Bot" className="size-8" />
+                ) : (
+                    <img src="images/board.svg" alt="Jugador" className="size-8" />
 
-            {/* Boton para alternar entre la vista del tablero del jugador y los bots */}
-            <div className="absolute bottom-0 right-0 sm:hidden">
-                <button>{viewPlayerBoard === true ? "Bots" : "Jugador"}</button>
+                )}</button>
             </div>
-            {/* Diseño de cuadricula en tailwind: grid grid-cols-4 grid-rows-2 */}
-
-            {/* TODO: AUN NO ES RESPONSIVO */}
-            {
-                viewPlayerBoard === false && (
-                    <div className="flex flex-row items-center justify-center mx-auto mt-4 gap-2 mb-4">
-                        {
-                            // SECCION PARA AGRUPAR TODOS LOS BOTS
-                            currentLevel.bots.map((bot) => (
-                                <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
-                                    patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                                    handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
-                                />
-                            ))
-                        }
-                    </div>
-                )
-            }
-
-            {
-                // Si el jugador ha perdido
-                defeat === true && (
-                    // Muestra la ventana modal que se muestra automaticamente
-                    <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
-                )
-            }
-        </div>
+        </>
     )
 }
