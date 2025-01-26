@@ -71,14 +71,14 @@ export const levels: Level[] = [
                 // Tiempo de respuesta en milisegundos
                 interval: 2400,
                 // Número de tableros para el bot (maximo: 3)
-                boards: 2
+                boards: 1
             },
             // BOT DE PRUEBA
-            {
-                name: "S-BOT 2",
-                interval: 2000,
-                boards: 3
-            }
+            // {
+            //     name: "S-BOT 2",
+            //     interval: 2000,
+            //     boards: 3
+            // }
         ]
     },
     {
@@ -823,7 +823,7 @@ export const levels: Level[] = [
     {
         // Nivel Final
         level: 20,
-        targetQuantity: 7,
+        targetQuantity: 5,
         targetText: "Marca todo el tablero",
         boards: 2,
         patterns: [

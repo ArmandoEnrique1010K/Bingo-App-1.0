@@ -263,10 +263,11 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         const newBoardId = direction === "prev" ? currentBoard - 1 : currentBoard + 1;
         if (verifyExistBoard(newBoardId)) {
             setCurrentBoard(newBoardId);
-            console.log("Se muestra el tablero " + newBoardId)
-        } else {
-            console.log("No existe otro tablero");
+            // console.log("Se muestra el tablero " + newBoardId)
         }
+        // else {
+        //     console.log("No existe otro tablero");
+        // }
     };
 
     const isAtFirstBoard = currentBoard === Math.min(...newBoards.map(b => b.id));
@@ -279,13 +280,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     const [viewPlayerBoard, setViewPlayerBoard] = useState(true);
 
-    useEffect(() => {
-        if (viewPlayerBoard === false) {
-            console.log("Mostrando los tableros de los bots")
-        } else {
-            console.log("Mostrando el tablero del jugador")
-        }
-    }, [viewPlayerBoard])
+    // useEffect(() => {
+    //     if (viewPlayerBoard === false) {
+    //         console.log("Mostrando los tableros de los bots")
+    //     } else {
+    //         console.log("Mostrando el tablero del jugador")
+    //     }
+    // }, [viewPlayerBoard])
 
     const handleChangeViewPlayerBoard = () => {
         setViewPlayerBoard(!viewPlayerBoard)

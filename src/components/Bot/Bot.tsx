@@ -42,7 +42,6 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // Genera los tableros al inicio o cuando cambia el número de tableros
     // Conviene usar useMemo para generar los tableros
     const newBoards = useMemo(() => {
-        // console.log(boards)
         return Array.from({ length: boards }).map((_, index) => ({
             id: index + 1, // ID del tablero, evita el valor 0
             board: generateBoard() // Genera un tablero aleatorio
@@ -52,17 +51,8 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // READY??? : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
 
-    // TODO: EVITAR QUE LOS TABLEROS DE LOS BOTS SE RENDERICEN NUEVAMENTE
-    // Efecto para inicializar los tableros al montar el componente
-    // useEffect(() => {
-    //     setBoardsBot()
-    //     console.log("LLAMANDO")
-    // }, []);
-
     useEffect(() => {
         setBotBoard(newBoards);
-        console.log(newBoards)
-
     }, []);
     // const setBoardsBot = () => {
     //     setBotBoard(newBoards);
@@ -96,8 +86,8 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
                 const timeoutId = setTimeout(() => {
                     handleCheckNumber(res.idBoard, t.number, t.position); // Marca el número
-                    console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
-                    console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
+                    // console.log(`${name} ha marcado en el tablero ${res.idBoard} el número ${t.number}`);
+                    // console.log(`Se demoró ${(randomInterval).toFixed(2)} milisegundos`);
                 }, currentDelay);
 
                 newTimeoutIds.push(timeoutId); // Almacena el ID del temporizador
