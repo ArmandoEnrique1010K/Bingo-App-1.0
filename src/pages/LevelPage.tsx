@@ -10,6 +10,7 @@ import Bot from "../components/Bot/Bot";
 import LeaveModal from "../components/Modal/LeaveModal";
 import DefeatModal from "../components/Modal/DefeatModal";
 import VictoryModal from "../components/Modal/VictoryModal";
+import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 
 type LevelPageProps = {
     level: number
@@ -343,25 +344,30 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                     }
                                 </div>
                                 <div className="bg-gray-700 flex flex-col px-3 sm:mx-0 mx-3 gap-3 rounded-xl py-4">
-                                    <div className="flex flex-row justify-center gap-4">
+                                    <div className="flex flex-row justify-between gap-4">
                                         <button
-                                            className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
-            transition duration-300  w-full sm:text-base text-sm shadow-black 
+                                            className={`
+                                                
+                                                px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300  w-full  shadow-black 
             ${isAtFirstBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
                                             onClick={() => handleChangeBoard("prev")}
                                             disabled={isAtFirstBoard}
                                         >
-                                            Anterior
+                                            <ArrowLeftIcon className='
+                                    h-6 mx-auto' />
                                         </button>
 
                                         <button
-                                            className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
-            transition duration-300 w-full sm:text-base text-sm shadow-black 
+                                            className={`px-4 
+                                             sm:py-3 py-2 font-semibold rounded-lg shadow-md 
+            transition duration-300 w-full  sm:text-base text-sm shadow-black 
             ${isAtLastBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
                                             onClick={() => handleChangeBoard("next")}
                                             disabled={isAtLastBoard}
                                         >
-                                            Siguiente
+                                            <ArrowRightIcon className='h-6 mx-auto' />
+
                                         </button>
 
                                     </div>
@@ -394,12 +400,19 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 {/* TODO: UTILIZAR LA CLASE hidden PODRIA SER UNA OPCION VIABLE??? */}
                 {
                     (
-                        <div className={`sm:flex sm:flex-row grid grid-cols-2 items-center justify-center sm:mx-auto sm:mt-4 mt-0 mx-2 gap-3 mb-4 ${viewPlayerBoard === false ? "" : "hidden"}`}>
+                        <div className={`sm:flex sm:flex-row grid  grid-cols-2 items-center justify-center  sm:mx-auto sm:mt-4 mt-0 mx-2 gap-3 mb-4 ${viewPlayerBoard === false ? "" : "hidden"}`}>
                             {
                                 // SECCION PARA AGRUPAR TODOS LOS BOTS
-                                currentLevel.bots.map((bot) => (
+                                currentLevel.bots.map((bot, index) => (
                                     <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
-                                        patterns={patterns} boards={bot.boards} defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                                        patterns={patterns} boards={bot.boards}
+                                        // Obten los tableros del siguiente bot en la lista, de lo contrario un undefined
+
+                                        nextBoards={
+                                            bot.boards
+                                                ? currentLevel.bots[index + 1]?.boards
+                                                : 0
+                                        } defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
                                         handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
                                     />
                                 ))
@@ -420,13 +433,14 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             {
                 // TODO: ESTE BOTON DEBE ESTAR ABAJO DE LA PANTALLA
             }
-            <div className="sticky bottom-2 text-right sm:hidden">
-                <button className="bg-cyan-500 p-2 hover:bg-cyan-600 active:bg-cyan-700" onClick={handleChangeViewPlayerBoard}>{viewPlayerBoard === true ? (
-                    <img src="images/bot.svg" alt="Bot" className="size-8" />
-                ) : (
-                    <img src="images/board.svg" alt="Jugador" className="size-8" />
-
-                )}</button>
+            <div className="fixed bottom-4 right-4 text-right sm:hidden">
+                <button className="bg-cyan-500 p-3 rounded-full shadow-lg hover:bg-cyan-600 active:bg-cyan-700" onClick={handleChangeViewPlayerBoard}>
+                    {viewPlayerBoard === true ? (
+                        <img src="images/bot.svg" alt="Bot" className="w-8 h-8" />
+                    ) : (
+                        <img src="images/board.svg" alt="Jugador" className="w-8 h-8" />
+                    )}
+                </button>
             </div>
         </>
     )

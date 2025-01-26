@@ -15,11 +15,12 @@ type BotsProps = {
     defeat: boolean,
     handleSetVictory: (boolean: boolean) => void,
     victory: boolean,
-    handleCleanTargets: () => void
+    handleCleanTargets: () => void,
+    nextBoards: number
 }
 
 export default function Bots({ currentLevel, targets, interval, name, patterns, handleSetDefeat, defeat, handleSetVictory,
-    victory, boards, handleCleanTargets }: BotsProps) {
+    victory, boards, handleCleanTargets, nextBoards }: BotsProps) {
 
     // Variables de estado
 
@@ -260,25 +261,25 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     }, [])
 
     return (
+        // DE ALGUNA FORMA SE TIENE QUE OBTENER EL ID DE LOS BOTS
+        // SE NECESITA SABER EL NUMERO DE TABLEROS DEL SIGUIENTE BOT PARA APLICAR EL ESTILO RESPONSIVE
         <div className={`flex flex-col items-center justify-center bg-gray-700  p-2 rounded-lg shadow-md 
-            ${boards === 1 ? "bg-red-500 align" : ""}
-        ${boards >= 2 ? "col-span-2" : "col-span-1"}
+
+        
+        ${boards >= 2 ? "col-span-2" : ""}
+        ${boards < 2 && nextBoards >= 2 ? "col-span-2" : ""}
         `}>
             <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
 
             <div className="flex flex-row gap-4">
                 {
                     Array.from({ length: boards }).map((_, index) => (
-                        <>
-                            {/* <span>{index + 1}</span> */}
-                            <BotBoardNumbers key={index + 1}
-                                // board={botBoard.find(b => b.id === index + 1)?.board || []}
-                                board={botBoard.find(b => b.id === index + 1)?.board || []}
-                                idBoard={index + 1}
-                                handleSelectedPosition={handleSelectedPosition}
-                            />
-
-                        </>
+                        <BotBoardNumbers key={index + 1}
+                            // board={botBoard.find(b => b.id === index + 1)?.board || []}
+                            board={botBoard.find(b => b.id === index + 1)?.board || []}
+                            idBoard={index + 1}
+                            handleSelectedPosition={handleSelectedPosition}
+                        />
                     ))
                 }
             </div>
