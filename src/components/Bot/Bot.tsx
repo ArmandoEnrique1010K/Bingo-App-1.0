@@ -41,27 +41,35 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // Genera los tableros al inicio o cuando cambia el número de tableros
     // Conviene usar useMemo para generar los tableros
     const newBoards = useMemo(() => {
-        return Array.from({ length: currentLevel.boards }).map((_, index) => ({
+        // console.log(boards)
+        return Array.from({ length: boards }).map((_, index) => ({
             id: index + 1, // ID del tablero, evita el valor 0
             board: generateBoard() // Genera un tablero aleatorio
         }));
-    }, [currentLevel.boards])
+    }, [boards])
 
 
     // READY??? : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
 
     // TODO: EVITAR QUE LOS TABLEROS DE LOS BOTS SE RENDERICEN NUEVAMENTE
     // Efecto para inicializar los tableros al montar el componente
+    // useEffect(() => {
+    //     setBoardsBot()
+    //     console.log("LLAMANDO")
+    // }, []);
+
     useEffect(() => {
-        setBoardsBot()
-        console.log("LLAMANDO")
-    }, []);
-
-
-    const setBoardsBot = () => {
         setBotBoard(newBoards);
-    }
+        console.log(newBoards)
+
+    }, []);
+    // const setBoardsBot = () => {
+    //     setBotBoard(newBoards);
+    // }
+
     // Efecto principal: evalúa los números objetivos y los marca automáticamente
+
+
     useEffect(() => {
         if (!botBoard.length || !targets.length || defeat) return; // Si no hay tableros, objetivos o el juego terminó, no ejecuta
 
@@ -243,19 +251,34 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         }
     }, [defeat]);
 
+    const getQuantityBoards = () => {
+        console.log(boards)
+    }
+
+    useEffect(() => {
+        getQuantityBoards()
+    }, [])
 
     return (
-        <div className="flex flex-col items-center p-2 bg-gray-700 rounded-lg shadow-md">
+        <div className={`flex flex-col items-center justify-center bg-gray-700  p-2 rounded-lg shadow-md 
+            ${boards === 1 ? "bg-red-500 align" : ""}
+        ${boards >= 2 ? "col-span-2" : "col-span-1"}
+        `}>
             <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
 
             <div className="flex flex-row gap-4">
                 {
                     Array.from({ length: boards }).map((_, index) => (
-                        <BotBoardNumbers key={index + 1}
-                            board={botBoard.find(b => b.id === index + 1)?.board || []}
-                            idBoard={index + 1}
-                            handleSelectedPosition={handleSelectedPosition}
-                        />
+                        <>
+                            {/* <span>{index + 1}</span> */}
+                            <BotBoardNumbers key={index + 1}
+                                // board={botBoard.find(b => b.id === index + 1)?.board || []}
+                                board={botBoard.find(b => b.id === index + 1)?.board || []}
+                                idBoard={index + 1}
+                                handleSelectedPosition={handleSelectedPosition}
+                            />
+
+                        </>
                     ))
                 }
             </div>
