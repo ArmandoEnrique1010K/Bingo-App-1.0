@@ -19,6 +19,10 @@ Historial de versiones:
 - Algunos niveles tiene 2 tableros para el jugador
 - No es adaptable a dispositivos moviles
 
+1.2: 25/01/2025
+
+- Ahora es adaptable a dispositivos moviles, puedes jugarlo desde tu celular
+
 Versión de prueba: [Haga clic aqui para jugar](https://stately-hummingbird-3bc0f1.netlify.app/)
 
 ## Captura de pantalla

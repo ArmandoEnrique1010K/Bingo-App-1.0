@@ -257,7 +257,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
         
         ${boards >= 2 ? "col-span-2" : ""}
-        ${boards < 2 && nextBoards >= 2 ? "col-span-2" : ""}
+        ${boards < 2 && (nextBoards !== 0 || nextBoards >= 2) ? "col-span-2" : ""}
         `}>
             <h2 className="text-lg font-semibold text-gray-200 mb-2">{name}</h2>
 
