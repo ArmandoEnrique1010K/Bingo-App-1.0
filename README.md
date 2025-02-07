@@ -28,3 +28,10 @@ Versión de prueba: [Haga clic aqui para jugar](https://stately-hummingbird-3bc0
 ## Captura de pantalla
 
 ![](assets/2025-01-19-16-19-52-image.png)
+
+## Futuras mejoras
+
+- Mejorar el algoritmo que sirve para obtener los números objetivos, de tal manera que no se repitan.
+- Añadir nuevos niveles y patrones objetivos.
+- En lugar de usar una imagen en formato svg, existe la posibilidad de usar un tablero con elementos <div> para mostrar el patrón objetivo.
+- Fecha limite: 30/05/25
