@@ -21,19 +21,6 @@ export default function BoardNumbers({ board, handleClickButton, handleIsSelecte
                             min={((index) * 5) + 1} max={(index + 1) * 5} />
                     ))
                 }
-
-                {/* 
-                    <ColumnNumbers numberBoard={board} handleClickButton={handleClickButton} handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
-                        min={1} max={5} />
-                    <ColumnNumbers numberBoard={board} handleClickButton={handleClickButton} handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
-                        min={6} max={10} />
-                    <ColumnNumbers numberBoard={board} handleClickButton={handleClickButton} handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
-                        min={11} max={15} />
-                    <ColumnNumbers numberBoard={board} handleClickButton={handleClickButton} handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
-                        min={16} max={20} />
-                    <ColumnNumbers numberBoard={board} handleClickButton={handleClickButton} handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
-                        min={21} max={25} /> 
-                */}
             </div>
         </>
     )

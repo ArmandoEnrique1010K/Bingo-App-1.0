@@ -3,7 +3,7 @@
 // Nivel (objeto)
 export type Level = {
     level: number
-    targetQuantity: number
+    targetQuantity: number // TODO: ELIMINAR ESTO EN UNA FUTURA ACTUALIZACIÓN
     targetText: string
     boards: number
     patterns: Pattern[] // Arreglo de patrones ganadores
@@ -57,6 +57,7 @@ export type SelectedPositions = {
     positions: number[]
 }[]
 
+// TODO: ELIMINAR ESTO
 // Resultado de los numeros encontrados por los bots
 export type ResultNumberBoardsBot = {
     idBoard: number,

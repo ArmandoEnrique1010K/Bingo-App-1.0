@@ -1,3 +1,5 @@
+import { useMemo } from "react"
+
 type ButtonNumberProps = {
     handleClickButton: (idBoard: number, number: number, position: number) => void,
     handleIsSelectedNumber: (idBoard: number, position: number) => boolean,
@@ -9,6 +11,10 @@ type ButtonNumberProps = {
 }
 
 export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber, value, idBoard }: ButtonNumberProps) {
+
+    // CONTINUAR AQUI
+    const selectNumber = useMemo();
+
     return (
         <>
             <button

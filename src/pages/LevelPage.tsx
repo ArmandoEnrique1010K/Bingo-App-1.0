@@ -17,6 +17,7 @@ type LevelPageProps = {
     unlockLevel: (number: number) => void
 }
 
+// Pagina de un nivel
 export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // Obtiene los datos del nivel actual usando el metodo find.
@@ -27,11 +28,6 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Variables de estado
 
     // Tableros del jugador
-    // Recuerda que el type Board es:
-    // type Board = {
-    //     position: number;
-    //     number: number;
-    // }[]
     const [board, setBoard] = useState<BoardID>([]);
 
     // Numeros objetivos
@@ -54,9 +50,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Fin del juego si el bot gana
     const [defeat, setDefeat] = useState(false);
 
+    // NO DEBE PASAR DE 25 RONDAS SI VAN A SER 3 OBJETIVOS, COLAPSA LA APLICACIÓN
     // Turno o ronda
     const [round, setRound] = useState(0)
 
+
+    // NUMEROS EXCLUIDOS
+    const [excludedNumbers, setExcludedNumbers] = useState<number[]>([]);
 
     // Efecto para cargar los posibles patrones y almacenarlo en el state de patterns
     useEffect(() => {
@@ -136,9 +136,17 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         // Espera 1 seg. para generar los numeros objetivos
         // Recordar que la función generateTargets necesita la cantidad de números que se generaran
         setTimeout(() => {
-            setTargets(generateTargets(currentLevel.targetQuantity));
+            setTargets(generateTargets(currentLevel.targetQuantity, excludedNumbers));
+
+            // TODO: PROBAR ESTO
+            setExcludedNumbers([...excludedNumbers, ...targets])
         }, 1000)
     }
+
+    // Efecto secundario para pruebas
+    useEffect(() => {
+        console.log("Numeros que ya fuerón utilizados previamente (excepto en este turno): " + excludedNumbers)
+    }, [excludedNumbers])
 
     // Función para verificar que el numero ya se encuentre marcado en el tablero (devuelve un valor booleano)
     const isSelectedNumber = (idBoard: number, number: number): boolean => {
@@ -186,16 +194,21 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         }
     }
 
-    // Función para verificar si es un número seleccionado según el tablero y su posición del número
+    // TODO: ESTA FUNCIÓN SIEMPRE SE EJECUTA...
     const handleIsSelectedNumber = (idBoard: number, position: number) => {
         // Si en algun tablero por el id recibido y si en algunas de las posiciones, se encuentra la posición recibida
         if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos === position))) {
             // Devuelve true
+            console.log("TRUE")
             return true;
         }
+
         // De lo contrario, false
+        console.log("FALSE")
         return false;
     }
+
+    // Función para verificar si es un número seleccionado según el tablero y su posición del número
 
     // Función para verificar si el usuario ha completado un patrón ganador
     const handleCheckWinnerPattern = () => {

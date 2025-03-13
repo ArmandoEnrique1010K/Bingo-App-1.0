@@ -1,5 +1,6 @@
 // import { PowerUp } from "../types";
 
+// TODO: IMPLEMENTAR ESTO EN UNA FUTURA ACTUALIZACIÓN DEL JUEGO
 // export const powerUps: PowerUp[] = [
 //     {
 //         id: 1,

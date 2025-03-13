@@ -1,31 +1,5 @@
 import { Level } from "../types";
 
-// LISTA DE NIVELES
-// 1. Una columna o fila de 5 numeros
-// 2. Una pequeña cruz 5 numeros
-// 3. Un cuadro de 6 numeros
-// 4. Una letra X de 5 numeros
-// 5. Dos cuadrados en diagonales
-
-// 6. Cuatro al cuadrado
-// 7. El ojo
-// 8. La letra 'L'
-// 9. Los 8 numeros más alejados del tablero y el centro del tablero
-// 10. Una gran aspa de 9 numeros y una cruz de 5 numeros que comience desde el centro
-
-// 11. El numero 1
-// 12. Letra 'H' y letra 'I'
-// 13. Cuadrado de 9 numeros
-// 14. Una piramide de 8 numeros
-// 15. Aspa Invertida
-
-// 16. 3 Filas o 3 columnas separadas
-// 17. Un diamante invertido
-// 18. Una gran cruz de 9 numeros y una letra 'X' de 5 numeros que comience desde el centro
-// 19. Escalera de 15 numeros
-// 20. Todo el tablero debe estar marcado
-
-
 // Posiciones de los numeros en el tablero
 /*
 1   6   11  16  21
@@ -44,7 +18,8 @@ export const levels: Level[] = [
     {
         // Nivel
         level: 1,
-        // Numero de bolitas o numeros objetivos
+        // TODO: targetQuantity SE DEBERA ELIMINAR EN UNA FUTURA ACTUALIZACIÓN, TODOS LOS NIVELES DEBERAN TENER 3 OBJETIVOS
+        // Numero de bolitas o numeros objetivos 
         targetQuantity: 3,
         // Texto descriptivo para el patron objetivo
         targetText: "Una columna o una fila de 5 números",
@@ -152,7 +127,6 @@ export const levels: Level[] = [
             [8, 18, 14, 10, 20],
             [13, 23, 19, 15, 25],
         ],
-        // Ahora son 2 bots tipo "Slow"
         bots: [
             {
                 name: "S-Bot 1",
@@ -183,7 +157,6 @@ export const levels: Level[] = [
             },
         ]
     },
-    // A partir de este nivel se muestran 4 números objetivos
     {
         level: 6,
         targetQuantity: 4,
@@ -248,7 +221,6 @@ export const levels: Level[] = [
             ]
         ],
         bots: [
-            // Tu oponente es un bot de alta velocidad
             {
                 name: "F-Bot",
                 interval: 800,
@@ -274,7 +246,6 @@ export const levels: Level[] = [
             ]
         ],
         bots: [
-            // 1 vs 4 bots
             {
                 name: "S-Bot 1",
                 interval: 1800,
@@ -326,7 +297,6 @@ export const levels: Level[] = [
         ],
     },
     {
-        // Nivel con 2 objetivos en el tablero
         level: 10,
         targetQuantity: 4,
         targetText: "Un aspa de 9 números y una cruz de 5 números que comience del centro",
@@ -456,7 +426,6 @@ export const levels: Level[] = [
     },
     {
         level: 13,
-        // A partir de este nivel son 5 números objetivos
         targetQuantity: 5,
         targetText: "Un cuadrado de 9 números",
         boards: 1,
@@ -507,7 +476,6 @@ export const levels: Level[] = [
                 15, 20, 25,
             ],
         ],
-        // 5 BOTS
         bots: [
             {
                 name: "F-Bot 1",
@@ -586,7 +554,6 @@ export const levels: Level[] = [
             },
         ]
     },
-    // A partir de aqui todos los niveles son de 2 tableros para el jugador
     {
         level: 15,
         targetQuantity: 5,
@@ -820,8 +787,8 @@ export const levels: Level[] = [
             },
         ]
     },
+    // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
     {
-        // Nivel Final
         level: 20,
         targetQuantity: 5,
         targetText: "Marca todo el tablero",
@@ -836,7 +803,6 @@ export const levels: Level[] = [
             ]
         ],
         bots: [
-            // 8 BOTS
             {
                 name: "M-Bot 1",
                 interval: 1200,
@@ -881,30 +847,14 @@ export const levels: Level[] = [
     },
 ]
 
-// Posiciones de los numeros en el tablero
-/*
-1   6   11  16  21
-2   7   12  17  22
-3   8   13  18  23
-4   9   14  19  24
-5   10  15  20  25
-*/
 
-// El patrón de coordenadas {x: 0, y: 0} (no recomendado)
-/*
-0,4     1,4     2,4     3,4     4,4
-0,3     1,3     2,3     3,3     4,3
-0,2     1,2     2,2     3,2     4,2
-0,1     1,1     2,1     3,1     4,1
-0,0     1,0     2,0     3,0     4,0
-*/
-
+// TODO: DOCUMENTAR ESTO
 // NUEVAS IDEAS PARA NIVELES
-// Niveles con hasta 4 bots a la vez
-// Bots con un tiempo de respuesta minimo de 0.5 segundos (más rapido)
-// Patrones unicos (solamente 1 combincación o patrón)
-// Aumentar el numero de objetivos de 3 a 4 o 5 (maximo)
-// ¿Nivel final es marcar todos los numeros del tablero?
+// Niveles con hasta 4 bots a la vez (LISTO)
+// Bots con un tiempo de respuesta minimo de 0.5 segundos (más rapido) (LISTO)
+// Patrones unicos (solamente 1 combincación o patrón) (LISTO)
+// Aumentar el numero de objetivos de 3 a 4 o 5 (maximo) (NO SERA IMPLEMENTADO)
+// ¿Nivel final es marcar todos los numeros del tablero? (LISTO)
 
 // https://stackoverflow.com/questions/35435042/how-can-i-define-an-array-of-objects
 // https://stackoverflow.com/questions/23161486/create-strongly-typed-array-of-arrays-in-typescript
