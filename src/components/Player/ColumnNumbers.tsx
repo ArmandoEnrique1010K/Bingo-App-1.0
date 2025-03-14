@@ -1,4 +1,4 @@
-import { Board } from "../../types"
+import { Board, SelectedNumbers } from "../../types"
 import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
@@ -8,10 +8,11 @@ type RowNumbersProps = {
     min: number
     max: number,
     idBoard: number
+    selectedNumbers: SelectedNumbers
 }
 
 
-export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, handleClickButton, max, min, idBoard }: RowNumbersProps) {
+export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, handleClickButton, max, min, idBoard, selectedNumbers }: RowNumbersProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
@@ -26,6 +27,7 @@ export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, han
                             handleClickButton={handleClickButton}
                             value={{ number: n.number, position: n.position }}
                             idBoard={idBoard}
+                            selectedNumbers={selectedNumbers}
                         />
                     ))
                 }

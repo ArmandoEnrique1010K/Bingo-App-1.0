@@ -194,19 +194,17 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         }
     }
 
-    // TODO: ESTA FUNCIÓN SIEMPRE SE EJECUTA...
     const handleIsSelectedNumber = (idBoard: number, position: number) => {
-        // Si en algun tablero por el id recibido y si en algunas de las posiciones, se encuentra la posición recibida
         if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos === position))) {
-            // Devuelve true
-            console.log("TRUE")
+            console.log("TRUE");
             return true;
         }
-
-        // De lo contrario, false
-        console.log("FALSE")
+        console.log("FALSE");
         return false;
     }
+
+
+
 
     // Función para verificar si es un número seleccionado según el tablero y su posición del número
 
@@ -305,6 +303,20 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setViewPlayerBoard(!viewPlayerBoard)
     }
 
+    // const finalRound = () => {
+    //     if (round === 3) {
+    //         setDefeat(true);
+    //         return true;
+    //     }
+    // }
+
+    useEffect(() => {
+        if (round === 3) {
+            setTargets([])
+            setDefeat(true);
+        }
+    }, [round]); // Se ejecuta solo cuando `round` cambia
+
     // READY: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
     // TODO: SEPARAR LOS BOTS EN OTRO COMPONENTE PARA QUE EL USUARIO PUEDA VER EL TABLERO Y LOS BOTS POR SEPARADO EN UN DISPOSITIVO MOVIL
     return (
@@ -350,6 +362,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                                     board={board.find(b => b.id === index + 1)?.board || []}
                                                     handleIsSelectedNumber={handleIsSelectedNumber}
                                                     handleClickButton={handleClickButton}
+                                                    selectedNumbers={selectedNumbers}
                                                 />
 
                                             )
@@ -373,9 +386,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                         </button>
 
                                         <button
-                                            className={`px-4 
-                                             sm:py-3 py-2 font-semibold rounded-lg shadow-md 
-            transition duration-300 w-full  sm:text-base text-sm shadow-black 
+                                            className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md transition duration-300 w-full  sm:text-base text-sm shadow-black 
             ${isAtLastBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
                                             onClick={() => handleChangeBoard("next")}
                                             disabled={isAtLastBoard}
@@ -442,6 +453,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
                     )
                 }
+
+                {/* {
+                    /// Si el numero de turnos llega a 3 (limite)
+                    defeat === true && (
+                        <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
+                    )
+                } */}
 
             </div>
             {

@@ -1,14 +1,15 @@
-import { Board } from "../../types"
+import { Board, SelectedNumbers } from "../../types"
 import ColumnNumbers from "./ColumnNumbers"
 
 type BoardNumbersProps = {
     board: Board
     handleClickButton: (idBoard: number, number: number, position: number) => void,
     handleIsSelectedNumber: (idBoard: number, position: number) => boolean
-    idBoard: number
+    idBoard: number,
+    selectedNumbers: SelectedNumbers
 }
 
-export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard }: BoardNumbersProps) {
+export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard, selectedNumbers }: BoardNumbersProps) {
     return (
         <>
             <div className="flex flex-row gap-2 sm:p-4 p-2 bg-gray-700 justify-center items-center">
@@ -17,7 +18,7 @@ export default function BoardNumbers({ board, handleClickButton, handleIsSelecte
                 {
                     Array.from({ length: 5 }).map((_, index) => (
                         <ColumnNumbers key={index} numberBoard={board} handleClickButton={handleClickButton}
-                            handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard}
+                            handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard} selectedNumbers={selectedNumbers}
                             min={((index) * 5) + 1} max={(index + 1) * 5} />
                     ))
                 }
