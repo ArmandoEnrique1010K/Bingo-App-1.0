@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { MAX_TURNS } from "../../constants";
+import { bgOffActive } from "../../constants/colors";
 
 // No olvidar definir los types para las propiedades recibidas
 type TargetNumbersProps = {
@@ -8,8 +9,9 @@ type TargetNumbersProps = {
     round: number;
 };
 
-export default function TargetNumbers({ handleChangeTargets, targets, round }: TargetNumbersProps) {
+export default function TargetNumbers({ handleChangeTargets, targets, round, color }: TargetNumbersProps) {
 
+    const {bgOn, bgOnActive, bgOnHover} = color
     // Controla la visibilidad y habilitación del botón
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
@@ -53,7 +55,7 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
     };
 
     return (
-        <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 min-h-44 sm:mb-4">
+        <div className={`${bgOffActive} rounded-xl p-3 shadow-lg sm:min-h-52 min-h-44 sm:mb-4`}>
             <h2 className="text-cyan-400 sm:text-xl font-semibold sm:mb-2">Objetivos</h2>
 
 
@@ -80,9 +82,9 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
             {/* Renderiza el botón solamente si es necesario */}
             <div className="text-center mt-2">
                 <button
-                    className={`bg-cyan-500 text-white font-semibold sm:px-6 px-4 sm:py-3 py-2 text-sm sm:text-base
-                        rounded-lg shadow-black shadow-md hover:bg-cyan-600 
-                        active:bg-cyan-700 transition duration-300 sm:mb-4 ${isButtonDisabled ? "bg-gray-300 hover:bg-gray-500 opacity-50 cursor-not-allowed" : ""
+                    className={`${bgOn} text-white font-semibold sm:px-6 px-4 sm:py-3 py-2 text-sm sm:text-base
+                        rounded-lg shadow-black shadow-md transition duration-300 sm:mb-4 ${isButtonDisabled ? "bg-gray-300 hover:bg-gray-500 opacity-50 cursor-not-allowed" : `hover:${bgOnHover} 
+                        active:${bgOnActive}`
                         }`}
                     disabled={isButtonDisabled}
                     onClick={handleChangeTargets}

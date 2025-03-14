@@ -7,9 +7,6 @@ import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
 import Bot from "../components/Bot/Bot";
-import LeaveModal from "../components/Modal/LeaveModal";
-import DefeatModal from "../components/Modal/DefeatModal";
-import VictoryModal from "../components/Modal/VictoryModal";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import { DEFAULT_TARGETS, DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
 import ModalWithButton from "../components/Modal/ModalWithButton";
@@ -22,10 +19,13 @@ type LevelPageProps = {
 // Pagina de un nivel
 export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
+
     // Obtiene los datos del nivel actual usando el metodo find.
     // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi 
     // nula de que suceda eso)
     const currentLevel = levels.find(l => l.level === level) || levels[0];
+    // Desestructurar el objeto colors
+    const {bgOn,bgOnActive,bgOnHover } = currentLevel.color
 
     // Variables de estado
 
@@ -332,11 +332,12 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                             {/* Componente de los numeros objetivos */}
                             {/* TODO: MEJORAR LA LOGICA DE TARGETS, POR UN MILISEGUNDO SE VE QUE SE MUESTRA UN BOTON??? */}
-                            <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} />
+                            <TargetsNumbers round={round} targets={targets} handleChangeTargets={handleChangeTargets} color={currentLevel.color}/>
                         </div>
 
                         {/* Componente del patrón ganador */}
-                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} />
+                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} targetPositions={currentLevel.targetPositions}
+ />
 
                     </div>
 
@@ -363,6 +364,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                                     handleIsSelectedNumber={handleIsSelectedNumber}
                                                     handleClickButton={handleClickButton}
                                                     selectedNumbers={selectedNumbers}
+                                                    color={currentLevel.color}
                                                 />
 
                                             )
@@ -397,8 +399,6 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                                     </div>
                                     <div className="flex flex-row justify-between gap-4">
-                                        {/* <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                                        <LeaveModal /> */}
 
                                         <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL } initialState={false} />
                                         
@@ -453,7 +453,6 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     // Si el jugador ha perdido
                     defeat === true && (
                         // Muestra la ventana modal que se muestra automaticamente
-                        // <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
                         <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={DEFEAT_MODAL} initialState={true} />
 
                     )
@@ -462,18 +461,12 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 }
 
 {
+                        /// Si el numero de turnos llega a 3 (limite)
     round === MAX_TURNS && defeat === true && (
         <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
 
     )
 }
-                {/* {
-                    /// Si el numero de turnos llega a 3 (limite)
-                    defeat === true && (
-                        <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
-                    )
-                } */}
-
             </div>
             {
                 // TODO: ESTE BOTON DEBE ESTAR ABAJO DE LA PANTALLA

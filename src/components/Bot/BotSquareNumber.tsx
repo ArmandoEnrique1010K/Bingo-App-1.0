@@ -8,6 +8,8 @@ type BotSquareNumberProps = {
 }
 
 export default function BotSquareNumber({ handleSelectedPosition, value, idBoard }: BotSquareNumberProps) {
+    // const {bgOn,bgOnActive,bgOnHover } = currentLevel.color
+
     return (
         <>
             <div
@@ -19,7 +21,7 @@ export default function BotSquareNumber({ handleSelectedPosition, value, idBoard
                 }
             >
                 {/* El bot no muestra los numeros de su tablero */}
-                {value.position === 13 ? 'F' : "" /*value.number*/}
+                {value.position === 13 ? 'F' : /*""*/ value.number}
             </div>
         </>
     )

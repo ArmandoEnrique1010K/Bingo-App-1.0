@@ -7,6 +7,8 @@ export type Level = {
     boards: number
     patterns: Pattern[] // Arreglo de patrones ganadores
     bots: Bot[] // Arreglo de bots
+    targetPositions: number[] // Arreglo de las posiciones del patron ganador unico
+    color: Color // Colores
 }
 
 // Patrón ganador (arreglo de números)
@@ -75,5 +77,12 @@ export type Modal = {
         left: string
         right: string
     }
+
+}
+
+export type Color = {
+    bgOn: string
+    bgOnHover: string,
+    bgOnActive: string,
 
 }

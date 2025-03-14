@@ -12,7 +12,7 @@ type RowNumbersProps = {
 }
 
 
-export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, handleClickButton, max, min, idBoard, selectedNumbers }: RowNumbersProps) {
+export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, handleClickButton, max, min, idBoard, selectedNumbers, color }: RowNumbersProps) {
     return (
         <>
             <div className="flex flex-col gap-2">
@@ -28,6 +28,7 @@ export default function ColumnNumbers({ numberBoard, handleIsSelectedNumber, han
                             value={{ number: n.number, position: n.position }}
                             idBoard={idBoard}
                             selectedNumbers={selectedNumbers}
+                            color={color}
                         />
                     ))
                 }

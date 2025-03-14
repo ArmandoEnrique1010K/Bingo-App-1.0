@@ -2,6 +2,7 @@ import { Dialog, DialogPanel, DialogTitle, Button } from "@headlessui/react";
 import { FINAL_LEVEL } from "../../constants";
 import { Modal } from "../../types";
 import { Link } from "react-router";
+import { bgOff, bgOffActive, bgOffHover } from "../../constants/colors";
 
 type ModalBaseProps = {
     modal: Modal,
@@ -54,7 +55,8 @@ export default function ModalBase({modal, level, open, close, isOpen, tryAgain, 
                                         ) : (
                                             <Button
                                             onClick={exit}
-                                            className="w-full py-2 px-4 font-semibold bg-gray-500 text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700  focus:outline-none transition-all duration-300"
+                                            // bg-gray-500
+                                            className={`w-full py-2 px-4 font-semibold  ${bgOff} text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700  focus:outline-none transition-all duration-300`}
                                         >
                                             {modal.textButton.left}
                                         </Button>        
@@ -80,7 +82,7 @@ export default function ModalBase({modal, level, open, close, isOpen, tryAgain, 
                                         (modal.type === 'victory' && level === FINAL_LEVEL) || 
                                         <Button
                                         onClick={modal.type === 'victory' || modal.type === 'defeat' ? exit : close}
-                                        className="w-full py-2 px-4 font-semibold bg-gray-500 text-white rounded-lg text-lg hover:bg-gray-600 active:bg-gray-700  focus:outline-none transition-all duration-300"
+                                        className={`w-full py-2 px-4 font-semibold ${bgOff}  text-white rounded-lg text-lg hover:${bgOffHover} active:${bgOffActive}  focus:outline-none transition-all duration-300`}
                                     >
                                     {modal.textButton.right}
                                     </Button>    

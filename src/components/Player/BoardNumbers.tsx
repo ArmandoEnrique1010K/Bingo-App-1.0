@@ -9,8 +9,11 @@ type BoardNumbersProps = {
     selectedNumbers: SelectedNumbers
 }
 
-export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard, selectedNumbers }: BoardNumbersProps) {
+export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard, selectedNumbers, color }: BoardNumbersProps) {
+    // const {bgOff, bgOffHover, bgOffActive} = color;
+
     return (
+
         <>
             <div className="flex flex-row gap-2 sm:p-4 p-2 bg-gray-700 justify-center items-center">
 
@@ -19,7 +22,7 @@ export default function BoardNumbers({ board, handleClickButton, handleIsSelecte
                     Array.from({ length: 5 }).map((_, index) => (
                         <ColumnNumbers key={index} numberBoard={board} handleClickButton={handleClickButton}
                             handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard} selectedNumbers={selectedNumbers}
-                            min={((index) * 5) + 1} max={(index + 1) * 5} />
+                            min={((index) * 5) + 1} max={(index + 1) * 5} color={color}/>
                     ))
                 }
             </div>

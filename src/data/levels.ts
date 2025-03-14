@@ -1,3 +1,4 @@
+import { CYAN, RED, YELLOW } from "../constants/colors";
 import { Level } from "../types";
 
 // Posiciones de los numeros en el tablero
@@ -54,7 +55,9 @@ export const levels: Level[] = [
             //     interval: 2000,
             //     boards: 3
             // }
-        ]
+        ],
+        targetPositions: [3,8,13,18,23],
+        color: CYAN
     },
     {
         level: 2,
@@ -79,11 +82,13 @@ export const levels: Level[] = [
                 interval: 1900,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [8, 12, 13, 14, 18],
+        color: CYAN
     },
     {
         level: 3,
-        
+
         targetText: "Un rectangulo de 6 números",
         boards: 1,
         patterns: [
@@ -108,11 +113,13 @@ export const levels: Level[] = [
                 interval: 1400,
                 boards: 1
             }
-        ]
+        ],
+        targetPositions: [7, 8, 9, 12, 13, 14],
+        color: CYAN
     },
     {
         level: 4,
-        
+
         targetText: "Un aspa de 5 números",
         boards: 1,
         patterns: [
@@ -138,10 +145,12 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
+        targetPositions: [7, 9, 13, 17, 19],
+        color: RED
     },
     {
         level: 5,
-        
+
         targetText: "2 cuadrados de 4 números en 2 diagonales",
         boards: 2,
         patterns: [
@@ -155,10 +164,16 @@ export const levels: Level[] = [
                 boards: 2
             },
         ]
+        // TODO: SEGUIR AÑADIENDO PATRONES Y NUEVOS NIVELES
+        ,
+
+
+        targetPositions: [],
+        color: YELLOW
     },
     {
         level: 6,
-        
+
         targetText: "El ojo",
         boards: 1,
         patterns: [
@@ -181,12 +196,14 @@ export const levels: Level[] = [
                 interval: 1700,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: CYAN
     },
     // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
     {
         level: 7,
-        
+
         targetText: "Primera o ultima fila y columna",
         boards: 1,
         patterns: [
@@ -230,11 +247,17 @@ export const levels: Level[] = [
                 interval: 1500,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 8,
-        
+
         targetText: "Ocho cuartos",
         boards: 1,
         patterns: [
@@ -265,11 +288,17 @@ export const levels: Level[] = [
                 interval: 1800,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 9,
-        
+
         targetText: "Un cuadrado de 16 números",
         boards: 2,
         patterns: [
@@ -294,10 +323,16 @@ export const levels: Level[] = [
                 boards: 2
             }
         ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 10,
-        
+
         targetText: "Un aspa de 9 números y una cruz de 5 números que comience del centro",
         boards: 2,
         patterns: [
@@ -351,21 +386,26 @@ export const levels: Level[] = [
                 interval: 900,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
 
 
 
     {
         level: 11,
-        
+
         targetText: "El número 1",
         boards: 1,
         patterns: [
             [6, 2, 7, 8, 9, 5, 10, 15],
             [11, 7, 12, 13, 14, 10, 15, 20],
             [16, 12, 17, 18, 19, 15, 20, 25]
-
         ],
         bots: [
             {
@@ -384,10 +424,16 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 12,
-        
+
         targetText: "Las letras 'H' e 'I'",
         boards: 2,
         patterns: [
@@ -421,11 +467,17 @@ export const levels: Level[] = [
                 interval: 1700,
                 boards: 2
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 13,
-        
+
         targetText: "Un cuadrado de 9 números",
         boards: 1,
         patterns: [
@@ -501,12 +553,17 @@ export const levels: Level[] = [
                 interval: 900,
                 boards: 1
             }
-
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 14,
-        
+
         targetText: "Una piramide simetrica de 8 números",
         boards: 1,
         patterns: [
@@ -551,11 +608,17 @@ export const levels: Level[] = [
                 interval: 1500,
                 boards: 2
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 15,
-        
+
         targetText: "Un aspa a la inversa",
         boards: 2,
         patterns: [
@@ -566,7 +629,6 @@ export const levels: Level[] = [
                 4, 14, 24,
                 10, 15, 20
             ]
-
         ],
         bots: [
             {
@@ -590,10 +652,16 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 16,
-        
+
         targetText: "3 filas o 3 columnas separadas",
         boards: 2,
         patterns: [
@@ -621,11 +689,17 @@ export const levels: Level[] = [
                 interval: 1300,
                 boards: 3
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 17,
-        
+
         targetText: "Un diamante a la inversa",
         boards: 2,
         patterns: [
@@ -668,11 +742,17 @@ export const levels: Level[] = [
                 interval: 600,
                 boards: 1
             }
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 18,
-        
+
         targetText: "Una cruz de 9 números y un aspa de 5 números que empiece del centro",
         boards: 2,
         patterns: [
@@ -726,11 +806,17 @@ export const levels: Level[] = [
                 interval: 1300,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     {
         level: 19,
-        
+
         targetText: "Una escalera de 15 números",
         boards: 2,
         patterns: [
@@ -784,12 +870,18 @@ export const levels: Level[] = [
                 interval: 1300,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
     // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
     {
         level: 20,
-        
+
         targetText: "Marca todo el tablero",
         boards: 2,
         patterns: [
@@ -842,7 +934,13 @@ export const levels: Level[] = [
                 interval: 800,
                 boards: 1
             },
-        ]
+        ],
+        targetPositions: [],
+        color: {
+            bgButtonOn: "",
+            bgButtonOnHover: "",
+            bgButtonOnActive: ""
+        }
     },
 ]
 

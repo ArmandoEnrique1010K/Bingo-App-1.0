@@ -46,7 +46,9 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             id: index + 1, // ID del tablero, evita el valor 0
             board: generateBoard() // Genera un tablero aleatorio
         }));
-    }, [boards])
+
+        // FUNCIONA: AÑADIR DEFEAT
+    }, [boards, defeat])
 
 
     // READY??? : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
@@ -239,6 +241,11 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                 idBoard: index + 1,
                 numbers: [0]
             })));
+        }
+
+        if (defeat) {
+
+            console.log('reinciando tablero del bot')
         }
     }, [defeat]);
 
