@@ -20,7 +20,7 @@ export const levels: Level[] = [
         level: 1,
         // TODO: targetQuantity SE DEBERA ELIMINAR EN UNA FUTURA ACTUALIZACIÓN, TODOS LOS NIVELES DEBERAN TENER 3 OBJETIVOS
         // Numero de bolitas o numeros objetivos 
-        targetQuantity: 3,
+        
         // Texto descriptivo para el patron objetivo
         targetText: "Una columna o una fila de 5 números",
         // Numero de tableros del jugador
@@ -58,7 +58,6 @@ export const levels: Level[] = [
     },
     {
         level: 2,
-        targetQuantity: 3,
         targetText: "Una cruz de 5 números",
         boards: 1,
         patterns: [
@@ -84,7 +83,7 @@ export const levels: Level[] = [
     },
     {
         level: 3,
-        targetQuantity: 3,
+        
         targetText: "Un rectangulo de 6 números",
         boards: 1,
         patterns: [
@@ -113,7 +112,7 @@ export const levels: Level[] = [
     },
     {
         level: 4,
-        targetQuantity: 3,
+        
         targetText: "Un aspa de 5 números",
         boards: 1,
         patterns: [
@@ -142,7 +141,7 @@ export const levels: Level[] = [
     },
     {
         level: 5,
-        targetQuantity: 3,
+        
         targetText: "2 cuadrados de 4 números en 2 diagonales",
         boards: 2,
         patterns: [
@@ -159,7 +158,7 @@ export const levels: Level[] = [
     },
     {
         level: 6,
-        targetQuantity: 4,
+        
         targetText: "El ojo",
         boards: 1,
         patterns: [
@@ -187,7 +186,7 @@ export const levels: Level[] = [
     // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
     {
         level: 7,
-        targetQuantity: 4,
+        
         targetText: "Primera o ultima fila y columna",
         boards: 1,
         patterns: [
@@ -235,7 +234,7 @@ export const levels: Level[] = [
     },
     {
         level: 8,
-        targetQuantity: 4,
+        
         targetText: "Ocho cuartos",
         boards: 1,
         patterns: [
@@ -270,7 +269,7 @@ export const levels: Level[] = [
     },
     {
         level: 9,
-        targetQuantity: 4,
+        
         targetText: "Un cuadrado de 16 números",
         boards: 2,
         patterns: [
@@ -298,7 +297,7 @@ export const levels: Level[] = [
     },
     {
         level: 10,
-        targetQuantity: 4,
+        
         targetText: "Un aspa de 9 números y una cruz de 5 números que comience del centro",
         boards: 2,
         patterns: [
@@ -359,7 +358,7 @@ export const levels: Level[] = [
 
     {
         level: 11,
-        targetQuantity: 4,
+        
         targetText: "El número 1",
         boards: 1,
         patterns: [
@@ -388,7 +387,7 @@ export const levels: Level[] = [
     },
     {
         level: 12,
-        targetQuantity: 4,
+        
         targetText: "Las letras 'H' e 'I'",
         boards: 2,
         patterns: [
@@ -426,7 +425,7 @@ export const levels: Level[] = [
     },
     {
         level: 13,
-        targetQuantity: 5,
+        
         targetText: "Un cuadrado de 9 números",
         boards: 1,
         patterns: [
@@ -507,7 +506,7 @@ export const levels: Level[] = [
     },
     {
         level: 14,
-        targetQuantity: 5,
+        
         targetText: "Una piramide simetrica de 8 números",
         boards: 1,
         patterns: [
@@ -556,7 +555,7 @@ export const levels: Level[] = [
     },
     {
         level: 15,
-        targetQuantity: 5,
+        
         targetText: "Un aspa a la inversa",
         boards: 2,
         patterns: [
@@ -594,7 +593,7 @@ export const levels: Level[] = [
     },
     {
         level: 16,
-        targetQuantity: 5,
+        
         targetText: "3 filas o 3 columnas separadas",
         boards: 2,
         patterns: [
@@ -626,7 +625,7 @@ export const levels: Level[] = [
     },
     {
         level: 17,
-        targetQuantity: 5,
+        
         targetText: "Un diamante a la inversa",
         boards: 2,
         patterns: [
@@ -673,7 +672,7 @@ export const levels: Level[] = [
     },
     {
         level: 18,
-        targetQuantity: 5,
+        
         targetText: "Una cruz de 9 números y un aspa de 5 números que empiece del centro",
         boards: 2,
         patterns: [
@@ -731,7 +730,7 @@ export const levels: Level[] = [
     },
     {
         level: 19,
-        targetQuantity: 5,
+        
         targetText: "Una escalera de 15 números",
         boards: 2,
         patterns: [
@@ -790,7 +789,7 @@ export const levels: Level[] = [
     // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
     {
         level: 20,
-        targetQuantity: 5,
+        
         targetText: "Marca todo el tablero",
         boards: 2,
         patterns: [

@@ -7,6 +7,14 @@
 //         name: 'Ralentizar bots',
 //         status: true
 //     },
+
+// POR 5 TURNOS SE INCREMENTA LOS NUMEROS OBJETIVOS (MAXIMO 70 NUMEROS EN LUGAR DE 60)
+//     {
+//         id: 2,
+//         name: 'Aumentar numeros objetivos',
+//         status: true
+//     },
+
 //     {
 //         id: 2,
 //         name: 'Desactivar un bot',

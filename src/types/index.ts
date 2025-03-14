@@ -3,7 +3,6 @@
 // Nivel (objeto)
 export type Level = {
     level: number
-    targetQuantity: number // TODO: ELIMINAR ESTO EN UNA FUTURA ACTUALIZACIÓN
     targetText: string
     boards: number
     patterns: Pattern[] // Arreglo de patrones ganadores
@@ -66,3 +65,15 @@ export type ResultNumberBoardsBot = {
         number: number
     }[]
 }[]
+
+// DATOS DE UNA VENTANA MODAL
+export type Modal = {
+    type: string
+    title: string
+    message: string
+    textButton: {
+        left: string
+        right: string
+    }
+
+}

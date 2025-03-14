@@ -11,6 +11,8 @@ import LeaveModal from "../components/Modal/LeaveModal";
 import DefeatModal from "../components/Modal/DefeatModal";
 import VictoryModal from "../components/Modal/VictoryModal";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
+import { DEFAULT_TARGETS, DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
+import ModalWithButton from "../components/Modal/ModalWithButton";
 
 type LevelPageProps = {
     level: number
@@ -78,7 +80,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
             id: index + 1,
             board: generateBoard()
         }));
-    }, [currentLevel.boards])
+
+        // TODO: ¿CONVIENE COLOCAR defeat y victory EN EL ARREGLO DE DEPENDENCIAS?
+    }, [currentLevel.boards, currentLevel.level, defeat, victory])
 
 
     // Previamente se ha utilizado el siguiente codigo
@@ -112,7 +116,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setRound(0);
         // Aun no hay victoria ni derrota
         setVictory(false);
-        setDefeat(false)
+        setDefeat(false);
+        setExcludedNumbers([])
     }
 
     // Efecto secundario para cargar el nivel
@@ -130,17 +135,25 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
     // Función para cambiar los numeros objetivos
     const handleChangeTargets = () => {
-        setRound(round + 1) // Incrementa la ronda en 1
-        setTargets([]); // Limpia los numeros objetivos
+        
 
-        // Espera 1 seg. para generar los numeros objetivos
+        if (round === MAX_TURNS){
+            setTargets([])
+            setDefeat(true);
+
+        } else {
+                // Espera 1 seg. para generar los numeros objetivos
         // Recordar que la función generateTargets necesita la cantidad de números que se generaran
         setTimeout(() => {
-            setTargets(generateTargets(currentLevel.targetQuantity, excludedNumbers));
+            setTargets(generateTargets(DEFAULT_TARGETS, excludedNumbers));
 
             // TODO: PROBAR ESTO
             setExcludedNumbers([...excludedNumbers, ...targets])
         }, 1000)
+        setRound(round + 1) // Incrementa la ronda en 1
+        setTargets([]); // Limpia los numeros objetivos
+
+        }
     }
 
     // Efecto secundario para pruebas
@@ -303,19 +316,6 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         setViewPlayerBoard(!viewPlayerBoard)
     }
 
-    // const finalRound = () => {
-    //     if (round === 3) {
-    //         setDefeat(true);
-    //         return true;
-    //     }
-    // }
-
-    useEffect(() => {
-        if (round === 3) {
-            setTargets([])
-            setDefeat(true);
-        }
-    }, [round]); // Se ejecuta solo cuando `round` cambia
 
     // READY: AÑADIR BOTONES PARA CAMBIAR DE TABLERO
     // TODO: SEPARAR LOS BOTS EN OTRO COMPONENTE PARA QUE EL USUARIO PUEDA VER EL TABLERO Y LOS BOTS POR SEPARADO EN UN DISPOSITIVO MOVIL
@@ -327,7 +327,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
                             <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
                                 <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
-                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span></p>
+                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span> / {MAX_TURNS}</p>
                             </div>
 
                             {/* Componente de los numeros objetivos */}
@@ -396,10 +396,13 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                         </button>
 
                                     </div>
-                                    <div className="flex flex-row justify-center gap-4">
-                                        <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
-                                        <LeaveModal />
+                                    <div className="flex flex-row justify-between gap-4">
+                                        {/* <VictoryModal level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} />
+                                        <LeaveModal /> */}
 
+                                        <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL } initialState={false} />
+                                        
+                                        <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={EXIT_MODAL} initialState={false}/>
                                     </div>
                                 </div>
 
@@ -450,10 +453,20 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     // Si el jugador ha perdido
                     defeat === true && (
                         // Muestra la ventana modal que se muestra automaticamente
-                        <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
+                        // <DefeatModal level={currentLevel.level} handleSetDefeat={handleSetDefeat} />
+                        <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={DEFEAT_MODAL} initialState={true} />
+
                     )
+
+
                 }
 
+{
+    round === MAX_TURNS && defeat === true && (
+        <ModalWithButton level={level}  handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
+
+    )
+}
                 {/* {
                     /// Si el numero de turnos llega a 3 (limite)
                     defeat === true && (

@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { MAX_TURNS } from "../../constants";
 
 // No olvidar definir los types para las propiedades recibidas
 type TargetNumbersProps = {
@@ -12,6 +13,20 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
     // Controla la visibilidad y habilitación del botón
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 
+    // const finalRound = () => {
+    //     if (round === 3) {
+    //         setDefeat(true);
+    //         return true;
+    //     }
+    // }
+
+    // useEffect(() => {
+    //     if (round === MAX_TURNS) {
+    //         // DETENER LA FUNCIÓN GENERADORA DE TARGETS
+    //         setTargets([])
+    //         setDefeat(true);
+    //     }
+    // }, [round]); // Se ejecuta solo cuando `round` cambia
 
     useEffect(() => {
 
@@ -33,6 +48,7 @@ export default function TargetNumbers({ handleChangeTargets, targets, round }: T
     // Función para obtener el texto dinámico del botón
     const getButtonText = () => {
         if (round === 0) return "Iniciar";
+        if (round === MAX_TURNS) return "Rendirse"
         return "Siguiente";
     };
 

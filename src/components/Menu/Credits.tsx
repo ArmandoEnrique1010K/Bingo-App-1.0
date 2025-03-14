@@ -82,3 +82,6 @@ export default function Credits() {
 
 // HEADLESS UI
 // https://headlessui.com/react/dialog
+
+// EMOJIPEDIA
+// https://emojipedia.org/
