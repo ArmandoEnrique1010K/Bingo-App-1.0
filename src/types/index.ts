@@ -8,6 +8,7 @@ export type Level = {
     patterns: Pattern[] // Arreglo de patrones ganadores
     bots: Bot[] // Arreglo de bots
     color: string // Colores
+    music: string // Nombre de la canción
 }
 
 // Patrón ganador (arreglo de números)

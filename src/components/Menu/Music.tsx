@@ -15,7 +15,7 @@ export default function Music() {
     useEffect(() => {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
-            url: "/music/background.mp3", // Nombre del archivo de audio
+            url: "/music/tap_out.mp3", // Nombre del archivo de audio
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
             volume: -15, // Reduce el volumen

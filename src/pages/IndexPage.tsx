@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { Link } from 'react-router'
 import { levels } from '../data/levels'
 
@@ -7,7 +7,7 @@ type IndexProps = {
 }
 
 // Pagina de inicio
-export default function IndexPage({ unlockedLevels }: IndexProps) {
+export default function IndexPage({ unlockedLevels, }: IndexProps) {
 
     const [menuLevels, setMenuLevels] = useState(false)
 
@@ -18,9 +18,16 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
         return result;
     }
 
-    useEffect(() => {
-        getColorLevel(1)
-    }, [])
+    const getMusicLevel = (level: number) => {
+        const levelData = levels.find(l => l.level === level);
+        const result = levelData ? levelData.music : '';
+        console.log("MUSICA: " + result)
+        return result;
+    }
+
+    // useEffect(() => {
+    //     getColorLevel(1)
+    // }, [])
 
     return (
         <div className="min-h-full max-h-full flex flex-col items-center bg-gray-800 text-white">
@@ -51,8 +58,11 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                                             // className={`bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:` + {} + ` active:bg-cyan-700`}
 
                                             className={`bg-${getColorLevel(level)}-500 text-white text-center py-4 rounded-md shadow-lg`}
-
-
+                                            // onClick={() => console.log("Haz hecho clic en el nivel")}
+                                            onClick={() => {
+                                                getColorLevel(level)
+                                                getMusicLevel(level)
+                                            }}
                                         >
                                             Nivel {level}
                                         </Link>

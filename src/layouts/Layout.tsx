@@ -5,6 +5,21 @@ import Help from '../components/Menu/Help';
 
 // Representa la barra de menu
 export default function Layout() {
+
+    // const getColorLevel = (level: number) => {
+    //     const levelData = levels.find(l => l.level === level);
+    //     const result = levelData ? levelData.color : '';
+    //     console.log("COLOR: " + result)
+    //     return result;
+    // }
+
+    // const getMusicLevel = (level: number) => {
+    //     const levelData = levels.find(l => l.level === level);
+    //     const result = levelData ? levelData.music : '';
+    //     console.log("MUSICA: " + result)
+    //     return result;
+    // }
+
     return (
         // Usa un contenedor general de altura completa (h-screen) y asigna dinámicamente el espacio restante al contenedor <main> con flex-grow.
         <div className="flex flex-col min-w-full h-screen">
@@ -19,5 +34,6 @@ export default function Layout() {
                 <Outlet />
             </main>
         </div>
+
     )
 }

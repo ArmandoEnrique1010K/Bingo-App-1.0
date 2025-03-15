@@ -36,7 +36,7 @@ export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber
 
                 //                     hover:bg-cyan-700 active:bg-cyan-600 
 
-                className={`sm:text-2xl text-xl font-bold sm:w-16 sm:h-16 w-12 h-12 border-none rounded-lg text-white transition duration-300 bg-${activeColor}-500 `}
+                className={`sm:text-2xl text-xl font-bold sm:w-16 sm:h-16 w-12 h-12 border-none rounded-lg text-white transition duration-300 bg-${activeColor}-500`}
                 // Al hacer clic, marca el numero llamando a handleClickButton
                 onClick={() => handleClickButton(idBoard, value.number, value.position)}>
 

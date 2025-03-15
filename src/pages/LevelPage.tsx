@@ -24,6 +24,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi 
     // nula de que suceda eso)
     const currentLevel = levels.find(l => l.level === level) || levels[0];
+
+    const musicLevel = currentLevel.music;
     // Desestructurar el objeto colors
     // const { bgOn, bgOnActive, bgOnHover } = currentLevel.color
 
@@ -208,6 +210,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
         }
     }
 
+
+    // TODO: MEJORAR EL PERFORMANCE DE ESTA FUNCIÓN
     const handleIsSelectedNumber = (idBoard: number, position: number) => {
         if (selectedPositions.some(board => board.idBoard === idBoard && board.positions.some(pos => pos === position))) {
             console.log("TRUE");
@@ -327,8 +331,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     <div className="flex flex-row sm:flex-col sm:w-96 w-full justify-center sm:m-0 sm:gap-0 gap-3 mx-auto">
                         <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
                             <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
-                                <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
-                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold">{round}</span> / {MAX_TURNS}</p>
+                                <h1 className={`sm:text-2xl text-xl font-bold mb-2 text-${color}-500`}>Nivel {level}</h1>
+                                <p className="sm:text-lg text-sm">Ronda: <span className={`font-semibold text-${color}-500`}>{round}</span> / {MAX_TURNS}</p>
                             </div>
 
                             {/* Componente de los numeros objetivos */}

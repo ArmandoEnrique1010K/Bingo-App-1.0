@@ -15,39 +15,50 @@ import { Level } from "../types";
 // F - Bot: 900 - 500
 
 
+// BLUE (5 números)
 // 1. COLUMNA O FILA DE 5 NÚMEROS
 // 2. CRUZ DE 5 NÚMEROS
-// 3. RECTANGULO DE 6 NÚMEROS
+// 3. RECTANGULO DE 6 NÚMEROS   -- 1 POTENCIADOR:
 // 4. ASPA DE 5 NÚMEROS
 // 5. SIMBOLO DE POTENCIA
 
-// DOS FILAS X
+// VIOLET (un tablero extra)
+// ESQUINA DE 90 GRADOS
 // 2 CUADRADOS EN 2 ESQUINAS
-// EL OJO
+// OJO DEL CENTRO
 // MATRIZ DE 8 NÚMEROS
-// MOVIMIENTO DE LA TORRE DE AJEDREZ
+// DOS COLUMNAS --> 10 PATRONES
 
-// ANILLO DE 8 NÚMEROS
-// CUADRADO DE 16 NÚMEROS
+// GREEN (más bots)
 // ASPA DE 9 NÚMEROS
+// CUADRADO DE 16 NÚMEROS
 // NÚMERO 1
+// ANILLO DE 8 NÚMEROS
 // LETRA H Y LETRA I
+
+// YELLOW (al menos 4 patrones)
+// SEÑAL DE SALIDA
 // CUADRADO DE 9 NÚMEROS
 // PIRAMIDE SIMETRICA DE 8 NÚMEROS
-
+// LETRA Z O LETRA N
 // ASPA INVERTIDA
-// DIAMANTE INVERTIDO
-// 3 FILAS O 3 COLUMNAS SEPARADAS
-// CRUZ DE 9 NÚMEROS (ASTERISCO)
-// MARCA TODO EL TABLERO
-// ESCALERA DE 15 NÚMEROS
 
-// lista de nuevos niveles
+// ORANGE (patrones unicos)
+// 3 FILAS O 3 COLUMNAS SEPARADAS
+// DIAMANTE INVERTIDO
 // SIMBOLO DE PORCENTAJE (%)
 // NÚMERO 4
-// LA PARCA
-// SEÑAL DE SALIDA
 // COPO DE NIEVE
+
+// RED (todos tienen 2 tableros)
+// LA PARCA
+// DISEÑO (2 PATRONES)
+// ASTERISCO
+// ESCALERA DE 15 NÚMEROS
+// MARCA TODO EL TABLERO
+
+
+
 
 // Aqui se especifica los niveles, incluyendo los posibles patrones ganadores por cada nivel del juego
 export const levels: Level[] = [
@@ -91,7 +102,8 @@ export const levels: Level[] = [
             //     boards: 3
             // }
         ],
-        color: BLUE
+        color: BLUE,
+        music: 'tap_out'
     },
     {
         level: 2,

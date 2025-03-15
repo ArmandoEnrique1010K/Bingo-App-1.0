@@ -48,14 +48,16 @@ export default function TargetNumbers({ handleChangeTargets, targets, round, col
 
     // Función para obtener el texto dinámico del botón
     const getButtonText = () => {
-        if (round === 0) return "Iniciar";
+        if (round === 0) {
+            return "Iniciar";
+        }
         if (round === MAX_TURNS) return "Rendirse"
         return "Siguiente";
     };
 
     return (
         <div className="bg-gray-700 rounded-xl p-3 shadow-lg sm:min-h-52 min-h-44 sm:mb-4">
-            <h2 className="sm:text-xl font-semibold sm:mb-2">Objetivos</h2>
+            <h2 className={`sm:text-xl font-semibold sm:mb-2 text-${color}-500`}>Objetivos</h2>
 
 
             {/* Renderiza los numeros objetivos si hay elementos en targets */}
