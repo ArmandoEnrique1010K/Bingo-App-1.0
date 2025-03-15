@@ -5,9 +5,10 @@ type BotSquareNumberProps = {
         position: number
     },
     idBoard: number
+    color: string
 }
 
-export default function BotSquareNumber({ handleSelectedPosition, value, idBoard }: BotSquareNumberProps) {
+export default function BotSquareNumber({ handleSelectedPosition, value, idBoard, color }: BotSquareNumberProps) {
     // const {bgOn,bgOnActive,bgOnHover } = currentLevel.color
 
     return (
@@ -16,7 +17,7 @@ export default function BotSquareNumber({ handleSelectedPosition, value, idBoard
                 // Aplica un estilo de acuerdo a la condición ternaria
                 className={`text-xs sm:text-sm sm:size-6 size-4 text-center sm:border-2 border-0 border-gray-600 text-white 
                     ${handleSelectedPosition(idBoard, value.position) === true
-                        ? "bg-cyan-500"
+                        ? `bg-${color}-500`
                         : "bg-gray-500"}`
                 }
             >

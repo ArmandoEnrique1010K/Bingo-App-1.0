@@ -18,7 +18,7 @@ export default function Help() {
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}
-            <button onClick={open} className='sm:py-4 py-2 px-3 text-cyan-500 hover:text-cyan-600 active:text-cyan-700'><QuestionMarkCircleIcon className='sm:w-8 w-6 ' aria-hidden="true" /></button>
+            <button onClick={open} className='sm:py-4 py-2 px-3 text-cyan-500'><QuestionMarkCircleIcon className='sm:w-8 w-6 ' aria-hidden="true" /></button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
@@ -73,7 +73,7 @@ export default function Help() {
                             <div className="mt-10">
                                 <Button
                                     onClick={close}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg focus:outline-none transition-all duration-300"
                                 >
                                     Cerrar
                                 </Button>

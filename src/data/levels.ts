@@ -1,4 +1,4 @@
-import { CYAN, RED, YELLOW } from "../constants/colors";
+import { BLUE, CYAN, GREEN, ORANGE, RED, VIOLET, YELLOW } from "../constants/colors";
 import { Level } from "../types";
 
 // Posiciones de los numeros en el tablero
@@ -21,9 +21,9 @@ export const levels: Level[] = [
         level: 1,
         // TODO: targetQuantity SE DEBERA ELIMINAR EN UNA FUTURA ACTUALIZACIÓN, TODOS LOS NIVELES DEBERAN TENER 3 OBJETIVOS
         // Numero de bolitas o numeros objetivos 
-        
+
         // Texto descriptivo para el patron objetivo
-        targetText: "Una columna o una fila de 5 números",
+        targetText: "Columna o una fila de 5 números",
         // Numero de tableros del jugador
         boards: 1,
         // Patrones ganadores (dado por coordenadas)
@@ -56,12 +56,12 @@ export const levels: Level[] = [
             //     boards: 3
             // }
         ],
-        targetPositions: [3,8,13,18,23],
-        color: CYAN
+        targetPositions: [3, 8, 13, 18, 23],
+        color: BLUE
     },
     {
         level: 2,
-        targetText: "Una cruz de 5 números",
+        targetText: "Cruz de 5 números",
         boards: 1,
         patterns: [
             [6, 2, 7, 12, 8],
@@ -84,12 +84,12 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [8, 12, 13, 14, 18],
-        color: CYAN
+        color: BLUE
     },
     {
         level: 3,
 
-        targetText: "Un rectangulo de 6 números",
+        targetText: "Rectangulo de 6 números",
         boards: 1,
         patterns: [
             [1, 2, 6, 7, 11, 12],
@@ -115,12 +115,12 @@ export const levels: Level[] = [
             }
         ],
         targetPositions: [7, 8, 9, 12, 13, 14],
-        color: CYAN
+        color: BLUE
     },
     {
         level: 4,
 
-        targetText: "Un aspa de 5 números",
+        targetText: "Aspa de 5 números",
         boards: 1,
         patterns: [
             [1, 11, 7, 3, 13],
@@ -146,12 +146,62 @@ export const levels: Level[] = [
             }
         ],
         targetPositions: [7, 9, 13, 17, 19],
-        color: RED
+        color: BLUE
     },
     {
         level: 5,
+        targetText: "Simbolo de potencia",
+        boards: 1,
+        patterns: [
+            [3, 7, 11, 17, 23],
+            [4, 8, 12, 18, 24],
+            [5, 9, 13, 19, 25]
+        ],
+        bots: [
+            {
+                name: "S-Bot 1",
+                interval: 2100,
+                boards: 1
+            },
+            {
+                name: "S-Bot 2",
+                interval: 1700,
+                boards: 1
+            }
+        ],
+        targetPositions: [8, 12, 14, 16, 20],
+        color: BLUE
+    },
+    {
+        level: 6,
+        targetText: "Dos filas",
+        boards: 1,
+        patterns: [
+            [3, 7, 11, 17, 23],
+            [4, 8, 12, 18, 24],
+            [5, 9, 13, 19, 25]
+        ],
+        bots: [
+            {
+                name: "S-Bot 1",
+                interval: 2100,
+                boards: 1
+            },
+            {
+                name: "S-Bot 2",
+                interval: 1700,
+                boards: 1
+            }
+        ],
+        targetPositions: [8, 12, 14, 16, 20],
+        color: VIOLET
+    },
 
-        targetText: "2 cuadrados de 4 números en 2 diagonales",
+
+    {
+        level: 7,
+
+        targetText: "2 cuadrados en 2 esquinas",
         boards: 2,
         patterns: [
             [1, 6, 2, 7, 19, 24, 20, 25],
@@ -164,15 +214,14 @@ export const levels: Level[] = [
                 boards: 2
             },
         ]
-        // TODO: SEGUIR AÑADIENDO PATRONES Y NUEVOS NIVELES
         ,
 
 
         targetPositions: [],
-        color: YELLOW
+        color: VIOLET
     },
     {
-        level: 6,
+        level: 8,
 
         targetText: "El ojo",
         boards: 1,
@@ -249,11 +298,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 8,
@@ -290,11 +335,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 9,
@@ -324,11 +365,7 @@ export const levels: Level[] = [
             }
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 10,
@@ -388,11 +425,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
 
 
@@ -425,11 +458,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 12,
@@ -469,11 +498,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 13,
@@ -555,11 +580,7 @@ export const levels: Level[] = [
             }
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 14,
@@ -610,11 +631,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 15,
@@ -653,11 +670,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 16,
@@ -691,11 +704,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 17,
@@ -744,11 +753,7 @@ export const levels: Level[] = [
             }
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 18,
@@ -808,11 +813,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     {
         level: 19,
@@ -872,11 +873,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
     // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
     {
@@ -936,11 +933,7 @@ export const levels: Level[] = [
             },
         ],
         targetPositions: [],
-        color: {
-            bgButtonOn: "",
-            bgButtonOnHover: "",
-            bgButtonOnActive: ""
-        }
+        color: CYAN
     },
 ]
 

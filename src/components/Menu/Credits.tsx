@@ -20,7 +20,7 @@ export default function Credits() {
     return (
         <>
             {/* El botón contiene un icono de HeroIcons */}
-            <button onClick={open} className="sm:py-4 py-2 px-3  text-cyan-500 hover:text-cyan-600 active:text-cyan-700"><InformationCircleIcon className='sm:w-8 w-6' aria-hidden="true" /></button>
+            <button onClick={open} className="sm:py-4 py-2 px-3  text-cyan-500"><InformationCircleIcon className='sm:w-8 w-6' aria-hidden="true" /></button>
 
             {/* Recuerda que puedes hacer clic en cualquier parte de la pantalla para cerrar la ventana modal */}
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
@@ -64,7 +64,7 @@ export default function Credits() {
                                 {/* Botón para cerrar la ventana modal */}
                                 <Button
                                     onClick={close}
-                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg hover:bg-gray-600 focus:outline-none transition-all duration-300"
+                                    className="w-full py-2 px-4 bg-gray-700 text-white rounded-lg text-lg focus:outline-none transition-all duration-300"
                                 >
                                     Cerrar
                                 </Button>

@@ -1,6 +1,5 @@
 import { useMemo } from "react";
-import { Color, SelectedNumbers } from "../../types";
-import { bgOff } from "../../constants/colors";
+import { SelectedNumbers } from "../../types";
 
 type ButtonNumberProps = {
     handleClickButton: (idBoard: number, number: number, position: number) => void,
@@ -11,7 +10,7 @@ type ButtonNumberProps = {
     },
     idBoard: number
     selectedNumbers: SelectedNumbers
-    color: Color
+    color: string
 }
 
 export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber, value, idBoard, selectedNumbers, color }: ButtonNumberProps) {
@@ -19,11 +18,10 @@ export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber
     // CONTINUAR AQUI
     const selectNumber = useMemo(() => handleIsSelectedNumber(idBoard, value.position), [selectedNumbers]);
 
-    const { bgOn, bgOnHover, bgOnActive } = color;
 
-    const activeColor = useMemo(() => selectNumber === true ? bgOn : bgOff, [selectedNumbers]);
+    const activeColor = useMemo(() => selectNumber === true ? color : 'gray', [selectedNumbers]);
 
-    console.log(bgOnHover)
+    // console.log(bgOnHover)
     return (
         <>
             <button
@@ -38,7 +36,7 @@ export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber
 
                 //                     hover:bg-cyan-700 active:bg-cyan-600 
 
-                className={`sm:text-2xl text-xl font-bold sm:w-16 sm:h-16 w-12 h-12 border-none rounded-lg text-white transition duration-300 ${activeColor} hover:` + bgOnHover + ` active:` + bgOnActive + ` `}
+                className={`sm:text-2xl text-xl font-bold sm:w-16 sm:h-16 w-12 h-12 border-none rounded-lg text-white transition duration-300 bg-${activeColor}-500 `}
                 // Al hacer clic, marca el numero llamando a handleClickButton
                 onClick={() => handleClickButton(idBoard, value.number, value.position)}>
 

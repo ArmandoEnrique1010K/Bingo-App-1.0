@@ -25,8 +25,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
     // nula de que suceda eso)
     const currentLevel = levels.find(l => l.level === level) || levels[0];
     // Desestructurar el objeto colors
-    const { bgOn, bgOnActive, bgOnHover } = currentLevel.color
+    // const { bgOn, bgOnActive, bgOnHover } = currentLevel.color
 
+    const color = currentLevel.color;
     // Variables de estado
 
     // Tableros del jugador
@@ -327,7 +328,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         <div className=" flex flex-col min-w-20 sm:ml-0 ml-2 sm:w-auto w-full">
                             <div className="mb-4 text-center bg-gray-700 rounded-xl p-1">
                                 <h1 className="sm:text-2xl text-xl font-bold mb-2">Nivel {level}</h1>
-                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold text-cyan-400">{round}</span> / {MAX_TURNS}</p>
+                                <p className="sm:text-lg text-sm">Ronda: <span className="font-semibold">{round}</span> / {MAX_TURNS}</p>
                             </div>
 
                             {/* Componente de los numeros objetivos */}
@@ -336,7 +337,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         </div>
 
                         {/* Componente del patrón ganador */}
-                        <TargetPattern level={currentLevel.level} text={currentLevel.targetText} targetPositions={currentLevel.targetPositions}
+                        <TargetPattern color={color} level={currentLevel.level} text={currentLevel.targetText} targetPositions={currentLevel.targetPositions}
                         />
 
                     </div>
@@ -378,7 +379,8 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                             className={`
                                                 px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md 
             transition duration-300  w-full  shadow-black 
-            ${isAtFirstBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+            ${isAtFirstBoard ? "bg-gray-500 text-white cursor-not-allowed" : `bg-${color}-500 text-white `} 
+            `}
                                             onClick={() => handleChangeBoard("prev")}
                                             disabled={isAtFirstBoard}
                                         >
@@ -388,7 +390,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
 
                                         <button
                                             className={`px-4 sm:py-3 py-2 font-semibold rounded-lg shadow-md transition duration-300 w-full  sm:text-base text-sm shadow-black 
-            ${isAtLastBoard ? "bg-gray-500 text-white cursor-not-allowed" : "bg-cyan-500 hover:bg-cyan-600 text-white"}`}
+            ${isAtLastBoard ? "bg-gray-500 text-white cursor-not-allowed" : `bg-${color}-500 text-white `}`}
                                             onClick={() => handleChangeBoard("next")}
                                             disabled={isAtLastBoard}
                                         >
@@ -399,9 +401,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                     </div>
                                     <div className="flex flex-row justify-between gap-4">
 
-                                        <ModalWithButton level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL} initialState={false} />
+                                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL} initialState={false} />
 
-                                        <ModalWithButton level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={EXIT_MODAL} initialState={false} />
+                                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={EXIT_MODAL} initialState={false} />
                                     </div>
                                 </div>
 
@@ -441,6 +443,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                                                 : 0
                                         } defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
                                         handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
+                                        color={color}
                                     />
                                 ))
                             }
@@ -452,7 +455,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                     // Si el jugador ha perdido
                     defeat === true && (
                         // Muestra la ventana modal que se muestra automaticamente
-                        <ModalWithButton level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={DEFEAT_MODAL} initialState={true} />
+                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={DEFEAT_MODAL} initialState={true} />
 
                     )
 
@@ -462,7 +465,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 {
                     /// Si el numero de turnos llega a 3 (limite)
                     round === MAX_TURNS && defeat === true && (
-                        <ModalWithButton level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
+                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
 
                     )
                 }
@@ -471,7 +474,9 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                 // TODO: ESTE BOTON DEBE ESTAR ABAJO DE LA PANTALLA
             }
             <div className="fixed bottom-4 right-4 text-right sm:hidden">
-                <button className="bg-cyan-500 p-3 rounded-full shadow-lg hover:bg-cyan-600 active:bg-cyan-700" onClick={handleChangeViewPlayerBoard}>
+                <button
+                    className={`bg-${color}-500 p-3 rounded-full shadow-lg `}
+                    onClick={handleChangeViewPlayerBoard}>
                     {viewPlayerBoard === true ? (
                         <img src="images/bot.svg" alt="Bot" className="w-8 h-8" />
                     ) : (

@@ -9,7 +9,7 @@ export const DEFAULT_TARGETS = 3
 export const MAX_TURNS = 20;
 
 // Nivel final
-export const FINAL_LEVEL = 20;
+export const FINAL_LEVEL = 30;
 
 // Numero máximo de potenciadores
 // export const MAX_POWERUPS = 3;

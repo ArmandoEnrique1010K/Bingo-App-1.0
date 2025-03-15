@@ -17,10 +17,11 @@ type BotsProps = {
     victory: boolean,
     handleCleanTargets: () => void,
     nextBoards: number
+    color: string
 }
 
 export default function Bots({ currentLevel, targets, interval, name, patterns, handleSetDefeat, defeat, handleSetVictory,
-    victory, boards, handleCleanTargets, nextBoards }: BotsProps) {
+    victory, boards, handleCleanTargets, nextBoards, color }: BotsProps) {
 
     // Variables de estado
 
@@ -276,6 +277,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
                             board={botBoard.find(b => b.id === index + 1)?.board || []}
                             idBoard={index + 1}
                             handleSelectedPosition={handleSelectedPosition}
+                            color={color}
                         />
                     ))
                 }

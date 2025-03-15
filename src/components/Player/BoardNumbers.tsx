@@ -1,4 +1,4 @@
-import { Board, Color, SelectedNumbers } from "../../types"
+import { Board, SelectedNumbers } from "../../types"
 import ColumnNumbers from "./ColumnNumbers"
 
 type BoardNumbersProps = {
@@ -7,7 +7,7 @@ type BoardNumbersProps = {
     handleIsSelectedNumber: (idBoard: number, position: number) => boolean
     idBoard: number,
     selectedNumbers: SelectedNumbers
-    color: Color
+    color: string
 }
 
 export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard, selectedNumbers, color }: BoardNumbersProps) {

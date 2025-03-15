@@ -1,4 +1,4 @@
-import { Board, Color, SelectedNumbers } from "../../types"
+import { Board, SelectedNumbers } from "../../types"
 import ButtonNumber from "./ButtonNumber"
 
 type RowNumbersProps = {
@@ -9,7 +9,7 @@ type RowNumbersProps = {
     max: number,
     idBoard: number
     selectedNumbers: SelectedNumbers,
-    color: Color
+    color: string
 }
 
 

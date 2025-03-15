@@ -8,7 +8,7 @@ export type Level = {
     patterns: Pattern[] // Arreglo de patrones ganadores
     bots: Bot[] // Arreglo de bots
     targetPositions: number[] // Arreglo de las posiciones del patron ganador unico
-    color: Color // Colores
+    color: string // Colores
 }
 
 // Patrón ganador (arreglo de números)
@@ -80,9 +80,9 @@ export type Modal = {
 
 }
 
-export type Color = {
-    bgOn: string
-    bgOnHover: string,
-    bgOnActive: string,
+// export type Color = {
+//     bgOn: string
+//     bgOnHover: string,
+//     bgOnActive: string,
 
-}
+// }

@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { Link } from 'react-router'
+import { levels } from '../data/levels'
 
 type IndexProps = {
     unlockedLevels: number[]
@@ -10,6 +11,17 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
 
     const [menuLevels, setMenuLevels] = useState(false)
 
+    const getColorLevel = (level: number) => {
+        const levelData = levels.find(l => l.level === level);
+        const result = levelData ? levelData.color : '';
+        console.log("COLOR: " + result)
+        return result;
+    }
+
+    useEffect(() => {
+        getColorLevel(1)
+    }, [])
+
     return (
         <div className="min-h-full max-h-full flex flex-col items-center bg-gray-800 text-white">
             <h1 className="text-4xl font-bold text-center my-8">BingoApp</h1>
@@ -18,7 +30,7 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                     <button
                         className="w-full flex-grow
                         flex items-center justify-center bg-cyan-500 text-white text-2xl font-semibold 
-                        hover:bg-cyan-600 active:bg-cyan-700
+                        
                         p-4"
                         // Al hacer clic, muestra la lista de niveles
                         onClick={() => setMenuLevels(true)}
@@ -36,7 +48,11 @@ export default function IndexPage({ unlockedLevels }: IndexProps) {
                                         <Link
                                             key={level}
                                             to={`/level_${level}`}
-                                            className="bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:bg-cyan-600 active:bg-cyan-700"
+                                            // className={`bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:` + {} + ` active:bg-cyan-700`}
+
+                                            className={`bg-${getColorLevel(level)}-500 text-white text-center py-4 rounded-md shadow-lg`}
+
+
                                         >
                                             Nivel {level}
                                         </Link>
