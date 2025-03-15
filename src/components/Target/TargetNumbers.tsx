@@ -1,17 +1,19 @@
 import { useEffect, useState } from "react";
 import { MAX_TURNS } from "../../constants";
 import { bgOffActive } from "../../constants/colors";
+import { Color } from "../../types";
 
 // No olvidar definir los types para las propiedades recibidas
 type TargetNumbersProps = {
     handleChangeTargets: () => void;
     targets: number[];
     round: number;
+    color: Color
 };
 
 export default function TargetNumbers({ handleChangeTargets, targets, round, color }: TargetNumbersProps) {
 
-    const {bgOn, bgOnActive, bgOnHover} = color
+    const { bgOn, bgOnActive, bgOnHover } = color
     // Controla la visibilidad y habilitación del botón
     const [isButtonDisabled, setIsButtonDisabled] = useState(false);
 

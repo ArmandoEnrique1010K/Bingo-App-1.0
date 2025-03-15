@@ -1,4 +1,4 @@
-import { Board, SelectedNumbers } from "../../types"
+import { Board, Color, SelectedNumbers } from "../../types"
 import ColumnNumbers from "./ColumnNumbers"
 
 type BoardNumbersProps = {
@@ -7,6 +7,7 @@ type BoardNumbersProps = {
     handleIsSelectedNumber: (idBoard: number, position: number) => boolean
     idBoard: number,
     selectedNumbers: SelectedNumbers
+    color: Color
 }
 
 export default function BoardNumbers({ board, handleClickButton, handleIsSelectedNumber, idBoard, selectedNumbers, color }: BoardNumbersProps) {
@@ -22,7 +23,7 @@ export default function BoardNumbers({ board, handleClickButton, handleIsSelecte
                     Array.from({ length: 5 }).map((_, index) => (
                         <ColumnNumbers key={index} numberBoard={board} handleClickButton={handleClickButton}
                             handleIsSelectedNumber={handleIsSelectedNumber} idBoard={idBoard} selectedNumbers={selectedNumbers}
-                            min={((index) * 5) + 1} max={(index + 1) * 5} color={color}/>
+                            min={((index) * 5) + 1} max={(index + 1) * 5} color={color} />
                     ))
                 }
             </div>

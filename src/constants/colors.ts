@@ -16,7 +16,7 @@ export const CYAN: Color = {
 }
 
 
-export const YELLOW = {
+export const YELLOW: Color = {
     bgOn: 'bg-yellow-500',
     bgOnHover: 'bg-yellow-600',
     bgOnActive: 'bg-yellow-700',
