@@ -3,12 +3,12 @@ import PatternBoard from "./PatternBoard"
 type TargetPatternProps = {
     level: number,
     text: string,
-    targetPositions: number[]
     color: string
+    patterns: number[][]
 }
 
 // Componente para mostrar el patrón objetivo
-export default function TargetPattern({ color, text, targetPositions }: TargetPatternProps) {
+export default function TargetPattern({ color, text, patterns }: TargetPatternProps) {
 
     console.log(color);
     return (
@@ -27,7 +27,7 @@ export default function TargetPattern({ color, text, targetPositions }: TargetPa
                         className="w-28 sm:w-56 md:w-36 shadow-lg"
                     />
                 </div> */}
-                <PatternBoard targetPositions={targetPositions} color={color} />
+                <PatternBoard color={color} patterns={patterns} />
 
                 <div className="sm:text-lg  text-sm text-white text-center my-auto ">
                     {text}

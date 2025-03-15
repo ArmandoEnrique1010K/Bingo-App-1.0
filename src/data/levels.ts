@@ -14,6 +14,41 @@ import { Level } from "../types";
 // M - Bot: 1500 - 1000
 // F - Bot: 900 - 500
 
+
+// 1. COLUMNA O FILA DE 5 NÚMEROS
+// 2. CRUZ DE 5 NÚMEROS
+// 3. RECTANGULO DE 6 NÚMEROS
+// 4. ASPA DE 5 NÚMEROS
+// 5. SIMBOLO DE POTENCIA
+
+// DOS FILAS X
+// 2 CUADRADOS EN 2 ESQUINAS
+// EL OJO
+// MATRIZ DE 8 NÚMEROS
+// MOVIMIENTO DE LA TORRE DE AJEDREZ
+
+// ANILLO DE 8 NÚMEROS
+// CUADRADO DE 16 NÚMEROS
+// ASPA DE 9 NÚMEROS
+// NÚMERO 1
+// LETRA H Y LETRA I
+// CUADRADO DE 9 NÚMEROS
+// PIRAMIDE SIMETRICA DE 8 NÚMEROS
+
+// ASPA INVERTIDA
+// DIAMANTE INVERTIDO
+// 3 FILAS O 3 COLUMNAS SEPARADAS
+// CRUZ DE 9 NÚMEROS (ASTERISCO)
+// MARCA TODO EL TABLERO
+// ESCALERA DE 15 NÚMEROS
+
+// lista de nuevos niveles
+// SIMBOLO DE PORCENTAJE (%)
+// NÚMERO 4
+// LA PARCA
+// SEÑAL DE SALIDA
+// COPO DE NIEVE
+
 // Aqui se especifica los niveles, incluyendo los posibles patrones ganadores por cada nivel del juego
 export const levels: Level[] = [
     {
@@ -56,7 +91,6 @@ export const levels: Level[] = [
             //     boards: 3
             // }
         ],
-        targetPositions: [3, 8, 13, 18, 23],
         color: BLUE
     },
     {
@@ -83,7 +117,6 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [8, 12, 13, 14, 18],
         color: BLUE
     },
     {
@@ -114,7 +147,6 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [7, 8, 9, 12, 13, 14],
         color: BLUE
     },
     {
@@ -145,7 +177,6 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [7, 9, 13, 17, 19],
         color: BLUE
     },
     {
@@ -169,7 +200,6 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [8, 12, 14, 16, 20],
         color: BLUE
     },
     {
@@ -193,7 +223,6 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [8, 12, 14, 16, 20],
         color: VIOLET
     },
 
@@ -217,7 +246,7 @@ export const levels: Level[] = [
         ,
 
 
-        targetPositions: [],
+
         color: VIOLET
     },
     {
@@ -246,7 +275,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
@@ -297,13 +326,13 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
         level: 8,
 
-        targetText: "Ocho cuartos",
+        targetText: "Matriz de 8 números",
         boards: 1,
         patterns: [
             [
@@ -334,7 +363,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -364,7 +393,7 @@ export const levels: Level[] = [
                 boards: 2
             }
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -424,7 +453,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
 
@@ -457,7 +486,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -497,7 +526,7 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -579,7 +608,7 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -630,7 +659,7 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -669,7 +698,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -703,7 +732,7 @@ export const levels: Level[] = [
                 boards: 3
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -752,7 +781,7 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -812,7 +841,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     {
@@ -872,7 +901,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
     // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
@@ -932,7 +961,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        targetPositions: [],
+
         color: CYAN
     },
 ]

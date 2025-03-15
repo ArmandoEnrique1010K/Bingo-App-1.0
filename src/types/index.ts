@@ -7,7 +7,6 @@ export type Level = {
     boards: number
     patterns: Pattern[] // Arreglo de patrones ganadores
     bots: Bot[] // Arreglo de bots
-    targetPositions: number[] // Arreglo de las posiciones del patron ganador unico
     color: string // Colores
 }
 

@@ -337,8 +337,7 @@ export default function LevelPage({ level, unlockLevel }: LevelPageProps) {
                         </div>
 
                         {/* Componente del patrón ganador */}
-                        <TargetPattern color={color} level={currentLevel.level} text={currentLevel.targetText} targetPositions={currentLevel.targetPositions}
-                        />
+                        <TargetPattern patterns={currentLevel.patterns} color={color} level={currentLevel.level} text={currentLevel.targetText} />
 
                     </div>
 
