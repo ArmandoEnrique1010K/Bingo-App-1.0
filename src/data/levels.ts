@@ -547,7 +547,7 @@ export const levels: Level[] = [
     },
     {
         level: 16,
-        targetText: "Flecha unidireccional",
+        targetText: "Señal de transito",
         boards: 2,
         patterns: [
             [
