@@ -13,6 +13,7 @@ export const FINAL_LEVEL = 30;
 
 // Numero máximo de potenciadores
 // export const MAX_POWERUPS = 3;
+// https://github.com/tailwindlabs/tailwindcss/discussions/13881
 
 // TIPOS DE VENTANA MODAL VENTANA MODAL
 export const VICTORY_MODAL: Modal = {

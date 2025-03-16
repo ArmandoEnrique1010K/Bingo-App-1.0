@@ -1,4 +1,3 @@
-import { BLUE, CYAN, GREEN, ORANGE, RED, VIOLET, YELLOW } from "../constants/colors";
 import { Level } from "../types";
 
 // Posiciones de los numeros en el tablero
@@ -102,7 +101,7 @@ export const levels: Level[] = [
             //     boards: 3
             // }
         ],
-        color: BLUE,
+        color: 'blue',
         music: 'tap_out'
     },
     {
@@ -129,11 +128,11 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: BLUE
+        color: 'blue',
+        music: 'tap_out'
     },
     {
         level: 3,
-
         targetText: "Rectangulo de 6 números",
         boards: 1,
         patterns: [
@@ -159,11 +158,11 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: BLUE
+        color: 'blue',
+        music: 'tap_out'
     },
     {
         level: 4,
-
         targetText: "Aspa de 5 números",
         boards: 1,
         patterns: [
@@ -189,7 +188,8 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: BLUE
+        color: 'blue',
+        music: 'tap_out'
     },
     {
         level: 5,
@@ -212,89 +212,12 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: BLUE
+        color: 'blue',
+        music: 'tap_out'
     },
     {
         level: 6,
-        targetText: "Dos filas",
-        boards: 1,
-        patterns: [
-            [3, 7, 11, 17, 23],
-            [4, 8, 12, 18, 24],
-            [5, 9, 13, 19, 25]
-        ],
-        bots: [
-            {
-                name: "S-Bot 1",
-                interval: 2100,
-                boards: 1
-            },
-            {
-                name: "S-Bot 2",
-                interval: 1700,
-                boards: 1
-            }
-        ],
-        color: VIOLET
-    },
-
-
-    {
-        level: 7,
-
-        targetText: "2 cuadrados en 2 esquinas",
-        boards: 2,
-        patterns: [
-            [1, 6, 2, 7, 19, 24, 20, 25],
-            [4, 9, 5, 10, 16, 21, 17, 22],
-        ],
-        bots: [
-            {
-                name: "M-Bot",
-                interval: 1500,
-                boards: 2
-            },
-        ]
-        ,
-
-
-
-        color: VIOLET
-    },
-    {
-        level: 8,
-
-        targetText: "El ojo",
-        boards: 1,
-        patterns: [
-            [
-                6, 11, 16,
-                2, 22,
-                3, 13, 23,
-                4, 24,
-                10, 15, 20,
-            ]
-        ],
-        bots: [
-            {
-                name: "M-Bot",
-                interval: 1400,
-                boards: 1
-            },
-            {
-                name: "S-Bot",
-                interval: 1700,
-                boards: 1
-            },
-        ],
-
-        color: CYAN
-    },
-    // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
-    {
-        level: 7,
-
-        targetText: "Primera o ultima fila y columna",
+        targetText: "Esquina de 90 grados",
         boards: 1,
         patterns: [
             [
@@ -326,6 +249,7 @@ export const levels: Level[] = [
                 5, 10, 15, 20, 25
             ]
         ],
+        // TODO: CAMBIAR LOS BOTS
         bots: [
             {
                 name: "F-Bot",
@@ -338,13 +262,62 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'violet',
+        music: 'tap_out'
+    },
+    {
+        level: 7,
+        targetText: "2 cuadrados en 2 esquinas",
+        boards: 2,
+        patterns: [
+            [1, 6, 2, 7, 16, 21, 17, 22],
+            [1, 6, 2, 7, 19, 24, 20, 25],
+            [4, 9, 5, 10, 16, 21, 17, 22],
+            [4, 9, 5, 10, 19, 24, 20, 25],
+            [1, 6, 2, 7, 4, 9, 5, 10],
+            [16, 21, 17, 22, 19, 24, 20, 25],
+        ],
+        bots: [
+            {
+                name: "M-Bot",
+                interval: 1500,
+                boards: 2
+            },
+        ],
+        color: 'violet',
+        music: 'tap_out'
     },
     {
         level: 8,
-
-        targetText: "Matriz de 8 números",
+        targetText: "Ojo en el centro",
+        boards: 1,
+        patterns: [
+            [
+                6, 11, 16,
+                2, 22,
+                3, 13, 23,
+                4, 24,
+                10, 15, 20,
+            ]
+        ],
+        bots: [
+            {
+                name: "M-Bot",
+                interval: 1400,
+                boards: 1
+            },
+            {
+                name: "S-Bot",
+                interval: 1700,
+                boards: 1
+            },
+        ],
+        color: 'violet',
+        music: 'tap_out'
+    },
+    {
+        level: 9,
+        targetText: "Matriz de 9 números",
         boards: 1,
         patterns: [
             [
@@ -375,69 +348,48 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
-    },
-    {
-        level: 9,
-
-        targetText: "Un cuadrado de 16 números",
-        boards: 2,
-        patterns: [
-            [1, 6, 11, 16, 2, 7, 12, 17,
-                3, 8, 13, 18, 4, 9, 14, 19],
-            [2, 7, 12, 17, 3, 8, 13, 18,
-                4, 9, 14, 19, 5, 10, 15, 20],
-            [6, 11, 16, 21, 7, 12, 17, 22,
-                8, 13, 18, 23, 9, 14, 19, 24],
-            [7, 12, 17, 22, 8, 13, 18, 23,
-                9, 14, 19, 24, 10, 15, 20, 25],
-        ],
-        bots: [
-            {
-                name: "M-Bot 1",
-                interval: 1500,
-                boards: 2
-            },
-            {
-                name: "M-Bot 2",
-                interval: 1400,
-                boards: 2
-            }
-        ],
-
-        color: CYAN
+        color: 'violet',
+        music: 'tap_out'
     },
     {
         level: 10,
-
-        targetText: "Un aspa de 9 números y una cruz de 5 números que comience del centro",
+        targetText: "Dos filas de 10 números",
+        boards: 1,
+        patterns: [
+            [1, 6, 11, 16, 21, 2, 7, 12, 17, 22],
+            [1, 6, 11, 16, 21, 3, 8, 13, 18, 23],
+            [1, 6, 11, 16, 21, 4, 9, 14, 19, 24],
+            [1, 6, 11, 16, 21, 5, 10, 15, 20, 25],
+            [2, 7, 12, 17, 22, 3, 8, 13, 18, 23],
+            [2, 7, 12, 17, 22, 4, 9, 14, 19, 24],
+            [2, 7, 12, 17, 22, 5, 10, 15, 20, 25],
+            [3, 8, 13, 18, 23, 4, 9, 14, 19, 24],
+            [3, 8, 13, 18, 23, 5, 10, 15, 20, 25],
+            [4, 9, 14, 19, 24, 5, 10, 15, 20, 25],
+        ],
+        bots: [
+            {
+                name: "S-Bot 1",
+                interval: 2100,
+                boards: 1
+            },
+            {
+                name: "S-Bot 2",
+                interval: 1700,
+                boards: 1
+            }
+        ],
+        color: 'violet',
+        music: 'tap_out'
+    },
+    {
+        level: 11,
+        targetText: "Aspa de 9 números",
         boards: 2,
         patterns: [
             [
                 1, 21,
                 7, 17,
-                13, 18, 23,
-                9, 19,
-                5, 25,
-            ],
-            [
-                1, 21,
-                7, 17,
-                13,
-                9, 14, 19,
-                5, 15, 25,
-            ],
-            [
-                1, 21,
-                7, 17,
-                3, 8, 13,
-                9, 19,
-                5, 25,
-            ],
-            [
-                1, 11, 21,
-                7, 12, 17,
                 13,
                 9, 19,
                 5, 25,
@@ -465,16 +417,44 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'green',
+        music: 'tap_out'
     },
 
 
-
+    // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
     {
-        level: 11,
-
-        targetText: "El número 1",
+        level: 12,
+        targetText: "Cuadrado de 16 números",
+        boards: 2,
+        patterns: [
+            [1, 6, 11, 16, 2, 7, 12, 17,
+                3, 8, 13, 18, 4, 9, 14, 19],
+            [2, 7, 12, 17, 3, 8, 13, 18,
+                4, 9, 14, 19, 5, 10, 15, 20],
+            [6, 11, 16, 21, 7, 12, 17, 22,
+                8, 13, 18, 23, 9, 14, 19, 24],
+            [7, 12, 17, 22, 8, 13, 18, 23,
+                9, 14, 19, 24, 10, 15, 20, 25],
+        ],
+        bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1500,
+                boards: 2
+            },
+            {
+                name: "M-Bot 2",
+                interval: 1400,
+                boards: 2
+            }
+        ],
+        color: 'green',
+        music: 'tap_out'
+    },
+    {
+        level: 13,
+        targetText: "Número 1",
         boards: 1,
         patterns: [
             [6, 2, 7, 8, 9, 5, 10, 15],
@@ -498,13 +478,37 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'green',
+        music: 'tap_out'
     },
     {
-        level: 12,
-
-        targetText: "Las letras 'H' e 'I'",
+        level: 14,
+        targetText: "Anillo de 8 números",
+        boards: 1,
+        patterns: [
+            [1, 6, 11, 2, 12, 3, 8, 13],
+            [2, 7, 12, 3, 13, 4, 9, 14],
+            [3, 8, 13, 4, 14, 5, 10, 15],
+            [6, 11, 16, 7, 17, 8, 13, 18],
+            [7, 12, 17, 8, 18, 9, 14, 19],
+            [8, 13, 18, 9, 19, 10, 15, 20],
+            [11, 12, 13, 16, 18, 21, 22, 23],
+            [12, 13, 14, 17, 19, 22, 23, 24],
+            [13, 14, 15, 18, 20, 23, 24, 25]
+        ],
+        bots: [
+            {
+                name: "S-Bot",
+                interval: 1900,
+                boards: 1
+            },
+        ],
+        color: 'green',
+        music: 'tap_out'
+    },
+    {
+        level: 15,
+        targetText: "Letras 'H' e 'I'",
         boards: 2,
         patterns: [
             [
@@ -538,12 +542,57 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-
-        color: CYAN
+        color: 'green',
+        music: 'tap_out'
     },
     {
-        level: 13,
+        level: 16,
+        targetText: "Flecha unidireccional",
+        boards: 2,
+        patterns: [
+            [
+                2, 3, 4,
+                7, 8, 9,
+                11, 12, 13, 14, 15,
+                17, 18, 19,
+                23
+            ],
+            [
+                3,
+                7, 8, 9,
+                11, 12, 13, 14, 15,
+                17, 18, 19,
+                22, 23, 24
+            ],
+            [
+                3,
+                6, 7, 8, 9,
+                11, 12, 13, 14, 15,
+                16, 17, 18, 19,
+                23
+            ],
+            [
+                3,
+                7, 8, 9, 10,
+                11, 12, 13, 14, 15,
+                17, 18, 19, 20,
+                23
+            ]
+        ],
 
+        bots: [
+            {
+                name: "S-Bot 1",
+                interval: 1900,
+                boards: 2
+            },
+        ],
+        color: 'yellow',
+        music: 'tap_out'
+    },
+
+    {
+        level: 17,
         targetText: "Un cuadrado de 9 números",
         boards: 1,
         patterns: [
@@ -620,13 +669,12 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-
-        color: CYAN
+        color: 'yellow',
+        music: 'tap_out'
     },
     {
-        level: 14,
-
-        targetText: "Una piramide simetrica de 8 números",
+        level: 18,
+        targetText: "Piramide simetrica de 8 números",
         boards: 1,
         patterns: [
             [
@@ -671,13 +719,31 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-
-        color: CYAN
+        color: 'yellow',
+        music: 'tap_out'
     },
     {
-        level: 15,
+        level: 19,
+        targetText: "Letra 'Z' o letra 'N'",
+        boards: 1,
+        patterns: [
+            [1, 6, 11, 16, 21, 17, 13, 9, 5, 10, 15, 20, 25],
+            [1, 2, 3, 4, 5, 7, 13, 19, 25, 21, 22, 23, 24]
 
-        targetText: "Un aspa a la inversa",
+        ],
+        bots: [
+            {
+                name: "F-Bot 1",
+                interval: 800,
+                boards: 1
+            },
+        ],
+        color: 'yellow',
+        music: 'tap_out'
+    },
+    {
+        level: 20,
+        targetText: "Aspa invertida",
         boards: 2,
         patterns: [
             [
@@ -710,12 +776,11 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'yellow',
+        music: 'tap_out'
     },
     {
-        level: 16,
-
+        level: 21,
         targetText: "3 filas o 3 columnas separadas",
         boards: 2,
         patterns: [
@@ -744,13 +809,12 @@ export const levels: Level[] = [
                 boards: 3
             },
         ],
-
-        color: CYAN
+        color: 'orange',
+        music: 'tap_out'
     },
     {
-        level: 17,
-
-        targetText: "Un diamante a la inversa",
+        level: 22,
+        targetText: "Diamante invertido",
         boards: 2,
         patterns: [
             [
@@ -793,45 +857,175 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-
-        color: CYAN
+        color: 'orange',
+        music: 'tap_out'
     },
-    {
-        level: 18,
 
-        targetText: "Una cruz de 9 números y un aspa de 5 números que empiece del centro",
+    {
+        level: 23,
+        targetText: "Simbolo de porcentaje",
         boards: 2,
         patterns: [
             [
-                1, 11,
-                7, 12,
-                3, 8, 13, 18, 23,
-                14,
-                15,
-            ],
-            [
-                11, 21,
-                12, 17,
-                3, 8, 13, 18, 23,
-                14,
-                15,
-            ],
-            [
-                11,
-                12,
-                3, 8, 13, 18, 23,
-                14, 19,
-                15, 25,
-            ],
-            [
-                11,
-                12,
-                3, 8, 13, 18, 23,
-                9, 14,
-                5, 15,
-            ],
+                1, 2, 6, 7,
+                5, 9, 13, 17, 21,
+                19, 20, 24, 25
+            ]
         ],
         bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1200,
+                boards: 1
+            },
+        ],
+        color: 'orange',
+        music: 'tap_out'
+    },
+
+    {
+        level: 24,
+        targetText: "Número 4",
+        boards: 2,
+        patterns: [
+            [
+                11, 16,
+                7, 17,
+                3, 8, 13, 18, 23,
+                19,
+                20
+            ]
+        ],
+        bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1200,
+                boards: 1
+            },
+        ],
+        color: 'orange',
+        music: 'tap_out'
+    },
+    {
+        level: 25,
+        targetText: "Asterisco",
+        boards: 1,
+        patterns: [
+            [
+                1, 11, 21,
+                7, 12, 17,
+                3, 8, 13, 18, 23,
+                9, 14, 19,
+                5, 15, 25
+            ]
+        ],
+        bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1200,
+                boards: 1
+            },
+        ],
+        color: 'orange',
+        music: 'tap_out'
+    },
+    {
+        level: 26,
+        targetText: "La parca",
+        boards: 1,
+        patterns: [
+            [
+                1, 6, 11, 16, 21,
+                2, 12, 22,
+                3, 8, 13, 18, 23,
+                9, 19,
+                10, 20
+            ]
+        ],
+        bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1200,
+                boards: 1
+            },
+        ],
+        color: 'red',
+        music: 'tap_out'
+    },
+    {
+        level: 27,
+        targetText: "Diseño de mosaico",
+        boards: 1,
+        patterns: [
+            [
+                1, 11, 21,
+                7, 17,
+                3, 13, 23,
+                9, 19,
+                5, 15, 25
+            ],
+            [
+                6, 16,
+                2, 12, 22,
+                8, 18,
+                4, 14, 24,
+                10, 20
+            ]
+        ],
+        bots: [
+            {
+                name: "M-Bot 1",
+                interval: 1200,
+                boards: 1
+            },
+        ],
+        color: 'red',
+        music: 'tap_out'
+    },
+
+    {
+        level: 28,
+        targetText: "Patrón irregular",
+        boards: 2,
+        patterns: [
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                3, 8, 18, 23, 2
+            ],
+
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                3, 8, 13, 23, 7
+            ],
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                3, 8, 13, 18, 12
+            ],
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                3, 8, 18, 22, 23
+            ],
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                3, 13, 18, 17, 23
+            ],
+            [
+                4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+                8, 13, 18, 12, 23
+            ],
+
+
+            // [
+            //     4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+
+            // ],
+            // [
+            //     4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
+
+            // ],
+        ],
+        bots: [
+            // MODIFICAR ESTO
             {
                 name: "M-Bot 1",
                 interval: 1500,
@@ -853,12 +1047,11 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'red',
+        music: 'tap_out'
     },
     {
-        level: 19,
-
+        level: 29,
         targetText: "Una escalera de 15 números",
         boards: 2,
         patterns: [
@@ -913,13 +1106,11 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'red',
+        music: 'tap_out'
     },
-    // TODO: EL NIVEL FINAL DEBERIA SER EL NIVEL 30, NO EL 20
     {
-        level: 20,
-
+        level: 30,
         targetText: "Marca todo el tablero",
         boards: 2,
         patterns: [
@@ -973,8 +1164,8 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-
-        color: CYAN
+        color: 'red',
+        music: 'tap_out'
     },
 ]
 
