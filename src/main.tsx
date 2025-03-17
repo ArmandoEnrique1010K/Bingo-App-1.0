@@ -5,11 +5,11 @@ import { StrictMode } from 'react'
 import { BingoProvider } from './context/BingoContext.tsx'
 
 createRoot(document.getElementById('root')!).render(
-    <StrictMode>
+    // <StrictMode>
         <BingoProvider>
             <App />
         </BingoProvider>
-    </StrictMode>
+    // </StrictMode>
 )
 
 // https://platzi.com/clases/3578-npm/52462-eliminacion-de-dependencias-y-package-lock/

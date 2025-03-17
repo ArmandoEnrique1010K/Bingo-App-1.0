@@ -18,12 +18,12 @@ export default function IndexPage({ unlockedLevels, }: IndexProps) {
         return result;
     }
 
-    const getMusicLevel = (level: number) => {
-        const levelData = levels.find(l => l.level === level);
-        const result = levelData ? levelData.music : '';
-        console.log("MUSICA: " + result)
-        return result;
-    }
+    // const getMusicLevel = (level: number) => {
+    //     const levelData = levels.find(l => l.level === level);
+    //     const result = levelData ? levelData.music : '';
+    //     console.log("MUSICA: " + result)
+    //     return result;
+    // }
 
     // useEffect(() => {
     //     getColorLevel(1)
@@ -37,8 +37,7 @@ export default function IndexPage({ unlockedLevels, }: IndexProps) {
                     <button
                         className="w-full flex-grow
                         flex items-center justify-center bg-cyan-500 text-white text-2xl font-semibold 
-                        
-                        p-4"
+                            p-4"
                         // Al hacer clic, muestra la lista de niveles
                         onClick={() => setMenuLevels(true)}
                     >
@@ -55,14 +54,12 @@ export default function IndexPage({ unlockedLevels, }: IndexProps) {
                                         <Link
                                             key={level}
                                             to={`/level_${level}`}
-                                            // className={`bg-cyan-500 text-white text-center py-4 rounded-md shadow-lg hover:` + {} + ` active:bg-cyan-700`}
-
                                             className={`bg-${getColorLevel(level)}-500 text-white text-center py-4 rounded-md shadow-lg`}
                                             // onClick={() => console.log("Haz hecho clic en el nivel")}
-                                            onClick={() => {
-                                                getColorLevel(level)
-                                                getMusicLevel(level)
-                                            }}
+                                            // onClick={() => {
+                                            //     getColorLevel(level)
+                                            //     getMusicLevel(level)
+                                            // }}
                                         >
                                             Nivel {level}
                                         </Link>

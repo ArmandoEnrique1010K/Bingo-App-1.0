@@ -86,3 +86,5 @@ export type Modal = {
 //     bgOnActive: string,
 
 // }
+
+export type Winner = 'none' | 'player' | 'bot' | 'end'

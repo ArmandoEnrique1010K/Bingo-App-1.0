@@ -6,7 +6,7 @@ import { Modal } from "../types";
 export const DEFAULT_TARGETS = 3
 
 // Turnos maximos por nivel
-export const MAX_TURNS = 20;
+export const MAX_TURNS = 3;
 
 // Nivel final
 export const FINAL_LEVEL = 30;

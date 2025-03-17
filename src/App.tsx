@@ -4,9 +4,10 @@ import { BingoContext } from "./context/BingoContext"
 
 function App() {
 
-  const {text} = useContext(BingoContext)
+  // LLAMAR AL CONTEXTO DE REACT
+  // const {text} = useContext(BingoContext)
 
-  console.log(text)
+  // console.log(text)
   return (
     <>
       <Router />
