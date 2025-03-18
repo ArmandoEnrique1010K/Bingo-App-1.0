@@ -19,7 +19,6 @@ export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveG
 
     const { color, currentLevel } = useContext(BingoContext)
 
-
     return (
         <>
             {/* Si se trata de una ventana modal de tipo victoria o derrota no se va a poder cerrar la ventana modal al hacer clic fuera de ella, si es de tipo exit si lo va a poder cerrar */}

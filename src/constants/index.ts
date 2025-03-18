@@ -3,7 +3,7 @@
 import { Modal } from "../types";
 
 // Numero de numeros objetivos por turno por defecto
-export const DEFAULT_TARGETS = 75
+export const DEFAULT_TARGETS = 10
 
 // Turnos maximos por nivel
 export const MAX_TURNS = 20;
@@ -59,6 +59,6 @@ export const FINAL_LEVEL_VICTORY_MODAL: Modal = {
     message: "Usted a derrotado a todos los bots del juego.",
     textButton: {
         left: "Salir al menú",
-        right: ""
+        right: "" // FALSY
     }
 }

@@ -5,6 +5,22 @@ import { generateBoard } from "../utils/generateBoard";
 import { generateTargets } from "../utils/generateTargets";
 import { DEFAULT_TARGETS, MAX_TURNS } from "../constants";
 
+const initialDataLevel = {
+    level: 0,
+    targetText: '',
+    boards: 0,
+    patterns: [],
+    bots: [
+        {
+            name: 'test',
+            interval: 1000,
+            boards: 1,
+        }
+
+    ],
+    color: 'blue',
+    music: 'tap_out',
+}
 
 export default function usePlayer() {
 
@@ -19,7 +35,7 @@ export default function usePlayer() {
 
     // Nivel actual
     const [currentLevel, setCurrentLevel] = useState<number>(0); // Numero
-    const [dataLevel, setDataLevel] = useState<Level>() // Data
+    const [dataLevel, setDataLevel] = useState<Level>(initialDataLevel) // Data
 
 
     // Verifica que un nivel se encuentre desbloqueado
@@ -38,24 +54,23 @@ export default function usePlayer() {
     // Obtiene los datos del nivel actual usando el metodo find.
     useEffect(() => {
         const result = levels.find(l => l.level === currentLevel);
-        setDataLevel(result);
+        if (result) {
+            setDataLevel(result);
+        } else {
+            setDataLevel(initialDataLevel)
+        }
         console.log('EL NIVEL ACTUAL ES: ' + result?.level)
     }, [currentLevel]);
 
+
     const {
-        level = 0,
-        targetText = '',
-        boards = 0, // CAMBIAR EL NOMBRE POR playerBoards
-        patterns = [],
-        bots = [
-            {
-                name: 'test',
-                interval: 1000,
-                boards: 1,
-            }
-        ],
-        color = '',
-        music = ''
+        level,
+        targetText,
+        boards,
+        patterns,
+        bots,
+        color,
+        music
     } = dataLevel || {};
 
     useEffect(() => {
@@ -148,13 +163,15 @@ export default function usePlayer() {
     // EFECTO SECUNDARIO
 
 
+    // ¿PORQUE DEPENDE TAMBIEN DE LEVEL?
     useEffect(() => {
         if (winner === 'none') {
             console.log('AUN NO HAY GANADOR')
             resetLevel()
             console.log(newBoards)
         }
-    }, [winner, level])
+    }, [level])
+
 
 
 
@@ -189,29 +206,6 @@ export default function usePlayer() {
         console.log('SE REESTABLECIO LOS DATOS INICIALES DEL NIVEL (RESETLEVEL)')
     }
 
-
-    // Cuando el jugador pierde, se tiene que volver a reiniciar el nivel
-    // Nota: El state de defeat debe volver a ser false
-    // useEffect(() => {
-    //     if (defeat === false) {
-    //         console.log('AUN NO HAY DERROTA')
-    //         resetLevel()
-    //     } else {
-    //         console.log('HUBO DERROTA')
-    //     }
-
-    // }, [defeat]);
-
-
-    // // Función para cambiar los numeros objetivos
-    // useEffect(() => {
-    //     if (victory === false) {
-    //         console.log('EL JUGADOR GANO')
-    //         resetLevel()
-    //     } else {
-    //         console.log('EL JUGADOR AUN NO HA GANADO')
-    //     }
-    // }, [victory])
 
     const handleChangeTargets = () => {
 
@@ -324,7 +318,6 @@ export default function usePlayer() {
                 // Se establece victory en true
                 // setVictory(true);
                 // setDefeat(false);
-                setWinner('player')
                 // console.log("El jugador ha ganado el nivel " + level);
 
                 // Es necesario limpiar los numeros objetivos para evitar que el bot siga marcando
@@ -435,6 +428,6 @@ export default function usePlayer() {
         dataLevel,
         winner,
         selectedPositionsInBoards,
-
+        excludedTargetNumbers
     }
 }

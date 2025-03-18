@@ -35,7 +35,7 @@ export function generateTargets(quantity: number, excludedNumbers: number[]) {
         const selectedNumber = allNumbers[index];
 
         // Agrega el número seleccionado
-        randomNumbers = [...randomNumbers, selectedNumber ];
+        randomNumbers = [...randomNumbers, selectedNumber];
 
         // Eliminar el número seleccionado del conjunto de números restantes
         // Actualizar `allNumbers` eliminando el número seleccionado

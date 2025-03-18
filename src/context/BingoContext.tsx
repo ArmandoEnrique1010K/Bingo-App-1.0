@@ -36,6 +36,7 @@ type BingoContextProps = {
     dataLevel: Level | undefined
     winner: Winner,
     selectedPositionsInBoards: SelectedPositions
+    excludedTargetNumbers: number[]
 }
 
 type BingoProviderProps = {
@@ -79,6 +80,7 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
         dataLevel,
         winner,
         selectedPositionsInBoards,
+        excludedTargetNumbers
     } = usePlayer()
     return (
         <BingoContext.Provider value={{
@@ -114,6 +116,7 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
             currentLevel,
             winner,
             selectedPositionsInBoards,
+            excludedTargetNumbers
         }}>
             {children}
         </BingoContext.Provider>

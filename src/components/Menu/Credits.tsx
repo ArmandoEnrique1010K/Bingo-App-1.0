@@ -1,12 +1,14 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 // Importa un icono de hero icons, utiliza el siguiente formato para importar un icono
 import { InformationCircleIcon } from '@heroicons/react/24/solid'
 import { Button, Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
+import { BingoContext } from "../../context/BingoContext";
 
 // Este componente es una ventana modal que muestra la información del autor que desarrollo esta aplicación
 export default function Credits() {
 
     const [isOpen, setIsOpen] = useState(false);
+    const { color } = useContext(BingoContext);
 
     function open() {
         setIsOpen(true)
@@ -20,7 +22,7 @@ export default function Credits() {
     return (
         <>
             {/* El botón contiene un icono de HeroIcons */}
-            <button onClick={open} className="sm:py-4 py-2 px-3  text-cyan-500"><InformationCircleIcon className='sm:w-8 w-6' aria-hidden="true" /></button>
+            <button onClick={open} className={`sm:py-4 py-2 px-3  text-${color}-500`}><InformationCircleIcon className='sm:w-8 w-6' aria-hidden="true" /></button>
 
             {/* Recuerda que puedes hacer clic en cualquier parte de la pantalla para cerrar la ventana modal */}
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>

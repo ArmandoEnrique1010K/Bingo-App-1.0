@@ -14,29 +14,25 @@ export default function ModalWithButton(
     { modal, initialState }: ModalWithButtonProps
 ) {
 
+    // Llama al contexto
     const { handleCheckWinnerPattern, setWinner, color, currentLevel, setCurrentLevel } = useContext(BingoContext)
 
-    // ESTADO PARA ABRIR Y CERRAR
+    // Estado para ver la ventana modal
     const [isOpen, setIsOpen] = useState(initialState);
+
     const navigate = useNavigate()
 
-    // FUNCIONES PARA ABRIR Y CERRAR LA VENTANA MODAL
+    // Abrir ventana
     function open() {
         setIsOpen(true)
     }
 
+    // Cerrar ventana
     function close() {
         setIsOpen(false)
     }
 
-    // SALIR DEL JUEGO
-    // function exit() {
-    //     navigate('/')
-    //     setWinner('none');
-    //     // handleSetDefeat(false)
-    // }
-
-    // VOLVER A INTENTAR EL MISMO NIVEL
+    // Reintentar el nivel actual
     function tryAgain() {
         navigate(`/level_${currentLevel}`)
         setWinner('none');
@@ -44,33 +40,35 @@ export default function ModalWithButton(
         close()
     }
 
-    // COMPROBAR SI EL JUGADOR HA GANADO
+    // Comprobar si el jugador gano
     function check() {
         if (handleCheckWinnerPattern() === true) {
-            // Abre la ventana modal
-            setIsOpen(true)
+            setWinner('player')
+            open()
         } else {
             console.log('AUN NO HA GANADO EL JUGADOR')
         }
     }
-    // Función para salir del juego, redirige hacia el endpoint '/'
+
+    // Salir del juego
     function leaveGame() {
-        setIsOpen(false)
+        close()
         navigate('/')
         setWinner('')
     }
 
-
+    // Siguiente nivel
     function nextLevel() {
-        setIsOpen(false)
+        close()
         navigate(`/level_${currentLevel + 1}`)
         setCurrentLevel(l => l + 1)
+        // resetLevel()
         setWinner('none')
     }
 
     return (
         <>
-            {/* Ejecuta la acción de acuerdo al tipo de modal, simplificar esto */}
+            {/* Ejecuta la acción de acuerdo al tipo de modal */}
             {
                 modal.type === 'victory' ? (
                     <button onClick={check} className={`w-full bg-${color}-500 text-white font-semibold px-4 sm:py-3 py-2 rounded-lg shadow-black 
@@ -79,9 +77,7 @@ export default function ModalWithButton(
                     <button onClick={open} className={`w-full bg-${color}-500 text-white font-semibold px-4 sm:py-3 py-2 rounded-lg shadow-black 
                     shadow-md transition duration-300 sm:text-base text-sm`}>Abandonar partida</button>
                 ) : ('')
-
             }
-
             <ModalBase modal={modal} open={open} close={close} isOpen={isOpen} tryAgain={tryAgain} leaveGame={leaveGame} nextLevel={nextLevel} />
         </>
     )

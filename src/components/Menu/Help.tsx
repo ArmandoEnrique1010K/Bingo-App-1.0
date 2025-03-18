@@ -1,11 +1,14 @@
 import { Button, Dialog, DialogPanel, DialogTitle } from '@headlessui/react';
 import { QuestionMarkCircleIcon } from '@heroicons/react/24/solid'
-import { useState } from 'react';
+import { useContext, useState } from 'react';
+import { BingoContext } from '../../context/BingoContext';
 
 // Ventana modal que muestra las instrucciones del juego
 export default function Help() {
 
     const [isOpen, setIsOpen] = useState(false);
+
+    const { color } = useContext(BingoContext);
 
     function open() {
         setIsOpen(true)
@@ -15,10 +18,11 @@ export default function Help() {
         setIsOpen(false)
     }
 
+
     return (
         <>
             {/* Aplicale estilos al icono para que se muestre */}
-            <button onClick={open} className='sm:py-4 py-2 px-3 text-cyan-500'><QuestionMarkCircleIcon className='sm:w-8 w-6 ' aria-hidden="true" /></button>
+            <button onClick={open} className={`sm:py-4 py-2 px-3 text-${color}-500`}><QuestionMarkCircleIcon className='sm:w-8 w-6 ' aria-hidden="true" /></button>
 
             <Dialog open={isOpen} as="div" className="relative z-10 focus:outline-none " onClose={close}>
                 {/* Aplica el color de fondo con opacidad */}
