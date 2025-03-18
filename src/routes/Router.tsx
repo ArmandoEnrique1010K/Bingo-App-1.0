@@ -11,6 +11,7 @@ const LevelPage = lazy(() => import('../pages/LevelPage'));
 // Componente de tipo router, define las rutas que tendrá la aplicación
 export default function Router() {
 
+    // UTILIZA EL CONTEXTO PARA OBTENER LOS NIVELES DESBLOQUEADOS
     const { unlockedLevels } = useContext(BingoContext)
 
     // Almacena los niveles desbloqueados en un arreglo utilizando la API LocalStorage

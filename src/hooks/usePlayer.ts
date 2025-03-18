@@ -170,10 +170,17 @@ export default function usePlayer() {
             resetLevel()
             console.log(newBoards)
         }
-    }, [level])
+
+    }, [level, winner])
+    // EN el arreglo de dependencias se coloca las variables, cuyo valor si cambia, ejecuta la función definida en el useEffect
 
 
 
+    useEffect(() => {
+        setExcludedTargetNumbers([])
+        console.log(excludedTargetNumbers)
+        console.log('EL NIVEL ACTUAL ES ' + currentLevel)
+    }, [currentLevel])
 
     // Función para establecer los valores iniciales al empezar o reiniciar el nivel
     const resetLevel = () => {
@@ -224,8 +231,12 @@ export default function usePlayer() {
             // Espera 1 seg. para generar los numeros objetivos
             // Recordar que la función generateTargets necesita la cantidad de números que se generaran y los numeros excluidos
             setTimeout(() => {
-                setTargetsNumbers(generateTargets(DEFAULT_TARGETS, excludedTargetNumbers));
-                setExcludedTargetNumbers([...excludedTargetNumbers, ...targetsNumbers])
+                // setTargetsNumbers(generateTargets(DEFAULT_TARGETS, excludedTargetNumbers));
+                // setExcludedTargetNumbers([...excludedTargetNumbers, ...targetsNumbers])
+
+                const newTargets = generateTargets(DEFAULT_TARGETS, excludedTargetNumbers);
+                setTargetsNumbers(newTargets);
+                setExcludedTargetNumbers(prevExcluded => [...prevExcluded, ...newTargets]);
             }, 1000)
 
         }

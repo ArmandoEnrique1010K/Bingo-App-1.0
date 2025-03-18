@@ -5,7 +5,16 @@ let allNumbers = Array.from({ length: 75 }, (_, index) => index + 1);
 export function generateTargets(quantity: number, excludedNumbers: number[]) {
 
     // Filtrar los números excluidos de `allNumbers`
-    allNumbers = allNumbers.filter(n => !excludedNumbers.includes(n));
+    // allNumbers = allNumbers.filter(n => !excludedNumbers.includes(n));
+
+    // Restablecer allNumbers si excludedNumbers está vacío
+    if (excludedNumbers.length === 0) {
+        allNumbers = Array.from({ length: 75 }, (_, index) => index + 1);
+    } else {
+        // Filtrar los números excluidos de `allNumbers`
+        allNumbers = allNumbers.filter(n => !excludedNumbers.includes(n));
+    }
+
 
     // Validar que haya suficientes números disponibles
     if (quantity > allNumbers.length) {
