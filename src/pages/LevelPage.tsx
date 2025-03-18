@@ -6,6 +6,8 @@ import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
 import { DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
 import ModalWithButton from "../components/Modal/ModalWithButton";
 import { BingoContext } from "../context/BingoContext";
+import Bots from "../components/Bot/Bots";
+
 
 
 // Pagina de un nivel
@@ -28,8 +30,10 @@ export default function LevelPage() {
         handleChangeBoard,
         isAtLastBoard,
         currentBoard,
-        winner
-
+        winner,
+        bots,
+        dataLevel,
+        currentLevel,
     } = useContext(BingoContext)
 
     // // Obtiene los datos del nivel actual usando el metodo find.
@@ -464,18 +468,25 @@ export default function LevelPage() {
                         <div className={`sm:flex sm:flex-row grid  grid-cols-2 items-center justify-center  sm:mx-auto sm:mt-4 mt-0 mx-2 gap-3 mb-4 ${viewPlayerBoard === false ? "" : "hidden"}`}>
                             {
                                 // SECCION PARA AGRUPAR TODOS LOS BOTS
-                                // bots.map((bot, index) => (
-                                //     <Bot key={bot.name} currentLevel={dataLevel} targets={targetsNumbers} interval={bot.interval} name={bot.name}
-                                //         patterns={winnerPatters} boards={bot.boards}
-                                //         nextBoards={
-                                //             bot.boards
-                                //                 ? currentLevel.bots[index + 1]?.boards
-                                //                 : 0
-                                //         } defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                                //         handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
-                                //         color={color}
-                                //     />
-                                // ))
+                                 bots.map((bot, index) => (
+                                     <Bots 
+                                     key={bot.name} 
+                                     currentLevel={dataLevel!} 
+                                     targets={targetsNumbers} 
+                                     interval={bot.interval} 
+                                     name={bot.name}
+                                         patterns={winnerPatters} 
+                                         boards={bot.boards}
+                                         nextBoards={ bot.boards ? dataLevel!.bots[index + 1]?.boards : 0} 
+                                         
+                                        //  defeat={defeat} 
+                                        //  handleSetDefeat={handleSetDefeat} 
+                                        //  victory={victory}
+                                        //  handleSetVictory={handleSetVictory} 
+                                        //  handleCleanTargets={handleCleanTargets}
+                                        //  color={color}
+                                     />
+                                 ))
                             }
                         </div>
                     )

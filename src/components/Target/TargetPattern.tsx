@@ -10,7 +10,7 @@ type TargetPatternProps = {
 // Componente para mostrar el patrón objetivo
 export default function TargetPattern({ color, text, patterns }: TargetPatternProps) {
 
-    console.log(color);
+    // console.log(color);
     return (
         <div className="w-full bg-gray-700 p-3 rounded-lg shadow-lg flex flex-col sm:min-w-20 sm:ml-0 sm:mr-0 mr-2 sm:w-auto ">
             <div className={`sm:text-xl font-semibold text-center mb-4 text-${color}-500`}>

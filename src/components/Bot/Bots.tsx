@@ -1,8 +1,10 @@
-import { useEffect, useMemo, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import { generateBoard } from "../../utils/generateBoard";
 import { BoardID, Level, Pattern, ResultNumberBoardsBot, SelectedNumbers, SelectedPositions } from "../../types";
 import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
+import { BingoContext } from "../../context/BingoContext";
+import { BOT_REACTION_DELAY } from "../../constants";
 
 type BotsProps = {
     currentLevel: Level,
@@ -11,18 +13,13 @@ type BotsProps = {
     name: string,
     patterns: Pattern[]
     boards: number
-    handleSetDefeat: (boolean: boolean) => void,
-    defeat: boolean,
-    handleSetVictory: (boolean: boolean) => void,
-    victory: boolean,
-    handleCleanTargets: () => void,
     nextBoards: number
-    color: string
 }
 
-export default function Bots({ currentLevel, targets, interval, name, patterns, handleSetDefeat, defeat, handleSetVictory,
-    victory, boards, handleCleanTargets, nextBoards, color }: BotsProps) {
+export default function Bots({ currentLevel, targets, interval, name, patterns, boards, nextBoards, }: BotsProps) {
 
+
+    const {winner, handleCleanTargets, color, setWinner} =    useContext(BingoContext)
     // Variables de estado
 
     // Tablero del bot
@@ -49,7 +46,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         }));
 
         // FUNCIONA: AÑADIR DEFEAT
-    }, [boards, defeat])
+    }, [boards, winner])
 
 
     // READY??? : DE ALGUNA MANERA, SI EL BOT HA GANADO, DEBE DEJAR DE SEGUIR EVALUANDO
@@ -65,7 +62,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
 
     useEffect(() => {
-        if (!botBoard.length || !targets.length || defeat) return; // Si no hay tableros, objetivos o el juego terminó, no ejecuta
+        if (!botBoard.length || !targets.length || (winner === 'bot')) return; // Si no hay tableros, objetivos o el juego terminó, no ejecuta
 
         // Limpia los temporizadores previos
         timeoutIds.forEach((id) => clearTimeout(id));
@@ -102,7 +99,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         return () => {
             newTimeoutIds.forEach((id) => clearTimeout(id));
         };
-    }, [currentLevel, targets, botBoard, interval, result, name, defeat]);
+    }, [currentLevel, targets, botBoard, interval, result, name, winner]);
 
 
     // Efecto: Encuentra los números objetivos en los tableros
@@ -176,8 +173,12 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // Verifica si un patrón ganador está presente en los tableros del bot
     const handleCheckWinnerPatternBot = () => {
-        if (defeat) return; // Si el juego terminó, no evalúa
+        if (winner === 'bot') return; // Si el juego terminó, no evalúa
 
+        if (winner === 'player'){
+            console.log('EL JUGADOR ES EL GANADOR DEL NIVEL')
+            return
+        }
         // Itera por cada tablero del bot
         for (const board of botSelectedPositions) {
 
@@ -189,25 +190,25 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             );
 
             // Si es true hasWinningPattern
-            if (hasWinningPattern) {
+            if (hasWinningPattern && winner === 'none') {
                 // console.log(
                 //     `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
                 // );
-
+                console.log(`EL BOT TIENE UNO DE LOS PATRONES GANADORES, ESPERANDO ${BOT_REACTION_DELAY/1000} SEGUNDOS PARA DEFINIR AL GANADOR... `)
+                // AQUI SE TIENE QUE ESTABLECER QUE EL BOT HA GANADO EL JUEGO (AL MENOS 5 SEGUNDOS DE DEMORA)
                 const timeoutId = setTimeout(() => {
-                    if (victory) {
-                        // console.log("El jugador ganó antes de que el bot terminara");
-                        handleSetDefeat(false);
-                    } else {
-                        handleSetDefeat(true);
-                        handleSetVictory(false);
+                    if (winner === 'none') {
+                        setWinner('bot'); // Establece el ganador como 'bot'
                         handleCleanTargets(); // Limpia los números objetivos
-                        // console.log("SE ACABO EL JUEGO: el bot ganó");
+                        console.log("SE ACABO EL JUEGO: el bot ganó");
                     }
-                }, 5000);
+                }, BOT_REACTION_DELAY);
 
                 // Limpia los temporizadores
                 return () => clearTimeout(timeoutId);
+
+                // // Limpia los temporizadores
+                // return () => clearTimeout(timeoutId);
             }
         }
     };
@@ -215,7 +216,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
     // Evalúa si hay un patrón ganador cada vez que cambian las posiciones marcadas
     useEffect(() => {
         handleCheckWinnerPatternBot();
-    }, [botSelectedNumbers]);
+    }, [botSelectedNumbers, winner]);
 
     // Reinicia el bot si el jugador gana
     useEffect(() => {
@@ -232,7 +233,7 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
 
     // Reinicia el bot si el bot gana
     useEffect(() => {
-        if (!defeat) {
+        if (winner === 'bot') {
             setBotBoard(newBoards);
             setBotSelectedPositions(Array.from({ length: boards }).map((_, index) => ({
                 idBoard: index + 1,
@@ -244,19 +245,19 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             })));
         }
 
-        if (defeat) {
+        // if (winner === 'bot') {
 
-            console.log('reinciando tablero del bot')
-        }
-    }, [defeat]);
+        //     console.log('reinciando tablero del bot')
+        // }
+    }, [winner]);
 
-    const getQuantityBoards = () => {
-        console.log(boards)
-    }
+    // const getQuantityBoards = () => {
+    //     console.log(boards)
+    // }
 
-    useEffect(() => {
-        getQuantityBoards()
-    }, [])
+    // useEffect(() => {
+    //     getQuantityBoards()
+    // }, [])
 
     return (
         // DE ALGUNA FORMA SE TIENE QUE OBTENER EL ID DE LOS BOTS

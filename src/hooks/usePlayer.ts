@@ -4,6 +4,7 @@ import { BoardID, Level, Pattern, SelectedNumbers, SelectedPositions, Winner } f
 import { generateBoard } from "../utils/generateBoard";
 import { generateTargets } from "../utils/generateTargets";
 import { DEFAULT_TARGETS, MAX_TURNS } from "../constants";
+import { useLocation } from "react-router";
 
 const initialDataLevel = {
     level: 0,
@@ -23,6 +24,9 @@ const initialDataLevel = {
 }
 
 export default function usePlayer() {
+
+    // SOLAMENTE ESE HOOK SE PUEDE UTILIZAR EN ESTE COMPONENTE
+    const location = useLocation();
 
     // Establece los niveles desbloqueados
     const initialLevels = (): number[] => {
@@ -80,13 +84,15 @@ export default function usePlayer() {
 
     // UNA SOLUCIÓN ES OBTENER DE LA URL EL NIVEL ACTUAL ('level_1', level_2, level_3), TOMAR ESE NUMERO Y GUARDARLO EN EL STATE DE CURRENTLEVEL
     useEffect(() => {
-        const path = window.location.pathname;
+        const path = location.pathname;
         const levelMatch = path.match(/level_(\d+)/);
         if (levelMatch) {
             const levelNumber = parseInt(levelMatch[1], 10);
             setCurrentLevel(levelNumber);
             setWinner('none');
         }
+
+        console.log(`EL ENDPOINT ACTUAL ES: ${location.pathname}`)
     }, []);
 
     // Tableros del jugador

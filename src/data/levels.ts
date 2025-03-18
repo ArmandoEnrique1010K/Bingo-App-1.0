@@ -90,7 +90,7 @@ export const levels: Level[] = [
                 // Nombre (debe ser único)
                 name: "S-Bot",
                 // Tiempo de respuesta en milisegundos
-                interval: 2400,
+                interval: 100,
                 // Número de tableros para el bot (maximo: 3)
                 boards: 1
             },

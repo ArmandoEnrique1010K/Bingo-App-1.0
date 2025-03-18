@@ -11,6 +11,10 @@ export const MAX_TURNS = 20;
 // Nivel final
 export const FINAL_LEVEL = 30;
 
+// Tiempo de respuesta de reacción del bot si ha ganado (milisegundos) (/1000)
+export const BOT_REACTION_DELAY = 10000
+
+
 // Numero máximo de potenciadores
 // export const MAX_POWERUPS = 3;
 // https://github.com/tailwindlabs/tailwindcss/discussions/13881
