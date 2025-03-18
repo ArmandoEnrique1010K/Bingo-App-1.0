@@ -15,7 +15,7 @@ export default function ModalWithButton(
 ) {
 
     // Llama al contexto
-    const { handleCheckWinnerPattern, setWinner, color, currentLevel, setCurrentLevel } = useContext(BingoContext)
+    const { handleCheckWinnerPattern, setWinner, color, currentLevel, setCurrentLevel, startMusic } = useContext(BingoContext)
 
     // Estado para ver la ventana modal
     const [isOpen, setIsOpen] = useState(initialState);
@@ -66,6 +66,10 @@ export default function ModalWithButton(
         setWinner('none')
     }
 
+    function closeAndPlayMusic(){
+        close()
+        startMusic();
+    }
     return (
         <>
             {/* Ejecuta la acción de acuerdo al tipo de modal */}
@@ -78,7 +82,7 @@ export default function ModalWithButton(
                     shadow-md transition duration-300 sm:text-base text-sm`}>Abandonar partida</button>
                 ) : ('')
             }
-            <ModalBase modal={modal} open={open} close={close} isOpen={isOpen} tryAgain={tryAgain} leaveGame={leaveGame} nextLevel={nextLevel} />
+            <ModalBase modal={modal} open={open} close={close} isOpen={isOpen} tryAgain={tryAgain} leaveGame={leaveGame} nextLevel={nextLevel} closeAndPlayMusic={closeAndPlayMusic}/>
         </>
     )
 }

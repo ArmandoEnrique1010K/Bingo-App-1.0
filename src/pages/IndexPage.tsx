@@ -7,7 +7,7 @@ import { levels } from '../data/levels'
 // Pagina de inicio
 export default function IndexPage() {
 
-    const { unlockedLevels, setCurrentLevel, setWinner, color } = useContext(BingoContext)
+    const { unlockedLevels, setCurrentLevel, setWinner, color, startMusic } = useContext(BingoContext)
 
     const [menuLevels, setMenuLevels] = useState(false)
 
@@ -28,7 +28,11 @@ export default function IndexPage() {
                         flex items-center justify-center bg-${color}-500 text-white text-2xl font-semibold 
                             p-4` }
                         // Al hacer clic, muestra la lista de niveles
-                        onClick={() => setMenuLevels(true)}
+                        onClick={() => 
+                            
+                            {setMenuLevels(true)
+                                startMusic()
+                            }}
                     >
                         Iniciar juego
                     </button>

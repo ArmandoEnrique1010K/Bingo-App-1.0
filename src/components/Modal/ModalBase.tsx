@@ -13,9 +13,10 @@ type ModalBaseProps = {
     tryAgain: () => void,
     leaveGame: () => void,
     nextLevel: () => void,
+    closeAndPlayMusic: () => void
 }
 
-export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveGame, nextLevel }: ModalBaseProps) {
+export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveGame, nextLevel, closeAndPlayMusic }: ModalBaseProps) {
 
     const { color, currentLevel } = useContext(BingoContext)
 
@@ -34,7 +35,7 @@ export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveG
                             data-[closed]:transform-[scale(95%)] data-[closed]:opacity-0"
                         >
                             <DialogTitle as="h2" className="text-4xl font-semibold text-center text-gray-900 mb-10">
-                                {modal.title}
+                                {modal.title} {modal.type === 'start' && currentLevel}
                             </DialogTitle>
                             <div className="space-y-3 text-lg text-gray-700">
                                 <p className='text-center'>
@@ -66,7 +67,19 @@ export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveG
                                             </Button>
                                         )
 
-                                    ) : (
+                                    ) : (modal.type === 'start') ? (
+                                        <Button
+                                        onClick={closeAndPlayMusic}
+                                        // bg-gray-500
+                                        className={`w-full py-2 px-4 font-semibold bg-${
+                                            color}-500 text-white rounded-lg text-lg focus:outline-none transition-all duration-300`}
+                                    >
+                                        {modal.textButton.left}
+                                    </Button>
+
+                                    )
+                                    
+                                    : (
                                         <Button
                                             onClick={modal.type === 'defeat' ? tryAgain : leaveGame}
                                             // Recuerda las pseudoclases de tailwind: hover (el cursor esta 
@@ -83,7 +96,7 @@ export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveG
 
                                 {
                                     (
-                                        (modal.type === 'victory' && currentLevel === FINAL_LEVEL) ||
+                                        (modal.type === 'victory' && currentLevel === FINAL_LEVEL) || (modal.type === 'start') ||
                                         <Button
                                             onClick={modal.type === 'victory' || modal.type === 'defeat' ? leaveGame : close}
                                             className={`w-full py-2 px-4 font-semibold bg-gray-500  text-white rounded-lg text-lg focus:outline-none transition-all duration-300`}

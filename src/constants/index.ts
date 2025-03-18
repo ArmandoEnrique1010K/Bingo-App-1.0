@@ -3,7 +3,7 @@
 import { Modal } from "../types";
 
 // Numero de numeros objetivos por turno por defecto
-export const DEFAULT_TARGETS = 20
+export const DEFAULT_TARGETS = 3
 
 // Turnos maximos por nivel
 export const MAX_TURNS = 20;
@@ -12,7 +12,7 @@ export const MAX_TURNS = 20;
 export const FINAL_LEVEL = 30;
 
 // Tiempo de respuesta de reacción del bot si ha ganado (milisegundos) (/1000)
-export const BOT_REACTION_DELAY = 10000
+export const BOT_REACTION_DELAY = 5000
 
 
 // Numero máximo de potenciadores
@@ -64,5 +64,15 @@ export const FINAL_LEVEL_VICTORY_MODAL: Modal = {
     textButton: {
         left: "Salir al menú",
         right: "" // FALSY
+    }
+}
+
+export const START_LEVEL_MODAL: Modal = {
+    type: "start",
+    title: "Nivel ",
+    message: "¿Listo para empezar?",
+    textButton: {
+        left: "Ok",
+        right: ""
     }
 }

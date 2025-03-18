@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { MAX_TURNS } from "../../constants";
 
 // No olvidar definir los types para las propiedades recibidas
@@ -49,6 +49,7 @@ export default function TargetNumbers({ handleChangeTargets, targets, round, col
     // Función para obtener el texto dinámico del botón
     const getButtonText = () => {
         if (round === 0) {
+            // DEBE REPRODUCIR MUSICA SI EL ROUND ES 0
             return "Iniciar";
         }
         if (round === MAX_TURNS) return "Rendirse"

@@ -37,6 +37,10 @@ type BingoContextProps = {
     winner: Winner,
     selectedPositionsInBoards: SelectedPositions
     excludedTargetNumbers: number[]
+    isPlaying: boolean
+    stopMusic: () => void
+    
+    startMusic: () => Promise<void>
 }
 
 type BingoProviderProps = {
@@ -80,7 +84,10 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
         dataLevel,
         winner,
         selectedPositionsInBoards,
-        excludedTargetNumbers
+        excludedTargetNumbers,
+        isPlaying,
+        stopMusic,
+        startMusic
     } = usePlayer()
     return (
         <BingoContext.Provider value={{
@@ -116,7 +123,11 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
             currentLevel,
             winner,
             selectedPositionsInBoards,
-            excludedTargetNumbers
+            excludedTargetNumbers,
+            isPlaying,
+            stopMusic,
+            startMusic
+    
         }}>
             {children}
         </BingoContext.Provider>

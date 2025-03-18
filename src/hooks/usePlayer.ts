@@ -5,6 +5,7 @@ import { generateBoard } from "../utils/generateBoard";
 import { generateTargets } from "../utils/generateTargets";
 import { DEFAULT_TARGETS, MAX_TURNS } from "../constants";
 import { useLocation } from "react-router";
+import * as Tone from 'tone'
 
 const initialDataLevel = {
     level: 0,
@@ -412,6 +413,79 @@ export default function usePlayer() {
         setViewPlayerBoard(!viewPlayerBoard)
     }
 
+    /////////////////////////////////////////////////////////////////////
+    // CONFIGURACIONES DE SONIDO Y AUDIO CON TONEJS
+
+
+    // EN REPRODUCCIÓN DE AUDIO ?
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    // Estado para el reproductor de audio
+    // Se utiliza un constructor como valor por defecto.
+    const [player, setPlayer] = useState<Tone.Player>(new Tone.Player());
+
+    // Efecto secundario que se monta al cargar el componente
+    useEffect(() => {
+        // Configura el reproductor y carga el archivo MP3
+        const audioPlayer = new Tone.Player({
+            // url: "/music/tap_out.mp3", // Nombre del archivo de audio
+            url: `/music/${dataLevel.music}.mp3`, // Nombre del archivo de audio
+            loop: true, // Activa el bucle
+            autostart: false, // No comienza automáticamente
+
+            // TODO: EL VOLUMEN DEBE SER DINAMICO
+            volume: -15, // Reduce el volumen
+        }).toDestination(); // Conecta el audio a la salida principal
+
+        // Actualiza el estado de player
+        setPlayer(audioPlayer);
+
+        // Cargar los buffers
+        // Tone.loaded().then(() => {
+        //     console.log("Todos los archivos de audio están listos.");
+        // });
+        // Limpieza al desmontar el componente
+        return () => {
+            audioPlayer.stop();
+            audioPlayer.dispose();
+        };
+    }, [dataLevel]);
+
+    // Función para iniciar la música de fondo
+    const startMusic = async () => {
+        // Utiliza un try-catch en funciones asincronas
+        try {
+            // Espera a que llame
+            await Tone.start();
+            console.log(`Ahora se esta reproduciendo: ${dataLevel.music}`)
+
+            // Reproduce el audio si el estado de player esta listo
+            if (player && player.loaded) {
+                player.start(); // Reproduce el audio
+                setIsPlaying(true); // Actualiza el state de isPlaying
+                // console.log('El audio está en reproducción');
+            }
+
+        } catch (error) {
+            // Muestra un mensaje de error
+            // console.error('Audio buffer is not loaded yet' + error);
+            console.error('No se pudo cargar el archivo de audio' + error);
+        }
+    };
+
+    // Función para detener la música de fondo
+    const stopMusic = () => {
+        player?.stop(); // Detiene la reproducción
+        setIsPlaying(false);
+    };
+
+
+
+    // useEffect(() => {
+    //     startMusic()
+    // }, [])
+
+
     return {
         color,
         round,
@@ -445,6 +519,13 @@ export default function usePlayer() {
         dataLevel,
         winner,
         selectedPositionsInBoards,
-        excludedTargetNumbers
+        excludedTargetNumbers,
+
+
+        // Contanstes, estados y funciones relacionados con sonido y audio
+        isPlaying,
+        stopMusic,
+        startMusic
+
     }
 }

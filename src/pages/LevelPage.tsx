@@ -3,7 +3,7 @@ import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
-import { DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
+import { DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, START_LEVEL_MODAL, VICTORY_MODAL } from "../constants";
 import ModalWithButton from "../components/Modal/ModalWithButton";
 import { BingoContext } from "../context/BingoContext";
 import Bots from "../components/Bot/Bots";
@@ -510,6 +510,8 @@ export default function LevelPage() {
 
                     )
                 }
+
+                <ModalWithButton modal={START_LEVEL_MODAL} initialState={true}/>
             </div>
             {
                 // TODO: ESTE BOTON DEBE ESTAR ABAJO DE LA PANTALLA

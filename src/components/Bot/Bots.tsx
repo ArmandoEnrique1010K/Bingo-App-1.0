@@ -5,6 +5,7 @@ import { dynamicInterval } from "../../utils/dynamicInterval";
 import BotBoardNumbers from "./BotBoardNumbers";
 import { BingoContext } from "../../context/BingoContext";
 import { BOT_REACTION_DELAY } from "../../constants";
+import { useLocation } from "react-router";
 
 type BotsProps = {
     currentLevel: Level,
@@ -18,6 +19,8 @@ type BotsProps = {
 
 export default function Bots({ currentLevel, targets, interval, name, patterns, boards, nextBoards, }: BotsProps) {
 
+    // SOLAMENTE ESE HOOK SE PUEDE UTILIZAR EN ESTE COMPONENTE
+    const location = useLocation();
 
     const {winner, handleCleanTargets, color, setWinner} =    useContext(BingoContext)
     // Variables de estado
@@ -178,7 +181,12 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         if (winner === 'player'){
             console.log('EL JUGADOR ES EL GANADOR DEL NIVEL')
             return
-        }
+        }                      
+        
+        const path = location.pathname;
+        console.log('EL ENDPOINT ACTUAL ES: ' + location.pathname)
+        console.log('EL NIVEL ACTUAL ES: ' + currentLevel.level)
+
         // Itera por cada tablero del bot
         for (const board of botSelectedPositions) {
 
@@ -190,19 +198,23 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
             );
 
             // Si es true hasWinningPattern
-            if (hasWinningPattern && winner === 'none') {
+            if (hasWinningPattern) {
                 // console.log(
                 //     `Tu oponente ${name} tiene el patrón asignado en su tablero ${board.idBoard}, tienes 5 segundos para intentar ganarle, nivel: ${currentLevel.level}`
                 // );
                 console.log(`EL BOT TIENE UNO DE LOS PATRONES GANADORES, ESPERANDO ${BOT_REACTION_DELAY/1000} SEGUNDOS PARA DEFINIR AL GANADOR... `)
                 // AQUI SE TIENE QUE ESTABLECER QUE EL BOT HA GANADO EL JUEGO (AL MENOS 5 SEGUNDOS DE DEMORA)
                 const timeoutId = setTimeout(() => {
-                    if (winner === 'none') {
-                        setWinner('bot'); // Establece el ganador como 'bot'
-                        handleCleanTargets(); // Limpia los números objetivos
-                        console.log("SE ACABO EL JUEGO: el bot ganó");
-                    }
-                }, BOT_REACTION_DELAY);
+
+                                            // TODO: EVALUAR SI ESTA EN EL MISMO NIVEL ACTUAL
+                    setWinner((prevWinner) => {
+                        if (prevWinner === 'none' && path === `/level_${currentLevel.level}`) {
+                            handleCleanTargets(); // Limpia los números objetivos
+                            console.log("SE ACABO EL JUEGO: el bot ganó");
+                            return 'bot'; // Establece el ganador como 'bot'
+                        }
+                        return prevWinner;
+                    });}, BOT_REACTION_DELAY);
 
                 // Limpia los temporizadores
                 return () => clearTimeout(timeoutId);
@@ -213,10 +225,9 @@ export default function Bots({ currentLevel, targets, interval, name, patterns, 
         }
     };
 
-    // Evalúa si hay un patrón ganador cada vez que cambian las posiciones marcadas
     useEffect(() => {
         handleCheckWinnerPatternBot();
-    }, [botSelectedNumbers, winner]);
+    }, [botSelectedNumbers]);
 
     // Reinicia el bot si el jugador gana
     useEffect(() => {
