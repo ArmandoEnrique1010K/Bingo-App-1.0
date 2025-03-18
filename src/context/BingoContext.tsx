@@ -1,6 +1,6 @@
 import { createContext, ReactNode } from "react";
 import usePlayer from "../hooks/usePlayer";
-import { BoardID, Bot, Pattern, SelectedNumbers, Winner } from "../types";
+import { BoardID, Bot, Level, Pattern, SelectedNumbers, SelectedPositions, Winner } from "../types";
 
 type BingoContextProps = {
     color: string
@@ -21,7 +21,7 @@ type BingoContextProps = {
     setWinner: React.Dispatch<React.SetStateAction<Winner>>,
     handleCleanTargets: () => void,
 
-    handleCheckWinnerPattern: () => void,
+    handleCheckWinnerPattern: () => boolean,
     viewPlayerBoard: boolean
 
 
@@ -31,6 +31,11 @@ type BingoContextProps = {
     music: string,
     bots: Bot[],
     unlockedLevels: number[]
+    currentBoard: number
+    currentLevel: number
+    dataLevel: Level | undefined
+    winner: Winner,
+    selectedPositionsInBoards: SelectedPositions
 }
 
 type BingoProviderProps = {
@@ -38,9 +43,10 @@ type BingoProviderProps = {
 }
 
 export const BingoContext = createContext<BingoContextProps>(null!)
-export const BingoProvider = ({children}: BingoProviderProps) => {
+
+export const BingoProvider = ({ children }: BingoProviderProps) => {
     // const text = 'CONTEXTO DE REACT'
-    const {        color,
+    const { color,
         round,
         targetsNumbers,
         winnerPatters,
@@ -68,9 +74,15 @@ export const BingoProvider = ({children}: BingoProviderProps) => {
         music,
         bots,
         unlockedLevels,
-} = usePlayer()
+        currentBoard,
+        currentLevel,
+        dataLevel,
+        winner,
+        selectedPositionsInBoards,
+    } = usePlayer()
     return (
-        <BingoContext.Provider value={{        color,
+        <BingoContext.Provider value={{
+            color,
             round,
             targetsNumbers,
             winnerPatters,
@@ -84,21 +96,25 @@ export const BingoProvider = ({children}: BingoProviderProps) => {
             handleChangeTargets,
             setCurrentLevel,
             handleChangeViewPlayerBoard,
-    
+
             setWinner,
             handleCleanTargets,
-    
+
             handleCheckWinnerPattern,
             viewPlayerBoard,
-    
-    
+            dataLevel,
+
             isAtFirstBoard,
             handleChangeBoard,
             isAtLastBoard,
             music,
             bots,
             unlockedLevels,
-    }}>
+            currentBoard,
+            currentLevel,
+            winner,
+            selectedPositionsInBoards,
+        }}>
             {children}
         </BingoContext.Provider>
     )

@@ -37,8 +37,9 @@ export default function usePlayer() {
 
     // Obtiene los datos del nivel actual usando el metodo find.
     useEffect(() => {
-        const result = levels.find(l => l.level === dataLevel?.level) || levels[0];
+        const result = levels.find(l => l.level === currentLevel);
         setDataLevel(result);
+        console.log('EL NIVEL ACTUAL ES: ' + result?.level)
     }, [currentLevel]);
 
     const {
@@ -57,6 +58,21 @@ export default function usePlayer() {
         music = ''
     } = dataLevel || {};
 
+    useEffect(() => {
+        console.log(patterns)
+    }, [currentLevel])
+
+
+    // UNA SOLUCIÓN ES OBTENER DE LA URL EL NIVEL ACTUAL ('level_1', level_2, level_3), TOMAR ESE NUMERO Y GUARDARLO EN EL STATE DE CURRENTLEVEL
+    useEffect(() => {
+        const path = window.location.pathname;
+        const levelMatch = path.match(/level_(\d+)/);
+        if (levelMatch) {
+            const levelNumber = parseInt(levelMatch[1], 10);
+            setCurrentLevel(levelNumber);
+            setWinner('none');
+        }
+    }, []);
 
     // Tableros del jugador
     const [playerBoards, setPlayerBoards] = useState<BoardID>([]);
@@ -65,7 +81,7 @@ export default function usePlayer() {
     const [targetsNumbers, setTargetsNumbers] = useState<number[]>([]);
 
     // Patrones ganadores
-    const [winnerPatters, setWinnerPatterns] = useState<Pattern[]>(patterns);
+    const [winnerPatters, setWinnerPatterns] = useState<Pattern[]>(dataLevel?.patterns || [[13]]);
 
 
     // Posiciones de los numeros seleccionados (se utiliza el type SelectedPositions)
@@ -74,23 +90,29 @@ export default function usePlayer() {
     // Números seleccionados
     const [selectedNumbersInBoards, setSelectedNumbersInBoards] = useState<SelectedNumbers>([]);
 
-    // Turno o ronda (NO DEBE PASAR DE 25 RONDAS)
+    // Turno o ronda (NO DEBE PASAR DE 20 RONDAS)
     const [round, setRound] = useState(0)
 
     // EL GANADOR
-    const [winner, setWinner] = useState<Winner>('none') // player, bot, none
+    const [winner, setWinner] = useState<Winner>('') // player, bot, none, end
 
     // NUMEROS EXCLUIDOS (YA QUE MOSTRARON EN LOS NUMEROS OBJETIVOS)
     const [excludedTargetNumbers, setExcludedTargetNumbers] = useState<number[]>([]);
 
 
+    // // Efecto para cargar los posibles patrones y almacenarlo en el state de patterns
+    // useEffect(() => {
+    //     setWinnerPatterns(patterns);
+    //     console.log('SE CARGO LOS PATRONES DE ESTE NIVEL: ' + dataLevel?.patterns)
+    // }, [currentLevel])
+
     // Efecto para cargar los posibles patrones y almacenarlo en el state de patterns
     useEffect(() => {
-        setWinnerPatterns(patterns);
-        console.log('SE CARGO LOS PATRONES DE ESTE NIVEL')
-    }, [currentLevel])
-
-
+        if (dataLevel?.patterns) {
+            setWinnerPatterns(dataLevel.patterns);
+            console.log('SE CARGARON LOS PATRONES DE ESTE NIVEL: ' + dataLevel.patterns);
+        }
+    }, [dataLevel]);
     // Usar useMemo de esta manera asegura que newBoards se recalculará solo cuando currentLevel.boards 
     // cambie, lo cual es una buena práctica para evitar renders innecesarios y mejorar el rendimiento.
 
@@ -121,7 +143,7 @@ export default function usePlayer() {
         }
 
         // TODO: ¿CONVIENE COLOCAR defeat y victory EN EL ARREGLO DE DEPENDENCIAS?
-    }, [winner])
+    }, [winner, boards])
 
     // EFECTO SECUNDARIO
 
@@ -130,12 +152,15 @@ export default function usePlayer() {
         if (winner === 'none') {
             console.log('AUN NO HAY GANADOR')
             resetLevel()
+            console.log(newBoards)
         }
-    }, [winner])
+    }, [winner, level])
+
 
 
     // Función para establecer los valores iniciales al empezar o reiniciar el nivel
     const resetLevel = () => {
+        console.log('RESETLEVEL: Generando tableros y limpiando números objetivos');
         // Genera los tableros y se limpian los numeros objetivos
         setPlayerBoards(newBoards)
         setTargetsNumbers([]);
@@ -289,7 +314,10 @@ export default function usePlayer() {
             // especificada en la función flecha.
             // Dentro de la función de every se utiliza some para verificar si al menos uno de los elementos en 
             // board.positions es igual a n.
-            if (patterns?.some(p => p.every(n => board.positions.some(
+            console.log(winnerPatters);
+            console.log(selectedPositionsInBoards)
+
+            if (winnerPatters?.some(p => p.every(n => board.positions.some(
                 position => position === n
             )))) {
 
@@ -389,7 +417,6 @@ export default function usePlayer() {
         handleChangeTargets,
         setCurrentLevel,
         handleChangeViewPlayerBoard,
-
         setWinner,
         handleCleanTargets,
 
@@ -403,5 +430,11 @@ export default function usePlayer() {
         music,
         bots,
         unlockedLevels,
+        currentBoard,
+        currentLevel,
+        dataLevel,
+        winner,
+        selectedPositionsInBoards,
+
     }
 }

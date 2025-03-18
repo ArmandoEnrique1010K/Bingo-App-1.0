@@ -1,6 +1,5 @@
-import { useContext } from "react"
 import Router from "./routes/Router"
-import { BingoContext } from "./context/BingoContext"
+import { BrowserRouter } from "react-router"
 
 function App() {
 
@@ -10,7 +9,9 @@ function App() {
   // console.log(text)
   return (
     <>
-      <Router />
+      <BrowserRouter>
+        <Router />
+      </BrowserRouter>
     </>
   )
 }

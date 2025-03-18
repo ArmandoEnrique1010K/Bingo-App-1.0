@@ -1,5 +1,5 @@
-import { lazy, Suspense, useContext, useEffect, useState } from "react";
-import { BrowserRouter, Navigate, Route, Routes } from "react-router";
+import { lazy, Suspense, useContext } from "react";
+import { Navigate, Route, Routes } from "react-router";
 import Layout from "../layouts/Layout";
 import { BingoContext } from "../context/BingoContext";
 
@@ -11,10 +11,10 @@ const LevelPage = lazy(() => import('../pages/LevelPage'));
 // Componente de tipo router, define las rutas que tendrá la aplicación
 export default function Router() {
 
-    const {unlockedLevels} = useContext(BingoContext)
+    const { unlockedLevels } = useContext(BingoContext)
 
     // Almacena los niveles desbloqueados en un arreglo utilizando la API LocalStorage
-            // El nivel 1 siempre estara desbloqueado)
+    // El nivel 1 siempre estara desbloqueado)
     // const initialLevels = (): number[] => {
     //     const localStorageLevels = localStorage.getItem('unlockedLevels')
     //     return localStorageLevels ? JSON.parse(localStorageLevels) : [1]
@@ -43,41 +43,36 @@ export default function Router() {
 
     return (
         // Habilita el sistema de rutas de React Router
-        <BrowserRouter>
-            <Routes>
-                {/* Un Route contiene el Layout, se muestra en cada ruta contenida */}
-                <Route element={<Layout />}>
+        <Routes>
+            {/* Un Route contiene el Layout, se muestra en cada ruta contenida */}
+            <Route element={<Layout />}>
 
-                    {/* Ruta hacia la pagina de inicio
+                {/* Ruta hacia la pagina de inicio
                     // Suspense lleva la propiedad fallback para mostrar un contenido mientras
                         // se carga la página web
                     */}
-                    <Route path="/" element={
-                        <Suspense fallback="Cargando...">
-                            <IndexPage unlockedLevels={unlockedLevels} />
-                        </Suspense>
-                    } />
+                <Route path="/" element={
+                    <Suspense fallback="Cargando...">
+                        <IndexPage />
+                    </Suspense>
+                } />
 
-                    {/* En lugar de definir las rutas para los niveles, se utiliza una ruta dinamica para ir hacia 
+                {/* En lugar de definir las rutas para los niveles, se utiliza una ruta dinamica para ir hacia 
                     un nivel desbloqueado 
                     // Itera con unlockedLevels para definir las rutas dinamicas */}
-                    {
-                        unlockedLevels.map((level) => (
-                            <Route key={level} path={`/level_${level}`} element={
-                                <Suspense fallback="Cargando...">
+                {
+                    unlockedLevels.map((level) => (
+                        <Route key={level} path={`/level_${level}`} element={
+                            <Suspense fallback="Cargando...">
+                                <LevelPage />
+                            </Suspense>
+                        } />
+                    ))
+                }
 
-                                    {/* TODO: PASAR ESTO unlockLevel={unlockLevel} */}
-                                    <LevelPage level={level} 
-                                    />
-                                </Suspense>
-                            } />
-                        ))
-                    }
-
-                    {/* Evita que el usuario se saltee de niveles o acceda a una pagina no definida */}
-                    <Route path="*" element={<Navigate to="/" />} />
-                </Route>
-            </Routes>
-        </BrowserRouter>
+                {/* Evita que el usuario se saltee de niveles o acceda a una pagina no definida */}
+                <Route path="*" element={<Navigate to="/" />} />
+            </Route>
+        </Routes>
     )
 }

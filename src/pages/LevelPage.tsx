@@ -1,30 +1,36 @@
-import { useContext, useEffect, useMemo, useState } from "react";
-import { levels } from "../data/levels";
-import { generateTargets } from "../utils/generateTargets";
-import { generateBoard } from "../utils/generateBoard";
-import { BoardID, Pattern, SelectedNumbers, SelectedPositions } from "../types";
+import { useContext } from "react";
 import TargetsNumbers from "../components/Target/TargetNumbers";
 import BoardNumbers from "../components/Player/BoardNumbers";
 import TargetPattern from "../components/Target/TargetPattern";
-import Bot from "../components/Bot/Bot";
 import { ArrowLeftIcon, ArrowRightIcon } from "@heroicons/react/24/solid";
-import { DEFAULT_TARGETS, DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
+import { DEFEAT_MODAL, EXIT_MODAL, FINAL_LEVEL, FINAL_LEVEL_VICTORY_MODAL, MAX_TURNS, NO_MORE_ROUNDS_MODAL, VICTORY_MODAL } from "../constants";
 import ModalWithButton from "../components/Modal/ModalWithButton";
-import { useLocation } from "react-router";
 import { BingoContext } from "../context/BingoContext";
 
-type LevelPageProps = {
-    level: number
-    // unlockLevel: (number: number) => void
-}
 
 // Pagina de un nivel
 
 // PROBLEMA: COMO PASAR UNA PROP level POR MEDIO DEL CONTEXTO
 export default function LevelPage() {
 
-        const {color, level, round, targetsNumbers, targetText, winnerPatters, handleChangeTargets, viewPlayerBoard, boards, currentBoard, playerBoards, } = useContext(BingoContext)
-    
+    const { color,
+        round,
+        targetsNumbers,
+        winnerPatters,
+        level,
+        targetText,
+        boards,
+        playerBoards,
+        handleChangeTargets,
+        handleChangeViewPlayerBoard,
+        viewPlayerBoard,
+        isAtFirstBoard,
+        handleChangeBoard,
+        isAtLastBoard,
+        currentBoard,
+        winner
+
+    } = useContext(BingoContext)
 
     // // Obtiene los datos del nivel actual usando el metodo find.
     // // Se utiliza levels[0], en el caso de que sea undefined (probabilidad casi 
@@ -104,12 +110,12 @@ export default function LevelPage() {
     //     } else {
     //         return []
     //     }
-        
+
     //     // TODO: ¿CONVIENE COLOCAR defeat y victory EN EL ARREGLO DE DEPENDENCIAS?
     // }, [defeat, victory])
 
     // // EFECTO SECUNDARIO
-    
+
     // // Función para establecer los valores iniciales al empezar o reiniciar el nivel
     // const resetLevel = () => {
     //     // Genera los tableros y los números objetivos se establecen en 0
@@ -396,10 +402,10 @@ export default function LevelPage() {
                                                     idBoard={index}
                                                     // Busca el tablero por su id y lo pasa como propiedad
                                                     board={playerBoards.find(b => b.id === index + 1)?.board || []}
-                                                    handleIsSelectedNumber={handleIsSelectedNumber}
-                                                    handleClickButton={handleClickButton}
-                                                    selectedNumbers={selectedNumbers}
-                                                    color={color}
+                                                // handleIsSelectedNumber={handleIsSelectedNumber}
+                                                // handleClickButton={handleClickButton}
+                                                // selectedNumbers={selectedNumbersInBoards}
+                                                // color={color}
                                                 />
 
                                             )
@@ -435,20 +441,12 @@ export default function LevelPage() {
                                     </div>
                                     <div className="flex flex-row justify-between gap-4">
 
-                                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL} initialState={false}/>
+                                        <ModalWithButton modal={level !== FINAL_LEVEL ? VICTORY_MODAL : FINAL_LEVEL_VICTORY_MODAL} initialState={false} />
 
-                                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={EXIT_MODAL} initialState={false} />
+                                        <ModalWithButton modal={EXIT_MODAL} initialState={false} />
                                     </div>
                                 </div>
 
-                                {/* <div className="flex flex-row justify-center gap-4">
-                    </div> */}
-                                {/* <div className="bg-gray-700 flex flex-row px-3 justify-between gap-3 items-center rounded-xl py-4">
-
-
-
-                    </div>
- */}
                             </div>
 
                         )
@@ -466,20 +464,18 @@ export default function LevelPage() {
                         <div className={`sm:flex sm:flex-row grid  grid-cols-2 items-center justify-center  sm:mx-auto sm:mt-4 mt-0 mx-2 gap-3 mb-4 ${viewPlayerBoard === false ? "" : "hidden"}`}>
                             {
                                 // SECCION PARA AGRUPAR TODOS LOS BOTS
-                                currentLevel.bots.map((bot, index) => (
-                                    <Bot key={bot.name} currentLevel={currentLevel} targets={targets} interval={bot.interval} name={bot.name}
-                                        patterns={patterns} boards={bot.boards}
-                                        // Obten los tableros del siguiente bot en la lista, de lo contrario un undefined
-
-                                        nextBoards={
-                                            bot.boards
-                                                ? currentLevel.bots[index + 1]?.boards
-                                                : 0
-                                        } defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
-                                        handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
-                                        color={color}
-                                    />
-                                ))
+                                // bots.map((bot, index) => (
+                                //     <Bot key={bot.name} currentLevel={dataLevel} targets={targetsNumbers} interval={bot.interval} name={bot.name}
+                                //         patterns={winnerPatters} boards={bot.boards}
+                                //         nextBoards={
+                                //             bot.boards
+                                //                 ? currentLevel.bots[index + 1]?.boards
+                                //                 : 0
+                                //         } defeat={defeat} handleSetDefeat={handleSetDefeat} victory={victory}
+                                //         handleSetVictory={handleSetVictory} handleCleanTargets={handleCleanTargets}
+                                //         color={color}
+                                //     />
+                                // ))
                             }
                         </div>
                     )
@@ -487,9 +483,9 @@ export default function LevelPage() {
 
                 {
                     // Si el jugador ha perdido
-                    defeat === true && (
+                    winner === 'bot' && (
                         // Muestra la ventana modal que se muestra automaticamente
-                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={DEFEAT_MODAL} initialState={true} />
+                        <ModalWithButton modal={DEFEAT_MODAL} initialState={true} />
 
                     )
 
@@ -498,8 +494,8 @@ export default function LevelPage() {
 
                 {
                     /// Si el numero de turnos llega a 3 (limite)
-                    round === MAX_TURNS && defeat === true && (
-                        <ModalWithButton color={color} level={level} handleCheckWinnerPattern={handleCheckWinnerPattern} handleSetDefeat={handleSetDefeat} modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
+                    round === MAX_TURNS && winner === 'end' && (
+                        <ModalWithButton modal={NO_MORE_ROUNDS_MODAL} initialState={true} />
 
                     )
                 }

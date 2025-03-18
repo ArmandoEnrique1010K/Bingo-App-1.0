@@ -87,4 +87,4 @@ export type Modal = {
 
 // }
 
-export type Winner = 'none' | 'player' | 'bot' | 'end'
+export type Winner = 'none' | 'player' | 'bot' | 'end' | ''

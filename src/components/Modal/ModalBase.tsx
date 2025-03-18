@@ -2,20 +2,24 @@ import { Dialog, DialogPanel, DialogTitle, Button } from "@headlessui/react";
 import { FINAL_LEVEL } from "../../constants";
 import { Modal } from "../../types";
 import { Link } from "react-router";
+import { BingoContext } from "../../context/BingoContext";
+import { useContext } from "react";
 
 type ModalBaseProps = {
     modal: Modal,
-    level: number,
     close: () => void,
     open: () => void,
     isOpen: boolean,
     tryAgain: () => void,
     leaveGame: () => void,
-    exit: () => void,
-    color?: string
+    nextLevel: () => void,
 }
 
-export default function ModalBase({ modal, color, level, open, close, isOpen, tryAgain, leaveGame, exit }: ModalBaseProps) {
+export default function ModalBase({ modal, open, close, isOpen, tryAgain, leaveGame, nextLevel }: ModalBaseProps) {
+
+    const { color, currentLevel } = useContext(BingoContext)
+
+
     return (
         <>
             {/* Si se trata de una ventana modal de tipo victoria o derrota no se va a poder cerrar la ventana modal al hacer clic fuera de ella, si es de tipo exit si lo va a poder cerrar */}
@@ -46,16 +50,16 @@ export default function ModalBase({ modal, color, level, open, close, isOpen, tr
                                     modal.type === 'victory' ? (
 
                                         // NO DEBE MOSTRAR ESTE BOTÓN SI ESTA EN EL NIVEL FINAL (20)
-                                        level !== FINAL_LEVEL ? (
+                                        currentLevel !== FINAL_LEVEL ? (
                                             <Link
                                                 className={`w-full py-2 px-4 font-semibold bg-${color}-500 text-white rounded-lg text-lg focus:outline-none transition-all duration-300 text-center`}
-                                                to={`/level_${level + 1}`} onClick={close}
+                                                to={`/level_${currentLevel + 1}`} onClick={nextLevel}
                                             >
                                                 {modal.textButton.left}
                                             </Link>
                                         ) : (
                                             <Button
-                                                onClick={exit}
+                                                onClick={leaveGame}
                                                 // bg-gray-500
                                                 className={`w-full py-2 px-4 font-semibold bg-gray-500 text-white rounded-lg text-lg focus:outline-none transition-all duration-300`}
                                             >
@@ -80,9 +84,9 @@ export default function ModalBase({ modal, color, level, open, close, isOpen, tr
 
                                 {
                                     (
-                                        (modal.type === 'victory' && level === FINAL_LEVEL) ||
+                                        (modal.type === 'victory' && currentLevel === FINAL_LEVEL) ||
                                         <Button
-                                            onClick={modal.type === 'victory' || modal.type === 'defeat' ? exit : close}
+                                            onClick={modal.type === 'victory' || modal.type === 'defeat' ? leaveGame : close}
                                             className={`w-full py-2 px-4 font-semibold bg-gray-500  text-white rounded-lg text-lg focus:outline-none transition-all duration-300`}
                                         >
                                             {modal.textButton.right}

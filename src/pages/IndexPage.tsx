@@ -1,33 +1,22 @@
-import { useState } from 'react'
+import { useContext, useState } from 'react'
 import { Link } from 'react-router'
+import { BingoContext } from '../context/BingoContext'
 import { levels } from '../data/levels'
 
-type IndexProps = {
-    unlockedLevels: number[]
-}
 
 // Pagina de inicio
-export default function IndexPage({ unlockedLevels, }: IndexProps) {
+export default function IndexPage() {
+
+    const { unlockedLevels, setCurrentLevel, setWinner } = useContext(BingoContext)
 
     const [menuLevels, setMenuLevels] = useState(false)
 
+    // TODO: ES POSIBLE TRASLADAR ESTO AL HOOK PERSONALIZADO???
     const getColorLevel = (level: number) => {
         const levelData = levels.find(l => l.level === level);
         const result = levelData ? levelData.color : '';
-        console.log("COLOR: " + result)
         return result;
     }
-
-    // const getMusicLevel = (level: number) => {
-    //     const levelData = levels.find(l => l.level === level);
-    //     const result = levelData ? levelData.music : '';
-    //     console.log("MUSICA: " + result)
-    //     return result;
-    // }
-
-    // useEffect(() => {
-    //     getColorLevel(1)
-    // }, [])
 
     return (
         <div className="min-h-full max-h-full flex flex-col items-center bg-gray-800 text-white">
@@ -54,12 +43,11 @@ export default function IndexPage({ unlockedLevels, }: IndexProps) {
                                         <Link
                                             key={level}
                                             to={`/level_${level}`}
+                                            onClick={() => {
+                                                setCurrentLevel(level)
+                                                setWinner('none')
+                                            }}
                                             className={`bg-${getColorLevel(level)}-500 text-white text-center py-4 rounded-md shadow-lg`}
-                                            // onClick={() => console.log("Haz hecho clic en el nivel")}
-                                            // onClick={() => {
-                                            //     getColorLevel(level)
-                                            //     getMusicLevel(level)
-                                            // }}
                                         >
                                             Nivel {level}
                                         </Link>

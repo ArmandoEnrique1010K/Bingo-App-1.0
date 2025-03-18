@@ -3,10 +3,10 @@
 import { Modal } from "../types";
 
 // Numero de numeros objetivos por turno por defecto
-export const DEFAULT_TARGETS = 3
+export const DEFAULT_TARGETS = 75
 
 // Turnos maximos por nivel
-export const MAX_TURNS = 3;
+export const MAX_TURNS = 20;
 
 // Nivel final
 export const FINAL_LEVEL = 30;

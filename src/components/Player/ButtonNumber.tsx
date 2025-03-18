@@ -1,25 +1,24 @@
-import { useMemo } from "react";
-import { SelectedNumbers } from "../../types";
+import { useContext, useMemo } from "react";
+import { BingoContext } from "../../context/BingoContext";
 
 type ButtonNumberProps = {
-    handleClickButton: (idBoard: number, number: number, position: number) => void,
-    handleIsSelectedNumber: (idBoard: number, position: number) => boolean,
     value: {
         number: number,
         position: number
     },
     idBoard: number
-    selectedNumbers: SelectedNumbers
-    color: string
 }
 
-export default function ButtonNumber({ handleClickButton, handleIsSelectedNumber, value, idBoard, selectedNumbers, color }: ButtonNumberProps) {
+export default function ButtonNumber({ value, idBoard }: ButtonNumberProps) {
+
+    const { handleClickButton, handleIsSelectedNumber, selectedNumbersInBoards, color } = useContext(BingoContext)
 
     // CONTINUAR AQUI
-    const selectNumber = useMemo(() => handleIsSelectedNumber(idBoard, value.position), [selectedNumbers]);
+    const selectNumber = useMemo(() => handleIsSelectedNumber(idBoard, value.position), [selectedNumbersInBoards]);
 
 
-    const activeColor = useMemo(() => selectNumber === true ? color : 'gray', [selectedNumbers]);
+    const activeColor = useMemo(() => selectNumber === true ? color : 'gray', [selectedNumbersInBoards]);
+
 
     // console.log(bgOnHover)
     return (

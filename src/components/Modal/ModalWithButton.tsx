@@ -1,20 +1,20 @@
-import { useState } from "react";
+import { useContext, useState } from "react";
 import { useNavigate } from "react-router";
 import ModalBase from "./ModalBase";
+import { BingoContext } from "../../context/BingoContext";
 import { Modal } from "../../types";
 
 type ModalWithButtonProps = {
     modal: Modal,
-    level: number,
-    handleCheckWinnerPattern: () => boolean,
-    handleSetDefeat: (boolean: boolean) => void,
     initialState: boolean
-    color?: string
 }
 
 // COMPONENTE PARA MOSTRAR LA VENTANA MODAL CON HEADLESS UI
-export default function ModalWithButton({ color, modal, level, handleCheckWinnerPattern, handleSetDefeat, initialState }: ModalWithButtonProps) {
+export default function ModalWithButton(
+    { modal, initialState }: ModalWithButtonProps
+) {
 
+    const { handleCheckWinnerPattern, setWinner, color, currentLevel, setCurrentLevel } = useContext(BingoContext)
 
     // ESTADO PARA ABRIR Y CERRAR
     const [isOpen, setIsOpen] = useState(initialState);
@@ -30,15 +30,17 @@ export default function ModalWithButton({ color, modal, level, handleCheckWinner
     }
 
     // SALIR DEL JUEGO
-    function exit() {
-        navigate('/')
-        handleSetDefeat(false)
-    }
+    // function exit() {
+    //     navigate('/')
+    //     setWinner('none');
+    //     // handleSetDefeat(false)
+    // }
 
     // VOLVER A INTENTAR EL MISMO NIVEL
     function tryAgain() {
-        navigate(`/level_${level}`)
-        handleSetDefeat(false)
+        navigate(`/level_${currentLevel}`)
+        setWinner('none');
+        // handleSetDefeat(false)
         close()
     }
 
@@ -47,12 +49,23 @@ export default function ModalWithButton({ color, modal, level, handleCheckWinner
         if (handleCheckWinnerPattern() === true) {
             // Abre la ventana modal
             setIsOpen(true)
+        } else {
+            console.log('AUN NO HA GANADO EL JUGADOR')
         }
     }
     // Función para salir del juego, redirige hacia el endpoint '/'
     function leaveGame() {
         setIsOpen(false)
         navigate('/')
+        setWinner('')
+    }
+
+
+    function nextLevel() {
+        setIsOpen(false)
+        navigate(`/level_${currentLevel + 1}`)
+        setCurrentLevel(l => l + 1)
+        setWinner('none')
     }
 
     return (
@@ -69,7 +82,7 @@ export default function ModalWithButton({ color, modal, level, handleCheckWinner
 
             }
 
-            <ModalBase color={color} modal={modal} level={level} open={open} close={close} isOpen={isOpen} tryAgain={tryAgain} leaveGame={leaveGame} exit={exit} />
+            <ModalBase modal={modal} open={open} close={close} isOpen={isOpen} tryAgain={tryAgain} leaveGame={leaveGame} nextLevel={nextLevel} />
         </>
     )
 }
