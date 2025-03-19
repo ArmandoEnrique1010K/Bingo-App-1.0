@@ -3,7 +3,7 @@
 import { Modal } from "../types";
 
 // Numero de numeros objetivos por turno por defecto
-export const DEFAULT_TARGETS = 3
+export const DEFAULT_TARGETS = 20
 
 // Turnos maximos por nivel
 export const MAX_TURNS = 20;
@@ -75,4 +75,10 @@ export const START_LEVEL_MODAL: Modal = {
         left: "Ok",
         right: ""
     }
+}
+
+// MUSIC
+export const TAP_OUT = {
+    name: 'tap_out',
+    volume: -15
 }

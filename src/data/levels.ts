@@ -129,7 +129,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: 'moonlight'
     },
     {
         level: 3,
@@ -159,7 +159,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: 'life'
     },
     {
         level: 4,
@@ -263,7 +263,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'violet',
-        music: 'tap_out'
+        music: 'call'
     },
     {
         level: 7,
