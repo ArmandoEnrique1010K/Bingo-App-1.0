@@ -7,6 +7,20 @@ export default {
   plugins: [],
   safelist: [
     // INVESTIGAR ESTO: SOLUCIÓN PARA CLASES DINAMICAS????
+
+    "bg-red-500",
+    "bg-amber-500",
+    "bg-lime-500",
+    "bg-emerald-500",
+    "bg-cyan-500",
+    "bg-blue-500",
+    "text-red-500",
+    "text-amber-500",
+    "text-lime-500",
+    "text-emerald-500",
+    "text-cyan-500",
+    "text-blue-500",
+
     "bg-red-500",
     "bg-blue-500",
     "bg-yellow-500",

@@ -1,72 +1,17 @@
 import { Level } from "../types";
 
-// Posiciones de los numeros en el tablero
-/*
-1   6   11  16  21
-2   7   12  17  22
-3   8   13  18  23
-4   9   14  19  24
-5   10  15  20  25
-*/
+// Paleta de colores y su significado
+// BLUE (al menos 5 números)
+// CYAN (un tablero extra)
+// EMERALD (aumento de oponentes)
+// LIME (al menos 4 posibles patrones)
+// AMBER (patrones unicos)
+// RED (al menos 2 tableros)
 
-// S - Bot: 2200 - 1600
-// M - Bot: 1500 - 1000
-// F - Bot: 900 - 500
-
-
-// BLUE (5 números)
-// 1. COLUMNA O FILA DE 5 NÚMEROS
-// 2. CRUZ DE 5 NÚMEROS
-// 3. RECTANGULO DE 6 NÚMEROS   -- 1 POTENCIADOR:
-// 4. ASPA DE 5 NÚMEROS
-// 5. SIMBOLO DE POTENCIA
-
-// VIOLET (un tablero extra)
-// ESQUINA DE 90 GRADOS
-// 2 CUADRADOS EN 2 ESQUINAS
-// OJO DEL CENTRO
-// MATRIZ DE 8 NÚMEROS
-// DOS COLUMNAS --> 10 PATRONES
-
-// GREEN (más bots)
-// ASPA DE 9 NÚMEROS
-// CUADRADO DE 16 NÚMEROS
-// NÚMERO 1
-// ANILLO DE 8 NÚMEROS
-// LETRA H Y LETRA I
-
-// YELLOW (al menos 4 patrones)
-// SEÑAL DE SALIDA
-// CUADRADO DE 9 NÚMEROS
-// PIRAMIDE SIMETRICA DE 8 NÚMEROS
-// LETRA Z O LETRA N
-// ASPA INVERTIDA
-
-// ORANGE (patrones unicos)
-// 3 FILAS O 3 COLUMNAS SEPARADAS
-// DIAMANTE INVERTIDO
-// SIMBOLO DE PORCENTAJE (%)
-// NÚMERO 4
-// COPO DE NIEVE
-
-// RED (todos tienen 2 tableros)
-// LA PARCA
-// DISEÑO (2 PATRONES)
-// ASTERISCO
-// ESCALERA DE 15 NÚMEROS
-// MARCA TODO EL TABLERO
-
-
-
-
-// Aqui se especifica los niveles, incluyendo los posibles patrones ganadores por cada nivel del juego
 export const levels: Level[] = [
     {
         // Nivel
         level: 1,
-        // TODO: targetQuantity SE DEBERA ELIMINAR EN UNA FUTURA ACTUALIZACIÓN, TODOS LOS NIVELES DEBERAN TENER 3 OBJETIVOS
-        // Numero de bolitas o numeros objetivos 
-
         // Texto descriptivo para el patron objetivo
         targetText: "Columna o una fila de 5 números",
         // Numero de tableros del jugador
@@ -94,12 +39,6 @@ export const levels: Level[] = [
                 // Número de tableros para el bot (maximo: 3)
                 boards: 1
             },
-            // BOT DE PRUEBA
-            // {
-            //     name: "S-BOT 2",
-            //     interval: 2000,
-            //     boards: 3
-            // }
         ],
         color: 'blue',
         music: 'tap_out'
@@ -159,7 +98,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'life'
+        music: 'tap_out'
     },
     {
         level: 4,
@@ -189,7 +128,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: 'stone'
     },
     {
         level: 5,
@@ -213,7 +152,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: 'moonlight'
     },
     {
         level: 6,
@@ -262,8 +201,8 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'violet',
-        music: 'call'
+        color: 'cyan',
+        music: 'dreams'
     },
     {
         level: 7,
@@ -284,8 +223,8 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        color: 'violet',
-        music: 'tap_out'
+        color: 'cyan',
+        music: 'stone'
     },
     {
         level: 8,
@@ -312,7 +251,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'violet',
+        color: 'cyan',
         music: 'tap_out'
     },
     {
@@ -348,8 +287,8 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'violet',
-        music: 'tap_out'
+        color: 'cyan',
+        music: 'moonlight'
     },
     {
         level: 10,
@@ -379,8 +318,8 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: 'violet',
-        music: 'tap_out'
+        color: 'cyan',
+        music: 'stone'
     },
     {
         level: 11,
@@ -417,12 +356,10 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'green',
-        music: 'tap_out'
+        color: 'emerald',
+        music: 'life'
     },
 
-
-    // TODO: ¿MODIFICAR ESTE NIVEL, ES MUY DIFICIL?
     {
         level: 12,
         targetText: "Cuadrado de 16 números",
@@ -449,8 +386,8 @@ export const levels: Level[] = [
                 boards: 2
             }
         ],
-        color: 'green',
-        music: 'tap_out'
+        color: 'emerald',
+        music: 'ready'
     },
     {
         level: 13,
@@ -478,12 +415,12 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'green',
+        color: 'emerald',
         music: 'tap_out'
     },
     {
         level: 14,
-        targetText: "Anillo de 8 números",
+        targetText: "Circulo de 8 números",
         boards: 1,
         patterns: [
             [1, 6, 11, 2, 12, 3, 8, 13],
@@ -503,8 +440,8 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'green',
-        music: 'tap_out'
+        color: 'emerald',
+        music: 'dreams'
     },
     {
         level: 15,
@@ -542,7 +479,7 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        color: 'green',
+        color: 'emerald',
         music: 'tap_out'
     },
     {
@@ -587,7 +524,7 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        color: 'yellow',
+        color: 'lime',
         music: 'tap_out'
     },
 
@@ -669,8 +606,8 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: 'yellow',
-        music: 'tap_out'
+        color: 'lime',
+        music: 'moonlight'
     },
     {
         level: 18,
@@ -719,7 +656,7 @@ export const levels: Level[] = [
                 boards: 2
             },
         ],
-        color: 'yellow',
+        color: 'lime',
         music: 'tap_out'
     },
     {
@@ -738,7 +675,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'yellow',
+        color: 'lime',
         music: 'tap_out'
     },
     {
@@ -776,7 +713,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'yellow',
+        color: 'lime',
         music: 'tap_out'
     },
     {
@@ -809,7 +746,7 @@ export const levels: Level[] = [
                 boards: 3
             },
         ],
-        color: 'orange',
+        color: 'amber',
         music: 'tap_out'
     },
     {
@@ -857,7 +794,7 @@ export const levels: Level[] = [
                 boards: 1
             }
         ],
-        color: 'orange',
+        color: 'amber',
         music: 'tap_out'
     },
 
@@ -879,7 +816,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'orange',
+        color: 'amber',
         music: 'tap_out'
     },
 
@@ -903,7 +840,7 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'orange',
+        color: 'amber',
         music: 'tap_out'
     },
     {
@@ -926,8 +863,8 @@ export const levels: Level[] = [
                 boards: 1
             },
         ],
-        color: 'orange',
-        music: 'tap_out'
+        color: 'amber',
+        music: 'end'
     },
     {
         level: 26,
@@ -950,7 +887,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'tap_out'
+        music: 'ready'
     },
     {
         level: 27,
@@ -1107,7 +1044,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'tap_out'
+        music: 'end'
     },
     {
         level: 30,
@@ -1165,7 +1102,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'tap_out'
+        music: 'ready'
     },
 ]
 

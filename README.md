@@ -35,3 +35,9 @@ Versión de prueba: [Haga clic aqui para jugar](https://stately-hummingbird-3bc0
 - Añadir nuevos niveles y patrones objetivos.
 - En lugar de usar una imagen en formato svg, existe la posibilidad de usar un tablero con elementos <div> para mostrar el patrón objetivo.
 - Fecha limite: 30/05/25
+
+
+// https://platzi.com/clases/3578-npm/52462-eliminacion-de-dependencias-y-package-lock/
+// Elimina una dependencia con el comando: npm uninstall
+// En este caso: sweetalert con el mismo comando para instalarlo, pero utilizando npm uninstall sweetalert2
+// Conviene usar HeadlessUI en lugar de SweetAlert2

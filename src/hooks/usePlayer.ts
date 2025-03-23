@@ -367,7 +367,7 @@ export default function usePlayer() {
     // }
 
     // Función para limpiar los numeros objetivos
-    const handleCleanTargets = () => {
+    const clearTargets = () => {
         setTargetsNumbers([])
     }
 
@@ -502,7 +502,7 @@ export default function usePlayer() {
         setCurrentLevel,
         handleChangeViewPlayerBoard,
         setWinner,
-        handleCleanTargets,
+        clearTargets,
 
         handleCheckWinnerPattern,
         viewPlayerBoard,
