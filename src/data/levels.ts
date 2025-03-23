@@ -1,3 +1,4 @@
+import { CHANGING, DREAMS, END, LIFE, MOONLIGHT, READY, STONE, TAP } from "../constants";
 import { Level } from "../types";
 
 // Paleta de colores y su significado
@@ -41,7 +42,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: TAP
     },
     {
         level: 2,
@@ -68,7 +69,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'blue',
-        music: 'moonlight'
+        music: MOONLIGHT
     },
     {
         level: 3,
@@ -98,7 +99,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'tap_out'
+        music: TAP
     },
     {
         level: 4,
@@ -128,7 +129,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'stone'
+        music: STONE
     },
     {
         level: 5,
@@ -152,7 +153,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'blue',
-        music: 'moonlight'
+        music: MOONLIGHT
     },
     {
         level: 6,
@@ -202,7 +203,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'cyan',
-        music: 'dreams'
+        music: DREAMS
     },
     {
         level: 7,
@@ -224,7 +225,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'cyan',
-        music: 'stone'
+        music: STONE
     },
     {
         level: 8,
@@ -252,7 +253,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'cyan',
-        music: 'tap_out'
+        music: TAP
     },
     {
         level: 9,
@@ -288,7 +289,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'cyan',
-        music: 'moonlight'
+        music: MOONLIGHT
     },
     {
         level: 10,
@@ -319,7 +320,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'cyan',
-        music: 'stone'
+        music: STONE
     },
     {
         level: 11,
@@ -357,7 +358,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'emerald',
-        music: 'life'
+        music: LIFE
     },
 
     {
@@ -387,7 +388,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'emerald',
-        music: 'ready'
+        music: READY
     },
     {
         level: 13,
@@ -416,7 +417,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'emerald',
-        music: 'tap_out'
+        music: TAP
     },
     {
         level: 14,
@@ -441,7 +442,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'emerald',
-        music: 'dreams'
+        music: DREAMS
     },
     {
         level: 15,
@@ -480,7 +481,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'emerald',
-        music: 'tap_out'
+        music: CHANGING
     },
     {
         level: 16,
@@ -525,7 +526,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'lime',
-        music: 'tap_out'
+        music: MOONLIGHT
     },
 
     {
@@ -607,7 +608,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'lime',
-        music: 'moonlight'
+        music: STONE
     },
     {
         level: 18,
@@ -657,7 +658,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'lime',
-        music: 'tap_out'
+        music: LIFE
     },
     {
         level: 19,
@@ -676,7 +677,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'lime',
-        music: 'tap_out'
+        music: DREAMS
     },
     {
         level: 20,
@@ -714,7 +715,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'lime',
-        music: 'tap_out'
+        music: READY
     },
     {
         level: 21,
@@ -747,7 +748,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'amber',
-        music: 'tap_out'
+        music: TAP
     },
     {
         level: 22,
@@ -795,7 +796,7 @@ export const levels: Level[] = [
             }
         ],
         color: 'amber',
-        music: 'tap_out'
+        music: CHANGING
     },
 
     {
@@ -817,7 +818,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'amber',
-        music: 'tap_out'
+        music: MOONLIGHT
     },
 
     {
@@ -841,7 +842,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'amber',
-        music: 'tap_out'
+        music: DREAMS
     },
     {
         level: 25,
@@ -864,7 +865,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'amber',
-        music: 'end'
+        music: END
     },
     {
         level: 26,
@@ -887,7 +888,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'ready'
+        music: CHANGING
     },
     {
         level: 27,
@@ -917,7 +918,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'tap_out'
+        music: STONE
     },
 
     {
@@ -950,16 +951,6 @@ export const levels: Level[] = [
                 4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
                 8, 13, 18, 12, 23
             ],
-
-
-            // [
-            //     4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
-
-            // ],
-            // [
-            //     4, 5, 9, 10, 14, 15, 19, 20, 24, 25,
-
-            // ],
         ],
         bots: [
             // MODIFICAR ESTO
@@ -985,7 +976,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'tap_out'
+        music: LIFE
     },
     {
         level: 29,
@@ -1044,7 +1035,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'end'
+        music: END
     },
     {
         level: 30,
@@ -1102,22 +1093,7 @@ export const levels: Level[] = [
             },
         ],
         color: 'red',
-        music: 'ready'
+        music: READY
     },
 ]
-
-
-// TODO: DOCUMENTAR ESTO
-// NUEVAS IDEAS PARA NIVELES
-// Niveles con hasta 4 bots a la vez (LISTO)
-// Bots con un tiempo de respuesta minimo de 0.5 segundos (más rapido) (LISTO)
-// Patrones unicos (solamente 1 combincación o patrón) (LISTO)
-// Aumentar el numero de objetivos de 3 a 4 o 5 (maximo) (NO SERA IMPLEMENTADO)
-// ¿Nivel final es marcar todos los numeros del tablero? (LISTO)
-
-// https://stackoverflow.com/questions/35435042/how-can-i-define-an-array-of-objects
-// https://stackoverflow.com/questions/23161486/create-strongly-typed-array-of-arrays-in-typescript
-
-// PODRIA SERVIR
-// https://github.com/nsamelson/AIGameRunner/blob/a51fad7b8ed9ffeb3c972ccb65c29030c2b9985e/public/games/quixo.js
 

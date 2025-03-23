@@ -4,6 +4,7 @@ import {
   BoardID,
   Bot,
   Level,
+  Music,
   Pattern,
   SelectedNumbers,
   SelectedPositions,
@@ -39,7 +40,7 @@ type BingoContextProps = {
   isAtFirstBoard: boolean;
   handleChangeBoard: (direction: "prev" | "next") => void;
   isAtLastBoard: boolean;
-  music: string;
+  music: Music;
   bots: Bot[];
   unlockedLevels: number[];
   currentBoard: number;

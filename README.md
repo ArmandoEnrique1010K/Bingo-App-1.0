@@ -41,3 +41,8 @@ Versión de prueba: [Haga clic aqui para jugar](https://stately-hummingbird-3bc0
 // Elimina una dependencia con el comando: npm uninstall
 // En este caso: sweetalert con el mismo comando para instalarlo, pero utilizando npm uninstall sweetalert2
 // Conviene usar HeadlessUI en lugar de SweetAlert2
+// https://stackoverflow.com/questions/35435042/how-can-i-define-an-array-of-objects
+// https://stackoverflow.com/questions/23161486/create-strongly-typed-array-of-arrays-in-typescript
+
+// PODRIA SERVIR
+// https://github.com/nsamelson/AIGameRunner/blob/a51fad7b8ed9ffeb3c972ccb65c29030c2b9985e/public/games/quixo.js

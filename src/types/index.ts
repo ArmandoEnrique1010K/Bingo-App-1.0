@@ -8,7 +8,7 @@ export type Level = {
     patterns: Pattern[] // Arreglo de patrones ganadores
     bots: Bot[] // Arreglo de bots
     color: string // Colores
-    music: string // Nombre de la canción
+    music: Music
 }
 
 // Patrón ganador (arreglo de números)
@@ -88,3 +88,8 @@ export type Modal = {
 // }
 
 export type Winner = 'none' | 'player' | 'bot' | 'end' | ''
+
+export type Music = {
+    name: string
+    volume: number
+}

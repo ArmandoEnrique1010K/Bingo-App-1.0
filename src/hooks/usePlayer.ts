@@ -3,7 +3,7 @@ import { levels } from "../data/levels";
 import { BoardID, Level, Pattern, SelectedNumbers, SelectedPositions, Winner } from "../types";
 import { generateBoard } from "../utils/generateBoard";
 import { generateTargets } from "../utils/generateTargets";
-import { DEFAULT_TARGETS, MAX_TURNS } from "../constants";
+import { DEFAULT_TARGETS, MAX_TURNS, TAP } from "../constants";
 import { useLocation } from "react-router";
 import * as Tone from 'tone'
 
@@ -21,40 +21,36 @@ const initialDataLevel = {
 
     ],
     color: 'blue',
-    music: 'tap_out',
+    music: TAP,
 }
 
 export default function usePlayer() {
 
-    // SOLAMENTE ESE HOOK SE PUEDE UTILIZAR EN ESTE COMPONENTE
+    /////////////////////// RUTAS
+
     const location = useLocation();
 
-    // Establece los niveles desbloqueados
+    // Obtiene los niveles desbloqueados desde localStorage o lo inicializa con el nivel 1
     const initialLevels = (): number[] => {
         const localStorageLevels = localStorage.getItem('unlockedLevels')
         return localStorageLevels ? JSON.parse(localStorageLevels) : [1]
     }
 
-    // Niveles desbloqueados
     const [unlockedLevels, setUnlockedLevels] = useState<number[]>(initialLevels)
+
+    // Desbloquea un nivel si no se encuentra desbloqueado
+    const unlockLevel = (level: number) => {
+        if (!unlockedLevels.includes(level)) {
+            setUnlockedLevels([...unlockedLevels, level])
+        }
+    }
+
+
+    ////////////////////////////// NIVEL
 
     // Nivel actual
     const [currentLevel, setCurrentLevel] = useState<number>(0); // Numero
     const [dataLevel, setDataLevel] = useState<Level>(initialDataLevel) // Data
-
-
-    // Verifica que un nivel se encuentre desbloqueado
-    const verifyUnlockedLevel = (level: number) => {
-        return unlockedLevels.includes(level);
-    };
-
-
-    // Desbloquear un nivel
-    const unlockLevel = (level: number) => {
-        if (!verifyUnlockedLevel(level)) {
-            setUnlockedLevels([...unlockedLevels, level])
-        }
-    }
 
     // Obtiene los datos del nivel actual usando el metodo find.
     useEffect(() => {
@@ -429,12 +425,12 @@ export default function usePlayer() {
         // Configura el reproductor y carga el archivo MP3
         const audioPlayer = new Tone.Player({
             // url: "/music/tap_out.mp3", // Nombre del archivo de audio
-            url: `/music/${dataLevel.music}.mp3`, // Nombre del archivo de audio
+            url: `/music/${dataLevel.music.name}.mp3`, // Nombre del archivo de audio
             loop: true, // Activa el bucle
             autostart: false, // No comienza automáticamente
 
             // TODO: EL VOLUMEN DEBE SER DINAMICO
-            volume: -15, // Reduce el volumen
+            volume: dataLevel.music.volume, // Reduce el volumen
         }).toDestination(); // Conecta el audio a la salida principal
 
         // Actualiza el estado de player
@@ -457,7 +453,7 @@ export default function usePlayer() {
         try {
             // Espera a que llame
             await Tone.start();
-            console.log(`Ahora se esta reproduciendo: ${dataLevel.music}`)
+            console.log(`Ahora se esta reproduciendo: ${dataLevel.music.name}`)
 
             // Reproduce el audio si el estado de player esta listo
             if (player && player.loaded) {

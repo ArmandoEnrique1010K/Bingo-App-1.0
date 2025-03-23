@@ -59,7 +59,7 @@ export const EXIT_MODAL: Modal = {
 
 export const FINAL_LEVEL_VICTORY_MODAL: Modal = {
 	type: "victory",
-	title: VICTORY_MODAL.title + "🏆",
+	title: VICTORY_MODAL.title,
 	message: "Usted a derrotado a todos los bots del juego.",
 	textButton: {
 		left: "Salir al menú",
@@ -78,7 +78,45 @@ export const START_LEVEL_MODAL: Modal = {
 }
 
 // MUSIC
-export const TAP_OUT = {
-	name: 'tap_out',
-	volume: -15
+
+
+
+export const CHANGING = {
+	name: 'changing',
+	volume: -19
+}
+
+export const DREAMS = {
+	name: 'dreams',
+	volume: -15.5
+}
+
+export const END = {
+	name: 'end',
+	volume: -16
+}
+
+export const LIFE = {
+	name: 'life',
+	volume: -13
+}
+
+export const MOONLIGHT = {
+	name: 'moonlight',
+	volume: -16
+}
+
+export const READY = {
+	name: 'ready',
+	volume: -12
+}
+
+export const STONE = {
+	name: 'stone',
+	volume: -6
+}
+
+export const TAP = {
+	name: 'tap',
+	volume: -16
 }
