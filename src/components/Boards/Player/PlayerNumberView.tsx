@@ -13,22 +13,18 @@ export default function PlayerNumberView({
   value,
   idBoard,
 }: PlayerNumberViewProps) {
-  const {
-    handleClickButton,
-    handleIsSelectedNumber,
-    selectedNumbersInBoards,
-    color,
-  } = useContext(BingoContext);
+  const { handleClickButton, handleIsSelectedNumber, selectedNumbers, color } =
+    useContext(BingoContext);
 
   // CONTINUAR AQUI
   const selectNumber = useMemo(
     () => handleIsSelectedNumber(idBoard, value.position),
-    [selectedNumbersInBoards]
+    [selectedNumbers]
   );
 
   const activeColor = useMemo(
     () => (selectNumber === true ? color : "gray"),
-    [selectedNumbersInBoards]
+    [selectedNumbers]
   );
 
   return (

@@ -14,9 +14,8 @@ import {
 type BingoContextProps = {
   color: string;
   round: number;
-  targetsNumbers: number[];
+  targets: number[];
   winnerPatters: Pattern[];
-  level: number;
   targetText: string;
   boards: number;
   playerBoards: BoardID;
@@ -26,7 +25,7 @@ type BingoContextProps = {
     number: number,
     position: number
   ) => void;
-  selectedNumbersInBoards: SelectedNumbers;
+  selectedNumbers: SelectedNumbers;
   setCurrentLevel: React.Dispatch<React.SetStateAction<number>>;
   handleChangeTargets: () => void;
   handleChangeViewPlayerBoard: () => void;
@@ -47,7 +46,7 @@ type BingoContextProps = {
   currentLevel: number;
   dataLevel: Level | undefined;
   winner: Winner;
-  selectedPositionsInBoards: SelectedPositions;
+  selectedPositions: SelectedPositions;
   excludedTargetNumbers: number[];
   isPlaying: boolean;
   stopMusic: () => void;
@@ -66,15 +65,14 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
   const {
     color,
     round,
-    targetsNumbers,
+    targets,
     winnerPatters,
-    level,
     targetText,
     boards,
     playerBoards,
     handleIsSelectedNumber,
     handleClickButton,
-    selectedNumbersInBoards,
+    selectedNumbers,
     handleChangeTargets,
     setCurrentLevel,
     handleChangeViewPlayerBoard,
@@ -95,7 +93,7 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
     currentLevel,
     dataLevel,
     winner,
-    selectedPositionsInBoards,
+    selectedPositions,
     excludedTargetNumbers,
     isPlaying,
     stopMusic,
@@ -106,26 +104,22 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
       value={{
         color,
         round,
-        targetsNumbers,
+        targets,
         winnerPatters,
-        level,
         targetText,
         boards,
         playerBoards,
         handleIsSelectedNumber,
         handleClickButton,
-        selectedNumbersInBoards,
+        selectedNumbers,
         handleChangeTargets,
         setCurrentLevel,
         handleChangeViewPlayerBoard,
-
         setWinner,
         clearTargets,
-
         handleCheckWinnerPattern,
         viewPlayerBoard,
         dataLevel,
-
         isAtFirstBoard,
         handleChangeBoard,
         isAtLastBoard,
@@ -135,7 +129,7 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
         currentBoard,
         currentLevel,
         winner,
-        selectedPositionsInBoards,
+        selectedPositions,
         excludedTargetNumbers,
         isPlaying,
         stopMusic,

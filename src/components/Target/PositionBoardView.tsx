@@ -12,7 +12,7 @@ export default function PositionBoardView({
 }: PositionBoardViewProps) {
   const [currentPatternIndex, setCurrentPatternIndex] = useState(0);
 
-  const verifyTargets = patterns[currentPatternIndex];
+  const verifyTargets = patterns[currentPatternIndex] || [];
 
   // Ejecutar siempre cada 5 segundos, patron dinamico
   useEffect(() => {

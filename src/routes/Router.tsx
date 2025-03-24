@@ -2,6 +2,7 @@ import { lazy, Suspense, useContext } from "react";
 import { Navigate, Route, Routes } from "react-router";
 import Layout from "../layouts/Layout";
 import { BingoContext } from "../context/BingoContext";
+import LoaderView from "../components/Loader/LoaderView";
 
 // Carga diferida de páginas para mejorar el rendimiento
 const IndexPage = lazy(() => import("../pages/IndexPage"));
@@ -17,7 +18,7 @@ export default function Router() {
         <Route
           path="/"
           element={
-            <Suspense fallback="Cargando...">
+            <Suspense fallback={<LoaderView />}>
               <IndexPage />
             </Suspense>
           }
@@ -29,7 +30,7 @@ export default function Router() {
               key={level}
               path={`/level_${level}`}
               element={
-                <Suspense fallback="Cargando...">
+                <Suspense fallback={<LoaderView />}>
                   <LevelPage />
                 </Suspense>
               }

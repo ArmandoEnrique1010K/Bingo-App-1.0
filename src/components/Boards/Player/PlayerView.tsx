@@ -54,7 +54,7 @@ export default function PlayerView({
                       }
                       // handleIsSelectedNumber={handleIsSelectedNumber}
                       // handleClickButton={handleClickButton}
-                      // selectedNumbers={selectedNumbersInBoards}
+                      // selectedNumbers={selectedNumbers}
                       // color={color}
                     />
                   )
