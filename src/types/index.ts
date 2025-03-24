@@ -93,3 +93,5 @@ export type Music = {
     name: string
     volume: number
 }
+
+export type Direction = 'left' | 'right'

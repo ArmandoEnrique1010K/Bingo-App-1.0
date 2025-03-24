@@ -4,7 +4,7 @@ import { BingoContext } from "../context/BingoContext";
 import { levels } from "../data/levels";
 
 export default function IndexPage() {
-  const { unlockedLevels, setCurrentLevel, setWinner, color } =
+  const { unlockedLevels, setCurrentLevel, setWinner, color, startMusic } =
     useContext(BingoContext);
 
   const [showLevels, setShowLevels] = useState(false);
@@ -26,7 +26,7 @@ export default function IndexPage() {
           className={`w-full flex-grow flex items-center justify-center bg-${color}-500 text-white text-2xl font-semibold p-4`}
           onClick={() => {
             setShowLevels(true);
-            // startMusic();
+            startMusic();
           }}
         >
           Iniciar juego

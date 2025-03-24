@@ -6,7 +6,7 @@ import {
   FINAL_LEVEL_VICTORY_MODAL,
   VICTORY_MODAL,
 } from "../../../constants";
-import { BoardID } from "../../../types";
+import { BoardID, Direction } from "../../../types";
 import StatusModalWithButton from "../../Status/StatusModalWithButton";
 
 type PlayerViewProps = {
@@ -15,10 +15,10 @@ type PlayerViewProps = {
   playerBoards: BoardID;
   level: number;
   color: string;
-  currentBoard: number;
+  currentBoardId: number;
   isAtFirstBoard: boolean;
   isAtLastBoard: boolean;
-  handleChangeBoard: (direction: "prev" | "next") => void;
+  changeBoard: (direction: Direction) => void;
 };
 export default function PlayerView({
   viewPlayerBoard,
@@ -26,10 +26,10 @@ export default function PlayerView({
   playerBoards,
   level,
   color,
-  currentBoard,
+  currentBoardId,
   isAtFirstBoard,
   isAtLastBoard,
-  handleChangeBoard,
+  changeBoard,
 }: PlayerViewProps) {
   return (
     <>
@@ -43,7 +43,7 @@ export default function PlayerView({
                   // TODO: BUSCAR EL TABLERO POR EL INDEX
                   // index + 1 <-- obtiene el id
 
-                  currentBoard === index + 1 && (
+                  currentBoardId === index + 1 && (
                     <PlayerBoardView
                       key={index}
                       idBoard={index}
@@ -71,7 +71,7 @@ export default function PlayerView({
                     : `bg-${color}-500 text-white `
                 } 
                 `}
-                onClick={() => handleChangeBoard("prev")}
+                onClick={() => changeBoard("left")}
                 disabled={isAtFirstBoard}
               >
                 <ArrowLeftIcon className="h-6 mx-auto" />
@@ -84,7 +84,7 @@ export default function PlayerView({
                     ? "bg-gray-500 text-white cursor-not-allowed"
                     : `bg-${color}-500 text-white `
                 }`}
-                onClick={() => handleChangeBoard("next")}
+                onClick={() => changeBoard("right")}
                 disabled={isAtLastBoard}
               >
                 <ArrowRightIcon className="h-6 mx-auto" />

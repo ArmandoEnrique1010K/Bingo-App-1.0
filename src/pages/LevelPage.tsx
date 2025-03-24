@@ -28,9 +28,9 @@ export default function LevelPage() {
     handleChangeViewPlayerBoard,
     viewPlayerBoard,
     isAtFirstBoard,
-    handleChangeBoard,
+    changeBoard,
     isAtLastBoard,
-    currentBoard,
+    currentBoardId,
     winner,
     bots,
     dataLevel,
@@ -84,11 +84,11 @@ export default function LevelPage() {
             boards={boards}
             playerBoards={playerBoards}
             level={currentLevel}
-            currentBoard={currentBoard}
+            currentBoardId={currentBoardId}
             color={color}
             isAtFirstBoard={isAtFirstBoard}
             isAtLastBoard={isAtLastBoard}
-            handleChangeBoard={handleChangeBoard}
+            changeBoard={changeBoard}
           />
         </div>
 

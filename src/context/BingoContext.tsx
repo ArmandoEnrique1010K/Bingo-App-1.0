@@ -3,6 +3,7 @@ import usePlayer from "../hooks/usePlayer";
 import {
   BoardID,
   Bot,
+  Direction,
   Level,
   Music,
   Pattern,
@@ -37,12 +38,12 @@ type BingoContextProps = {
   viewPlayerBoard: boolean;
 
   isAtFirstBoard: boolean;
-  handleChangeBoard: (direction: "prev" | "next") => void;
+  changeBoard: (direction: Direction) => void;
   isAtLastBoard: boolean;
   music: Music;
   bots: Bot[];
   unlockedLevels: number[];
-  currentBoard: number;
+  currentBoardId: number;
   currentLevel: number;
   dataLevel: Level | undefined;
   winner: Winner;
@@ -84,12 +85,12 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
     viewPlayerBoard,
 
     isAtFirstBoard,
-    handleChangeBoard,
     isAtLastBoard,
     music,
     bots,
     unlockedLevels,
-    currentBoard,
+    changeBoard,
+    currentBoardId,
     currentLevel,
     dataLevel,
     winner,
@@ -121,12 +122,12 @@ export const BingoProvider = ({ children }: BingoProviderProps) => {
         viewPlayerBoard,
         dataLevel,
         isAtFirstBoard,
-        handleChangeBoard,
         isAtLastBoard,
         music,
         bots,
         unlockedLevels,
-        currentBoard,
+        changeBoard,
+        currentBoardId,
         currentLevel,
         winner,
         selectedPositions,

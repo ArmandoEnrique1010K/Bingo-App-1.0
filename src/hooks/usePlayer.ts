@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useState } from "react";
 import { levels } from "../data/levels";
-import { BoardID, Level, Pattern, SelectedNumbers, SelectedPositions, Winner } from "../types";
+import { BoardID, Direction, Level, Pattern, SelectedNumbers, SelectedPositions, Winner } from "../types";
 import { generateBoard } from "../utils/generateBoard";
 import { generateTargets } from "../utils/generateTargets";
-import { DEFAULT_TARGETS, MAX_TURNS, TAP } from "../constants";
+import { DEFAULT_TARGETS, END, MAX_TURNS } from "../constants";
 import { useLocation } from "react-router";
 import * as Tone from 'tone'
 
@@ -21,7 +21,7 @@ const initialDataLevel = {
 
     ],
     color: 'blue',
-    music: TAP,
+    music: END,
 }
 
 export default function usePlayer() {
@@ -129,9 +129,12 @@ export default function usePlayer() {
 
     // MEJORAR ESTO
     useEffect(() => {
-        if (patterns) {
-            setWinnerPatterns(patterns);
-        }
+        // if (patterns) {
+        //     setWinnerPatterns(patterns);
+        // }
+        setWinnerPatterns(patterns);
+        setBoardsId(newBoards.map((n) => n.id));
+        setcurrentBoardId(newBoards.length > 0 ? newBoards[0].id : 0);
     }, [dataLevel]);
 
     // Usar useMemo de esta manera asegura que newBoards se recalcule solo cuando currentLevel.level o winner cambie, lo cual es una buena práctica para evitar renders innecesarios y mejorar el rendimiento.
@@ -340,29 +343,60 @@ export default function usePlayer() {
     // READY: ESTADO PARA MOSTRAR SOLAMENTE UN TABLERO
     // const actualBoard = newBoards.find(b => b.id === 1)?.id || 5;
 
-    const [currentBoard, setCurrentBoard] = useState(() =>
-        newBoards.find(b => b.id === 1)?.id || 1
-    );
+    // const [currentBoard, setCurrentBoard] = useState(() =>
+    //     newBoards.find(b => b.id === 1)?.id || 1
+    // );
 
-    const verifyExistBoard = (id: number) => newBoards.some(b => b.id === id);
+    // const verifyExistBoard = (id: number) => newBoards.some(b => b.id === id);
 
-    const handleChangeBoard = (direction: "prev" | "next") => {
-        const newBoardId = direction === "prev" ? currentBoard - 1 : currentBoard + 1;
-        if (verifyExistBoard(newBoardId)) {
-            setCurrentBoard(newBoardId);
-            // console.log("Se muestra el tablero " + newBoardId)
+    // Verifica si un tablero existe
+    const doesBoardExist = (id: number): boolean =>
+        newBoards.some((b) => b.id === id);
+
+    // const handleChangeBoard = (direction: "prev" | "next") => {
+    //     const newBoardId = direction === "prev" ? currentBoard - 1 : currentBoard + 1;
+    //     if (verifyExistBoard(newBoardId)) {
+    //         setCurrentBoard(newBoardId);
+    //         // console.log("Se muestra el tablero " + newBoardId)
+    //     }
+    //     // else {
+    //     //     console.log("No existe otro tablero");
+    //     // }
+    // };
+    // Id del ablero actual, incialmente selecciona el primer tablero
+    const [currentBoardId, setcurrentBoardId] = useState<number>(0);
+
+    // Id de los tableros
+    const [boardsId, setBoardsId] = useState<number[]>([0]);
+
+    // Cambia el tablero actual
+    const changeBoard = (direction: Direction): void => {
+        const newBoardId =
+            direction === "left" ? currentBoardId - 1 : currentBoardId + 1;
+        if (doesBoardExist(newBoardId)) {
+            setcurrentBoardId(newBoardId);
         }
-        // else {
-        //     console.log("No existe otro tablero");
-        // }
     };
 
-    const isAtFirstBoard = currentBoard === Math.min(...newBoards.map(b => b.id));
-    const isAtLastBoard = currentBoard === Math.max(...newBoards.map(b => b.id));
-    // Contenido HTML devuelto por el componente
-    // Efecto de gradiente en tailwindcss
-    // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
 
+
+
+
+
+    // const isAtFirstBoard = currentBoard === Math.min(...newBoards.map(b => b.id));
+    // const isAtLastBoard = currentBoard === Math.max(...newBoards.map(b => b.id));
+    // // Contenido HTML devuelto por el componente
+    // // Efecto de gradiente en tailwindcss
+    // // bg-gradient-to-br from-cyan-900 via-cyan-800 to-cyan-700
+
+    // Verifica si currentBoardId tiene el primer o ultimo tablero por su id
+    const isAtFirstBoard = useMemo(() => {
+        return currentBoardId === boardsId[0];
+    }, [currentBoardId, boardsId]);
+
+    const isAtLastBoard = useMemo(() => {
+        return currentBoardId === boardsId[boardsId.length - 1];
+    }, [currentBoardId, boardsId]);
 
     // Cambia la vista en diseño responsive
     const handleChangeViewPlayerBoard = () => {
@@ -435,12 +469,12 @@ export default function usePlayer() {
         handleCheckWinnerPattern,
         viewPlayerBoard,
         isAtFirstBoard,
-        handleChangeBoard,
         isAtLastBoard,
         music,
         bots,
         unlockedLevels,
-        currentBoard,
+        changeBoard,
+        currentBoardId,
         currentLevel,
         dataLevel,
         winner,
