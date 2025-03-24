@@ -49,11 +49,14 @@ export default function usePlayer() {
     ////////////////////////////// 
     // NIVEL
 
-    // Nivel actual
-    const [currentLevel, setCurrentLevel] = useState<number>(0);
 
     // Datos del nivel actual
     const [dataLevel, setDataLevel] = useState<Level>(initialDataLevel)
+
+    // Nivel actual
+    const levelMatch = location.pathname.match(/level_(\d+)/);
+    const levelUrl = levelMatch ? parseInt(levelMatch[1], 10) : 0;
+    const [currentLevel, setCurrentLevel] = useState<number>(levelUrl);
 
     const {
         targetText,
@@ -66,6 +69,7 @@ export default function usePlayer() {
 
     // Tableros del jugador
     const [playerBoards, setPlayerBoards] = useState<BoardID>([]);
+    const result = levels.find(l => l.level === currentLevel);
 
     // Numeros objetivos
     const [targets, setTargets] = useState<number[]>([]);
@@ -91,18 +95,6 @@ export default function usePlayer() {
     // Vista en diseño responsive
     const [viewPlayerBoard, setViewPlayerBoard] = useState(true);
 
-    // Obtiene los datos del nivel actual usando el metodo find.
-    useEffect(() => {
-        const result = levels.find(l => l.level === currentLevel);
-        if (result) {
-            setDataLevel(result);
-        } else {
-            setDataLevel(initialDataLevel)
-        }
-
-        console.log('EL NIVEL ACTUAL ES: ' + result?.level)
-
-    }, [currentLevel]);
 
     // UNA SOLUCIÓN ES OBTENER DE LA URL EL NIVEL ACTUAL ('level_1', level_2, level_3), TOMAR ESE NUMERO Y GUARDARLO EN EL STATE DE CURRENTLEVEL
     useEffect(() => {
@@ -110,13 +102,29 @@ export default function usePlayer() {
         const levelMatch = path.match(/level_(\d+)/);
         if (levelMatch) {
             console.log('SE ENCONTRO EL NIVEL: ' + location.pathname)
+            console.log(levelMatch[1])
             const levelNumber = parseInt(levelMatch[1], 10);
             setCurrentLevel(levelNumber);
-            // setDataLevel(levels.find(l => l.level === currentLevel)?.level)
+            setPlayerBoards(newBoards)
             setWinner('none');
-
+        } else {
+            setPlayerBoards([])
         }
     }, [location.pathname]);
+
+    // TODO: NO SE MUESTRA EL TABLERO DEL JUGADOR AL RECARGAR LA PAGINA WEB DE UN NIVEL
+
+    // Obtiene los datos del nivel actual usando el metodo find.
+    useEffect(() => {
+        if (result) {
+            console.log('HA ENCONTRADO EL NIVEL')
+            setDataLevel(result);
+        } else {
+            console.log('NO HA ENCONTRADO EL NIVEL')
+            setDataLevel(initialDataLevel)
+        }
+        console.log('EL NIVEL ACTUAL ES: ' + result?.level)
+    }, [currentLevel]);
 
 
     // MEJORAR ESTO
@@ -136,7 +144,7 @@ export default function usePlayer() {
         } else {
             return []
         }
-    }, [winner, dataLevel.level])
+    }, [winner, boards])
 
     // EFECTO SECUNDARIO
 
